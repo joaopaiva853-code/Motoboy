@@ -852,6 +852,9 @@
                 <div class="settings-item" onclick="resetAllData()">
                     <span>🗑️</span> <span style="flex:1;margin-left:10px;">Limpar Todos os Dados</span> <span>→</span>
                 </div>
+                <div class="settings-item" onclick="downloadApp()">
+                    <span>📥</span> <span style="flex:1;margin-left:10px;">Baixar App (HTML)</span> <span>→</span>
+                </div>
                 <p style="text-align:center;color:var(--text3);font-size:11px;margin-top:16px;">MotoDash v1.0 • App do Motoboy</p>
             </div>
         </div>
@@ -1576,6 +1579,23 @@
             renderAll();
         }
 
+        // ──────────────────────────────────────
+        //  DOWNLOAD APP
+        // ──────────────────────────────────────
+        function downloadApp() {
+            const html = document.documentElement.outerHTML;
+            const blob = new Blob(['<!DOCTYPE html>\n' + html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'MotoDash_App_Motoboy.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('📥 App baixado! Salve e use offline.');
+        }
+
         function resetAllData() {
             if (!confirm('Tem certeza? Isso apagará TODOS os dados permanentemente.')) return;
             appData = {
@@ -1645,7 +1665,7 @@
             document.getElementById('modalOverlay').addEventListener('click', closeModal);
             document.getElementById('addCorridaModalOverlay').addEventListener('click', closeAddCorridaModal);
             document.getElementById('editProfileModalOverlay').addEventListener('click', closeEditProfileModal);
-            console.log('🏍️ MotoDash iniciado! Cadastro do motoboy ativo.');
+            console.log('🏍️ MotoDash iniciado! Pronto para download.');
         }
 
         init();
