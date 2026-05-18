@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MotoDash - App do Motoboy</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
     <style>
         :root {
             --bg: #0f0f13;
@@ -748,6 +749,24 @@
             width: 100%;
             display: block;
         }
+        /* Install button highlight */
+        .btn-install {
+            background: var(--primary);
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: none; /* shown via JS when available */
+        }
+        .btn-install.show {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
@@ -796,7 +815,7 @@
                 </div>
                 <div class="section-title">🆕 Novas Corridas <span class="badge-count" id="badgeNewOrders">0</span></div>
                 <div id="newOrdersContainer">
-                    <div class="empty-state"><div class="icon">📭</div><p>Nenhuma nova corrida</p><p style="font-size:11px;">Fique online para receber pedidos</p></div>
+                    <div class="empty-state"><div class="icon">📭</div><p>Nenhuma nova corrida</p><p style="font-size:11px;">Adicione uma corrida manualmente</p></div>
                 </div>
                 <button class="btn btn-primary" style="margin-top:4px;" onclick="showAddCorridaModal()">
                     📝 Adicionar Corrida Manual
@@ -852,8 +871,9 @@
                 <div class="settings-item" onclick="resetAllData()">
                     <span>🗑️</span> <span style="flex:1;margin-left:10px;">Limpar Todos os Dados</span> <span>→</span>
                 </div>
-                <div class="settings-item" onclick="downloadApp()">
-                    <span>📥</span> <span style="flex:1;margin-left:10px;">Baixar App (HTML)</span> <span>→</span>
+                <!-- Botão de instalação do PWA -->
+                <div class="settings-item" id="installButtonContainer" style="display:none;" onclick="installApp()">
+                    <span>📲</span> <span style="flex:1;margin-left:10px;">Instalar App (Tela Inicial)</span> <span>→</span>
                 </div>
                 <p style="text-align:center;color:var(--text3);font-size:11px;margin-top:16px;">MotoDash v1.0 • App do Motoboy</p>
             </div>
@@ -957,6 +977,86 @@
     </div>
 
     <script>
+        // ──────────────────────────────────────
+        //  PWA: MANIFEST & SERVICE WORKER
+        // ──────────────────────────────────────
+        function setupPWA() {
+            // Criar manifest como blob URL
+            const manifest = {
+                name: 'MotoDash - App do Motoboy',
+                short_name: 'MotoDash',
+                description: 'Gestão de entregas para motoboys',
+                start_url: '.',
+                display: 'standalone',
+                background_color: '#0f0f13',
+                theme_color: '#ff6b35',
+                icons: [{
+                    src: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192"><rect width="192" height="192" rx="32" fill="#ff6b35"/><text x="96" y="120" font-size="100" text-anchor="middle" fill="white">🏍️</text></svg>'),
+                    sizes: '192x192',
+                    type: 'image/svg+xml',
+                    purpose: 'any maskable'
+                }]
+            };
+            const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+            const manifestUrl = URL.createObjectURL(manifestBlob);
+            const link = document.createElement('link');
+            link.rel = 'manifest';
+            link.href = manifestUrl;
+            document.head.appendChild(link);
+
+            // Registrar service worker
+            if ('serviceWorker' in navigator) {
+                const swCode = `
+                    const CACHE_NAME = 'motodash-v1';
+                    const urlsToCache = ['/'];
+                    self.addEventListener('install', event => {
+                        event.waitUntil(
+                            caches.open(CACHE_NAME)
+                                .then(cache => cache.addAll(urlsToCache))
+                        );
+                    });
+                    self.addEventListener('fetch', event => {
+                        event.respondWith(
+                            caches.match(event.request)
+                                .then(response => response || fetch(event.request))
+                        );
+                    });
+                `;
+                const swBlob = new Blob([swCode], { type: 'application/javascript' });
+                const swUrl = URL.createObjectURL(swBlob);
+                navigator.serviceWorker.register(swUrl)
+                    .then(reg => console.log('Service Worker registrado'))
+                    .catch(err => console.log('SW não registrado (pode ser esperado em HTTP local):', err));
+            }
+        }
+
+        // ──────────────────────────────────────
+        //  INSTALL PROMPT
+        // ──────────────────────────────────────
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            // Mostrar botão de instalação
+            const installContainer = document.getElementById('installButtonContainer');
+            if (installContainer) installContainer.style.display = 'flex';
+        });
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        showToast('✅ App instalado com sucesso!');
+                    }
+                    deferredPrompt = null;
+                    document.getElementById('installButtonContainer').style.display = 'none';
+                });
+            } else {
+                showToast('Instalação não disponível no momento. Use um navegador compatível em HTTPS.');
+            }
+        }
+
         // ──────────────────────────────────────
         //  DATA STORE (LocalStorage)
         // ──────────────────────────────────────
@@ -1521,7 +1621,7 @@
             const activeContainer2 = document.getElementById('activeOrdersContainer2');
 
             if (newOrders.length === 0) {
-                const empty = '<div class="empty-state"><div class="icon">📭</div><p>Nenhuma nova corrida</p><p style="font-size:11px;">Fique online para receber pedidos</p></div>';
+                const empty = '<div class="empty-state"><div class="icon">📭</div><p>Nenhuma nova corrida</p><p style="font-size:11px;">Adicione uma corrida manualmente</p></div>';
                 newContainer.innerHTML = empty;
                 newContainer2.innerHTML = empty;
             } else {
@@ -1579,23 +1679,6 @@
             renderAll();
         }
 
-        // ──────────────────────────────────────
-        //  DOWNLOAD APP
-        // ──────────────────────────────────────
-        function downloadApp() {
-            const html = document.documentElement.outerHTML;
-            const blob = new Blob(['<!DOCTYPE html>\n' + html], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'MotoDash_App_Motoboy.html';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            showToast('📥 App baixado! Salve e use offline.');
-        }
-
         function resetAllData() {
             if (!confirm('Tem certeza? Isso apagará TODOS os dados permanentemente.')) return;
             appData = {
@@ -1617,55 +1700,14 @@
         //  INIT
         // ──────────────────────────────────────
         function init() {
-            if (appData.orders.length === 0) {
-                const stores = [
-                    { name: '🍕 Pizzaria Bella Napoli', icon: 'pizza', type: 'pizza', pickup: 'Av. Paulista, 1000 - São Paulo', dropoff: 'Rua Augusta, 500 - São Paulo', distance: 3.2, price: 12.50 },
-                    { name: '🍔 Burger Prime', icon: 'burger', type: 'burger', pickup: 'Rua Oscar Freire, 200 - São Paulo', dropoff: 'Alameda Santos, 800 - São Paulo', distance: 2.1, price: 9.80 },
-                ];
-                const seedStore = stores[0];
-                const seedOrder = {
-                    id: generateId(),
-                    storeName: seedStore.name,
-                    storeIcon: seedStore.icon,
-                    storeType: seedStore.type,
-                    pickupAddr: seedStore.pickup,
-                    dropoffAddr: seedStore.dropoff,
-                    distance: seedStore.distance,
-                    price: seedStore.price,
-                    status: 'new',
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString(),
-                };
-                appData.orders.push(seedOrder);
-                const pastStore = stores[1];
-                const pastOrder = {
-                    id: generateId(),
-                    storeName: pastStore.name,
-                    storeIcon: pastStore.icon,
-                    storeType: pastStore.type,
-                    pickupAddr: pastStore.pickup,
-                    dropoffAddr: pastStore.dropoff,
-                    distance: pastStore.distance,
-                    price: pastStore.price + 2,
-                    status: 'delivered',
-                    createdAt: new Date(Date.now() - 3600000).toISOString(),
-                    updatedAt: new Date(Date.now() - 1800000).toISOString(),
-                };
-                appData.orders.push(pastOrder);
-                appData.totalDeliveries = 1;
-                appData.totalEarnings = pastOrder.price;
-                appData.totalRatings = 1;
-                appData.ratingSum = 5;
-                persist();
-            }
-
+            setupPWA();
             updateOnlineUI();
             updateHeaderAndProfile();
             renderAll();
             document.getElementById('modalOverlay').addEventListener('click', closeModal);
             document.getElementById('addCorridaModalOverlay').addEventListener('click', closeAddCorridaModal);
             document.getElementById('editProfileModalOverlay').addEventListener('click', closeEditProfileModal);
-            console.log('🏍️ MotoDash iniciado! Pronto para download.');
+            console.log('🏍️ MotoDash iniciado! PWA pronto para instalar na tela inicial.');
         }
 
         init();
