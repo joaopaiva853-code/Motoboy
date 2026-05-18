@@ -29,64 +29,32 @@
             --transition: 0.2s ease;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            -webkit-user-select: none;
+            background: var(--bg); color: var(--text);
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none;
         }
 
         .phone-frame {
-            width: 100%;
-            max-width: 420px;
-            height: 100vh;
-            max-height: 900px;
-            background: var(--bg);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 0 2px #1a1a24, 0 0 60px rgba(255, 107, 53, 0.08);
-            border-radius: 0;
+            width: 100%; max-width: 420px; height: 100vh; max-height: 900px;
+            background: var(--bg); position: relative; overflow: hidden;
+            display: flex; flex-direction: column;
+            box-shadow: 0 0 0 2px #1a1a24, 0 0 60px rgba(255, 107, 53, 0.08); border-radius: 0;
         }
-
-        @media (min-width: 440px) {
-            .phone-frame {
-                border-radius: 28px;
-                height: 92vh;
-                max-height: 850px;
-            }
-        }
+        @media (min-width: 440px) { .phone-frame { border-radius: 28px; height: 92vh; max-height: 850px; } }
 
         .header {
-            background: var(--surface);
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 100;
-            border-bottom: 1px solid var(--border);
-            min-height: var(--header-height);
-            flex-shrink: 0;
+            background: var(--surface); padding: 12px 16px; display: flex; align-items: center;
+            justify-content: space-between; z-index: 100; border-bottom: 1px solid var(--border);
+            min-height: var(--header-height); flex-shrink: 0;
         }
         .header-left { display: flex; align-items: center; gap: 10px; }
         .avatar {
-            width: 38px; height: 38px; border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), #ff9a5c);
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 16px; color: #fff;
+            width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), #ff9a5c);
+            display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; color: #fff;
         }
         .header-info .greeting { font-size: 12px; color: var(--text2); line-height: 1; }
         .header-info .name { font-weight: 700; font-size: 15px; line-height: 1.3; }
@@ -97,9 +65,7 @@
         }
         .online-toggle.online { border-color: var(--green); color: var(--green); }
         .online-toggle.offline { border-color: var(--text3); color: var(--text3); }
-        .online-dot {
-            width: 9px; height: 9px; border-radius: 50%; background: var(--text3); transition: var(--transition);
-        }
+        .online-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--text3); transition: var(--transition); }
         .online-toggle.online .online-dot { background: var(--green); box-shadow: 0 0 10px var(--green); animation: pulse-dot 1.5s infinite; }
         @keyframes pulse-dot { 0%,100%{ box-shadow: 0 0 4px var(--green); } 50%{ box-shadow: 0 0 14px var(--green), 0 0 24px var(--green); } }
 
@@ -137,7 +103,7 @@
         .order-badge.new { background: #fff3e0; color: #e65100; } .order-badge.progress { background: #e3f2fd; color: #0d47a1; } .order-badge.done { background: #e8f5e9; color: #1b5e20; } .order-badge.cancelled { background: #fce4ec; color: #880e4f; }
         .address-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text2); margin-bottom: 4px; line-height: 1.3; }
         .address-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-        .address-dot.pickup { background: var(--green); } .address-dot.dropoff { background: var(--red); }
+        .address-dot.dropoff { background: var(--red); }
         .order-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
         .order-price { font-weight: 700; font-size: 18px; color: var(--green); }
         .order-distance { font-size: 12px; color: var(--text3); display: flex; align-items: center; gap: 4px; }
@@ -152,6 +118,18 @@
         .btn-outline { background: transparent; border: 2px solid var(--green); color: var(--green); }
         .btn-map { background: transparent; border: 2px solid var(--primary); color: var(--primary); display: inline-flex; align-items: center; gap: 4px; font-size: 12px; padding: 6px 12px; border-radius: 20px; cursor: pointer; transition: var(--transition); text-decoration: none; }
         .btn-map:hover { background: rgba(255,107,53,0.1); }
+        .btn-whatsapp {
+            background: #25D366; color: #fff; border: none; display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer;
+            transition: var(--transition); text-decoration: none;
+        }
+        .btn-whatsapp:hover { background: #1ebc5a; transform: scale(1.02); }
+        .btn-whatsapp-sm {
+            background: #25D366; color: #fff; border: none; display: inline-flex; align-items: center; gap: 4px;
+            padding: 5px 10px; border-radius: 15px; font-size: 10px; font-weight: 600; cursor: pointer;
+            transition: var(--transition); text-decoration: none; margin-left: 8px;
+        }
+        .btn-whatsapp-sm:hover { background: #1ebc5a; }
 
         .empty-state { text-align: center; padding: 40px 20px; color: var(--text3); }
         .empty-state .icon { font-size: 56px; margin-bottom: 12px; opacity: 0.5; }
@@ -180,7 +158,6 @@
         .location-btn { background: var(--surface2); color: var(--primary); border: 1px solid var(--primary); padding: 8px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 4px; display: inline-flex; align-items: center; gap: 4px; transition: var(--transition); }
         .location-btn:active { background: var(--primary); color: #fff; }
         .distance-auto { font-size: 11px; color: var(--green); margin-top: 2px; display: flex; align-items: center; gap: 4px; }
-        .save-address-btn { background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 6px 12px; border-radius: 16px; font-size: 11px; cursor: pointer; margin-left: 8px; white-space: nowrap; }
         .saved-item { display: flex; align-items: center; justify-content: space-between; padding: 10px; background: var(--surface2); border-radius: var(--radius-xs); margin-top: 6px; cursor: pointer; transition: var(--transition); }
         .saved-item:hover { background: var(--border); }
         .saved-item .remove-saved { background: none; border: none; color: var(--red); font-size: 18px; cursor: pointer; padding: 4px 8px; }
@@ -229,8 +206,8 @@
         <div class="screen" id="screenProfile">
             <div class="profile-card"><div class="profile-avatar">🏍️</div><h3 id="profileMotoboyName">Carlos Motoboy</h3><p id="profileMotoboyDetails">Moto: Honda CG 160 • Placa: ABC-1234</p><button class="btn btn-secondary btn-sm" style="margin-top:10px;" onclick="showEditProfileModal()">✏️ Editar Cadastro</button></div>
             <div class="stats-row"><div class="stat-card"><div class="stat-label">Total de Entregas</div><div class="stat-value" id="profileTotalDeliveries" style="color:#fff;">0</div></div><div class="stat-card"><div class="stat-label">Ganhos Totais</div><div class="stat-value green" id="profileTotalEarnings">R$ 0,00</div></div></div>
-            <div class="section-title">🏪 Lojas Salvas</div>
-            <div id="savedAddressesContainer"><div class="empty-state"><div class="icon">🏪</div><p>Nenhuma loja salva</p></div></div>
+            <div class="section-title">🏪 Destinos Salvos</div>
+            <div id="savedAddressesContainer"><div class="empty-state"><div class="icon">🏪</div><p>Nenhum destino salvo</p></div></div>
             <div class="settings-item" onclick="showAddCorridaModal()"><span>📝</span> <span style="flex:1;margin-left:10px;">Adicionar Corrida Manual</span> <span>→</span></div>
             <div class="settings-item" onclick="resetAllData()"><span>🗑️</span> <span style="flex:1;margin-left:10px;">Limpar Todos os Dados</span> <span>→</span></div>
             <div class="settings-item" id="installButtonContainer" style="display:none;" onclick="installApp()"><span>📲</span> <span style="flex:1;margin-left:10px;">Instalar App (Tela Inicial)</span> <span>→</span></div>
@@ -263,23 +240,33 @@
                 </select>
             </div>
             <div class="form-group">
-                <label>Endereço de Coleta</label>
-                <input type="text" id="manualPickup" placeholder="Rua, número - Cidade" required oninput="scheduleDistanceUpdate()">
-                <button type="button" class="location-btn" onclick="getLocation('pickup')">📍 Usar localização</button>
+                <label>Nome do Cliente</label>
+                <input type="text" id="manualClientName" placeholder="Nome do cliente" required>
+            </div>
+            <div class="form-group">
+                <label>WhatsApp do Cliente (com DDD)</label>
+                <input type="tel" id="manualClientPhone" placeholder="11999999999" required>
             </div>
             <div class="form-group">
                 <label>Endereço de Entrega</label>
                 <input type="text" id="manualDropoff" placeholder="Rua, número - Cidade" required oninput="scheduleDistanceUpdate()">
-                <button type="button" class="location-btn" onclick="getLocation('dropoff')">📍 Usar localização</button>
+                <button type="button" class="location-btn" onclick="getLocation('dropoff')">📍 Usar localização do destino</button>
             </div>
             <div class="form-row" style="display:flex; gap:10px;">
-                <div class="form-group" style="flex:1;"><label>Distância (km)</label><input type="text" id="manualDistance" readonly value="3.0" style="background:#2a2a36; color:var(--text);"><span class="distance-auto" id="distanceStatus">🔍 Calcule automaticamente</span></div>
-                <div class="form-group" style="flex:1;"><label>Valor (R$)</label><input type="number" id="manualPrice" step="0.01" min="1" max="200" value="12.00" required></div>
+                <div class="form-group" style="flex:1;">
+                    <label>Distância (km)</label>
+                    <input type="text" id="manualDistance" readonly value="3.0" style="background:#2a2a36; color:var(--text);">
+                    <span class="distance-auto" id="distanceStatus">🔍 Calcule a partir da sua localização</span>
+                </div>
+                <div class="form-group" style="flex:1;">
+                    <label>Valor (R$)</label>
+                    <input type="number" id="manualPrice" step="0.01" min="1" max="200" value="12.00" required>
+                </div>
             </div>
             <div style="margin: 8px 0;">
-                <label style="font-size:12px;color:var(--text2);">Loja salva:</label>
+                <label style="font-size:12px;color:var(--text2);">Destino salvo:</label>
                 <select id="savedStoreSelect" onchange="fillFromSavedStore()" style="width:100%; padding:10px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); color:var(--text);">
-                    <option value="">-- Selecionar loja salva --</option>
+                    <option value="">-- Selecionar destino salvo --</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-accept btn-block" style="margin-top: 8px;">✅ Criar Corrida</button>
@@ -326,23 +313,61 @@
     function closeEditProfileModal(e){ if(e&&e.target!==document.getElementById('editProfileModalOverlay'))return; document.getElementById('editProfileModalOverlay').style.display='none'; }
     function submitEditProfile(e){ e.preventDefault(); const n=document.getElementById('editMotoboyName').value.trim(), m=document.getElementById('editMotoboyMotorcycle').value.trim(), p=document.getElementById('editMotoboyPlate').value.trim(); if(!n||!m||!p){ showToast('⚠️ Preencha todos'); return; } appData.motoboy={name:n,motorcycle:m,plate:p}; persist(); showToast('✅ Cadastro atualizado!'); document.getElementById('editProfileModalOverlay').style.display='none'; }
 
-    function getLocation(target){ if(!navigator.geolocation){ showToast('Geolocalização não suportada'); return; } navigator.geolocation.getCurrentPosition(pos=>{ const lat=pos.coords.latitude.toFixed(6), lng=pos.coords.longitude.toFixed(6); const t=`Lat: ${lat}, Lng: ${lng}`; if(target==='pickup') document.getElementById('manualPickup').value=t; else document.getElementById('manualDropoff').value=t; scheduleDistanceUpdate(); showToast(`📍 Localização (${lat}, ${lng})`); }, err=>{ showToast('⚠️ Erro ao obter localização.'); }); }
+    function openWhatsApp(phone) {
+        const cleaned = phone.replace(/\D/g, '');
+        if (!cleaned) { showToast('⚠️ Número de WhatsApp não informado'); return; }
+        window.open(`https://wa.me/55${cleaned}`, '_blank');
+    }
+
+    function getLocation(target){
+        if(!navigator.geolocation){ showToast('Geolocalização não suportada'); return; }
+        navigator.geolocation.getCurrentPosition(pos=>{
+            const lat=pos.coords.latitude.toFixed(6), lng=pos.coords.longitude.toFixed(6);
+            const t=`Lat: ${lat}, Lng: ${lng}`;
+            if(target==='dropoff') document.getElementById('manualDropoff').value=t;
+            scheduleDistanceUpdate();
+            showToast(`📍 Localização (${lat}, ${lng})`);
+        }, err=>{ showToast('⚠️ Erro ao obter localização.'); });
+    }
 
     let distanceTimeout;
     function scheduleDistanceUpdate(){ clearTimeout(distanceTimeout); distanceTimeout=setTimeout(updateDistance,800); }
     function haversineDistance(lat1,lon1,lat2,lon2){ const R=6371; const dLat=(lat2-lat1)*Math.PI/180, dLon=(lon2-lon1)*Math.PI/180; const a=Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2; return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)); }
     function parseCoordString(s){ const m=s.match(/Lat:\s*(-?\d+\.?\d*),\s*Lng:\s*(-?\d+\.?\d*)/i); return m?{lat:parseFloat(m[1]),lng:parseFloat(m[2])}:null; }
     async function geocodeAddress(addr){ const c=parseCoordString(addr); if(c) return c; const url=`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(addr)}&format=json&limit=1`; try{ const r=await fetch(url,{headers:{'User-Agent':'MotoDashApp/1.0'}}); if(!r.ok) return null; const d=await r.json(); if(d.length) return {lat:parseFloat(d[0].lat),lng:parseFloat(d[0].lon)}; return null; }catch(e){ return null; } }
-    async function updateDistance(){ const p=document.getElementById('manualPickup').value.trim(), d=document.getElementById('manualDropoff').value.trim(), inp=document.getElementById('manualDistance'), st=document.getElementById('distanceStatus'); if(!p||!d){ st.innerHTML='🔍 Preencha os dois endereços'; return; } st.innerHTML='⏳ Buscando...'; try{ const [c1,c2]=await Promise.all([geocodeAddress(p),geocodeAddress(d)]); if(c1&&c2){ const dist=haversineDistance(c1.lat,c1.lng,c2.lat,c2.lng); const rd=Math.round(dist*10)/10; inp.value=rd.toFixed(1); st.innerHTML=`✅ Distância: ${rd.toFixed(1)} km`; } else { st.innerHTML='⚠️ Não geocodificado. Ajuste manualmente.'; inp.removeAttribute('readonly'); } }catch(e){ st.innerHTML='⚠️ Erro ao calcular.'; } }
 
-    // Atualizar select de lojas salvas
+    async function updateDistance(){
+        const dropoff = document.getElementById('manualDropoff').value.trim();
+        const inp = document.getElementById('manualDistance');
+        const st = document.getElementById('distanceStatus');
+        if(!dropoff){ st.innerHTML='🔍 Insira o endereço de entrega'; return; }
+        st.innerHTML='⏳ Obtendo sua localização...';
+        if(!navigator.geolocation){ st.innerHTML='⚠️ Geolocalização não disponível. Ajuste manual.'; inp.removeAttribute('readonly'); return; }
+        navigator.geolocation.getCurrentPosition(async pos => {
+            const myLat = pos.coords.latitude, myLng = pos.coords.longitude;
+            const destCoords = await geocodeAddress(dropoff);
+            if(destCoords){
+                const dist = haversineDistance(myLat, myLng, destCoords.lat, destCoords.lng);
+                const rd = Math.round(dist*10)/10;
+                inp.value = rd.toFixed(1);
+                st.innerHTML = `✅ Distância até o destino: ${rd.toFixed(1)} km`;
+            } else {
+                st.innerHTML = '⚠️ Endereço não encontrado. Ajuste manual.';
+                inp.removeAttribute('readonly');
+            }
+        }, err => {
+            st.innerHTML = '⚠️ Permita a localização para calcular. Ajuste manual.';
+            inp.removeAttribute('readonly');
+        });
+    }
+
     function updateSavedStoreSelect(){
         const sel = document.getElementById('savedStoreSelect');
-        sel.innerHTML = '<option value="">-- Selecionar loja salva --</option>';
+        sel.innerHTML = '<option value="">-- Selecionar destino salvo --</option>';
         appData.savedAddresses.forEach((addr, idx) => {
             const opt = document.createElement('option');
             opt.value = idx;
-            opt.textContent = `${addr.storeName} - ${addr.pickupAddr}`;
+            opt.textContent = `${addr.storeName} - ${addr.dropoffAddr}`;
             sel.appendChild(opt);
         });
     }
@@ -353,31 +378,15 @@
         const addr = appData.savedAddresses[idx];
         document.getElementById('manualStoreName').value = addr.storeName.replace(/^[🍕🍔🍣🥤🛒]\s*/, '');
         document.getElementById('manualStoreType').value = addr.storeType;
-        document.getElementById('manualPickup').value = addr.pickupAddr;
+        document.getElementById('manualDropoff').value = addr.dropoffAddr;
         scheduleDistanceUpdate();
-    }
-
-    function saveCurrentAddress(){
-        const name = document.getElementById('manualStoreName').value.trim();
-        const type = document.getElementById('manualStoreType').value;
-        const pickup = document.getElementById('manualPickup').value.trim();
-        if (!name || !pickup) { showToast('⚠️ Preencha nome e endereço de coleta para salvar.'); return; }
-        const iconMap = { pizza:'🍕', burger:'🍔', sushi:'🍣', acai:'🥤', market:'🛒' };
-        const displayName = iconMap[type] + ' ' + name;
-        // Verificar duplicada
-        const exists = appData.savedAddresses.some(a => a.pickupAddr === pickup && a.storeName === displayName);
-        if (exists) { showToast('⚠️ Endereço já salvo.'); return; }
-        appData.savedAddresses.push({ storeName: displayName, storeType: type, pickupAddr: pickup });
-        persist();
-        updateSavedStoreSelect();
-        showToast('💾 Endereço salvo!');
     }
 
     function removeSavedAddress(index){
         appData.savedAddresses.splice(index,1);
         persist();
         updateSavedStoreSelect();
-        showToast('🗑️ Endereço removido.');
+        showToast('🗑️ Destino removido.');
     }
 
     function showAddCorridaModal(){
@@ -385,7 +394,7 @@
         document.getElementById('addCorridaModalOverlay').style.display='flex';
         document.getElementById('addCorridaForm').reset();
         document.getElementById('manualDistance').value='3.0'; document.getElementById('manualDistance').setAttribute('readonly',true);
-        document.getElementById('manualPrice').value='12.00'; document.getElementById('distanceStatus').innerHTML='🔍 Calcule automaticamente';
+        document.getElementById('manualPrice').value='12.00'; document.getElementById('distanceStatus').innerHTML='🔍 Calcule a partir da sua localização';
         updateSavedStoreSelect();
     }
     function closeAddCorridaModal(e){ if(e&&e.target!==document.getElementById('addCorridaModalOverlay'))return; document.getElementById('addCorridaModalOverlay').style.display='none'; }
@@ -394,19 +403,19 @@
         e.preventDefault();
         const storeName = document.getElementById('manualStoreName').value.trim();
         const storeType = document.getElementById('manualStoreType').value;
-        const pickup = document.getElementById('manualPickup').value.trim();
+        const clientName = document.getElementById('manualClientName').value.trim();
+        const clientPhone = document.getElementById('manualClientPhone').value.trim();
         const dropoff = document.getElementById('manualDropoff').value.trim();
         const distance = parseFloat(document.getElementById('manualDistance').value);
         const price = parseFloat(document.getElementById('manualPrice').value);
-        if(!storeName||!pickup||!dropoff||isNaN(distance)||isNaN(price)){ showToast('⚠️ Preencha todos corretamente'); return; }
+        if(!storeName||!clientName||!clientPhone||!dropoff||isNaN(distance)||isNaN(price)){ showToast('⚠️ Preencha todos os campos corretamente'); return; }
         const iconMap = { pizza:'🍕', burger:'🍔', sushi:'🍣', acai:'🥤', market:'🛒' };
         const displayName = iconMap[storeType]+' '+storeName;
-        const newOrder = { id:generateId(), storeName:displayName, storeIcon:storeType, storeType, pickupAddr:pickup, dropoffAddr:dropoff, distance:Math.round(distance*10)/10, price:Math.round(price*100)/100, status:'new', createdAt:new Date().toISOString(), updatedAt:new Date().toISOString() };
+        const newOrder = { id:generateId(), storeName:displayName, storeIcon:storeType, storeType, clientName, clientPhone, dropoffAddr:dropoff, distance:Math.round(distance*10)/10, price:Math.round(price*100)/100, status:'new', createdAt:new Date().toISOString(), updatedAt:new Date().toISOString() };
         appData.orders.unshift(newOrder);
-        // Salvar endereço automaticamente se não existir
-        const alreadySaved = appData.savedAddresses.some(a => a.pickupAddr === pickup && a.storeName === displayName);
+        const alreadySaved = appData.savedAddresses.some(a => a.dropoffAddr === dropoff && a.storeName === displayName);
         if (!alreadySaved) {
-            appData.savedAddresses.push({ storeName: displayName, storeType: storeType, pickupAddr: pickup });
+            appData.savedAddresses.push({ storeName: displayName, storeType: storeType, dropoffAddr: dropoff });
         }
         persist();
         playNotificationSound();
@@ -427,12 +436,14 @@
         const modal=document.getElementById('modalOverlay'), title=document.getElementById('modalTitle'), content=document.getElementById('modalContent');
         const statusMap={new:'Nova',accepted:'Aceita',picked_up:'Em Rota',delivered:'Entregue',cancelled:'Cancelada'};
         title.textContent='Detalhes da Corrida';
-        const mapBtn=(o.status==='accepted'||o.status==='picked_up')?`<button class="btn-map" onclick="openMap('${o.dropoffAddr.replace(/'/g,"\\'")}')">🗺️ Ver mapa</button>`:'';
+        const mapBtn=(o.status==='accepted'||o.status==='picked_up')?`<button class="btn-map" onclick="openMap('${o.dropoffAddr.replace(/'/g,"\\'")}')">🗺️ Ver no mapa</button>`:'';
+        const whatsappBtn = o.clientPhone ? `<button class="btn-whatsapp" onclick="openWhatsApp('${o.clientPhone.replace(/'/g,"\\'")}')">💬 WhatsApp</button>` : '';
         content.innerHTML=`
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><div class="store-icon ${o.storeIcon}" style="width:40px;height:40px;">${o.storeName.split(' ')[0]}</div><div><strong>${o.storeName}</strong><br><span style="font-size:11px;color:var(--text3);">${statusMap[o.status]}</span></div></div>
-            <div class="address-row"><div class="address-dot pickup"></div><strong>Coleta:</strong> ${o.pickupAddr}</div>
+            ${o.clientName ? `<div style="margin-bottom:8px;"><strong>👤 Cliente:</strong> ${o.clientName}</div>` : ''}
             <div class="address-row"><div class="address-dot dropoff"></div><strong>Entrega:</strong> ${o.dropoffAddr} ${mapBtn}</div>
             <div style="display:flex;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);"><span>📏 ${o.distance.toFixed(1)} km</span><span>💰 <strong style="color:var(--green);">${formatCurrency(o.price)}</strong></span></div>
+            ${whatsappBtn ? `<div style="margin-top:10px;">${whatsappBtn}</div>` : ''}
             <p style="font-size:10px;color:var(--text3);margin-top:8px;">Criado: ${formatDate(o.createdAt)}</p>
             ${o.status==='new'?`<div class="btn-row" style="margin-top:14px;"><button class="btn btn-reject" onclick="rejectOrder('${o.id}');closeModalDirect();">❌ Recusar</button><button class="btn btn-accept" onclick="acceptOrder('${o.id}');closeModalDirect();">✅ Aceitar</button></div>`:''}
             ${o.status==='accepted'?`<button class="btn btn-primary" style="margin-top:14px;width:100%;" onclick="markPickedUp('${o.id}');closeModalDirect();">📦 Coletado</button>`:''}
@@ -446,11 +457,12 @@
     function buildOrderCard(o){
         const s={new:{label:'Nova',cls:'new'},accepted:{label:'Aceita',cls:'progress'},picked_up:{label:'Em Rota',cls:'progress'},delivered:{label:'Entregue',cls:'done'},cancelled:{label:'Cancelada',cls:'cancelled'}}[o.status]||{label:o.status,cls:''};
         const isNew=o.status==='new';
+        const whatsappBtn = o.clientPhone ? `<button class="btn-whatsapp-sm" onclick="event.stopPropagation();openWhatsApp('${o.clientPhone.replace(/'/g,"\\'")}')">💬</button>` : '';
         let btns='';
         if(isNew) btns=`<div class="btn-row"><button class="btn btn-reject btn-sm" onclick="event.stopPropagation();rejectOrder('${o.id}')">❌ Recusar</button><button class="btn btn-accept btn-sm" onclick="event.stopPropagation();acceptOrder('${o.id}')">✅ Aceitar</button></div>`;
         else if(o.status==='accepted') btns=`<div class="btn-row"><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();cancelOrder('${o.id}')">❌ Cancelar</button><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();markPickedUp('${o.id}')">📦 Coletado</button></div>`;
         else if(o.status==='picked_up') btns=`<div class="btn-row"><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();cancelOrder('${o.id}')">❌ Cancelar</button><button class="btn btn-accept btn-sm" onclick="event.stopPropagation();markDelivered('${o.id}')">🏁 Entregue</button></div>`;
-        return `<div class="order-card${isNew?' new-order':''}" onclick="showOrderModal('${o.id}')"><div class="order-header"><div class="store-name"><div class="store-icon ${o.storeIcon}">${o.storeName.split(' ')[0].replace(/[🍕🍔🍣🥤🛒]/g,'')}</div>${o.storeName}</div><span class="order-badge ${s.cls}">${s.label}</span></div><div class="address-row"><div class="address-dot pickup"></div>${o.pickupAddr}</div><div class="address-row"><div class="address-dot dropoff"></div>${o.dropoffAddr}</div><div class="order-footer"><span class="order-price">${formatCurrency(o.price)}</span><span class="order-distance">📏 ${o.distance.toFixed(1)} km • ${timeAgo(o.createdAt)}</span></div>${btns}</div>`;
+        return `<div class="order-card${isNew?' new-order':''}" onclick="showOrderModal('${o.id}')"><div class="order-header"><div class="store-name"><div class="store-icon ${o.storeIcon}">${o.storeName.split(' ')[0].replace(/[🍕🍔🍣🥤🛒]/g,'')}</div>${o.storeName}</div><span class="order-badge ${s.cls}">${s.label}</span></div>${o.clientName ? `<div style="font-size:12px;color:var(--text2);margin-bottom:4px;">👤 ${o.clientName} ${whatsappBtn}</div>` : ''}<div class="address-row"><div class="address-dot dropoff"></div>${o.dropoffAddr}</div><div class="order-footer"><span class="order-price">${formatCurrency(o.price)}</span><span class="order-distance">📏 ${o.distance.toFixed(1)} km • ${timeAgo(o.createdAt)}</span></div>${btns}</div>`;
     }
 
     function renderAll(){
@@ -466,14 +478,13 @@
         if(activeOrders.length===0){ const e='<div class="empty-state"><div class="icon">🛵</div><p>Nenhuma em andamento</p></div>'; ac.innerHTML=e; ac2.innerHTML=e; } else { const c=activeOrders.map(buildOrderCard).join(''); ac.innerHTML=c; ac2.innerHTML=c; }
         renderHistory();
         document.getElementById('profileTotalDeliveries').textContent=appData.totalDeliveries; document.getElementById('profileTotalEarnings').textContent=formatCurrency(appData.totalEarnings);
-        // Render saved addresses
         const savedContainer = document.getElementById('savedAddressesContainer');
         if (appData.savedAddresses.length === 0) {
-            savedContainer.innerHTML = '<div class="empty-state"><div class="icon">🏪</div><p>Nenhuma loja salva</p></div>';
+            savedContainer.innerHTML = '<div class="empty-state"><div class="icon">🏪</div><p>Nenhum destino salvo</p></div>';
         } else {
             savedContainer.innerHTML = appData.savedAddresses.map((addr, i) => `
                 <div class="saved-item">
-                    <span>${addr.storeName} - ${addr.pickupAddr}</span>
+                    <span>${addr.storeName} - ${addr.dropoffAddr}</span>
                     <button class="remove-saved" onclick="removeSavedAddress(${i})">✕</button>
                 </div>
             `).join('');
@@ -516,7 +527,7 @@
         document.getElementById('modalOverlay').addEventListener('click',closeModal);
         document.getElementById('addCorridaModalOverlay').addEventListener('click',closeAddCorridaModal);
         document.getElementById('editProfileModalOverlay').addEventListener('click',closeEditProfileModal);
-        console.log('🏍️ MotoDash com salvamento de endereços.');
+        console.log('🏍️ MotoDash com WhatsApp e nome do cliente.');
     }
     init();
     window.addEventListener('beforeunload',()=>saveData(appData));
