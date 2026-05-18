@@ -70,7 +70,6 @@
             }
         }
 
-        /* ── HEADER ─────────────────── */
         .header {
             background: var(--surface);
             padding: 12px 16px;
@@ -82,1643 +81,446 @@
             min-height: var(--header-height);
             flex-shrink: 0;
         }
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .header-left { display: flex; align-items: center; gap: 10px; }
         .avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
+            width: 38px; height: 38px; border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), #ff9a5c);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 16px;
-            color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 16px; color: #fff;
         }
-        .header-info .greeting {
-            font-size: 12px;
-            color: var(--text2);
-            line-height: 1;
-        }
-        .header-info .name {
-            font-weight: 700;
-            font-size: 15px;
-            line-height: 1.3;
-        }
+        .header-info .greeting { font-size: 12px; color: var(--text2); line-height: 1; }
+        .header-info .name { font-weight: 700; font-size: 15px; line-height: 1.3; }
         .online-toggle {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--surface2);
-            padding: 8px 14px;
-            border-radius: 24px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: var(--transition);
-            border: 2px solid transparent;
+            display: flex; align-items: center; gap: 8px; background: var(--surface2);
+            padding: 8px 14px; border-radius: 24px; cursor: pointer; font-size: 13px;
+            font-weight: 600; transition: var(--transition); border: 2px solid transparent;
         }
-        .online-toggle.online {
-            border-color: var(--green);
-            color: var(--green);
-        }
-        .online-toggle.offline {
-            border-color: var(--text3);
-            color: var(--text3);
-        }
+        .online-toggle.online { border-color: var(--green); color: var(--green); }
+        .online-toggle.offline { border-color: var(--text3); color: var(--text3); }
         .online-dot {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            background: var(--text3);
-            transition: var(--transition);
+            width: 9px; height: 9px; border-radius: 50%; background: var(--text3); transition: var(--transition);
         }
-        .online-toggle.online .online-dot {
-            background: var(--green);
-            box-shadow: 0 0 10px var(--green);
-            animation: pulse-dot 1.5s infinite;
-        }
-        @keyframes pulse-dot {
-            0%,
-            100% {
-                box-shadow: 0 0 4px var(--green);
-            }
-            50% {
-                box-shadow: 0 0 14px var(--green), 0 0 24px var(--green);
-            }
-        }
+        .online-toggle.online .online-dot { background: var(--green); box-shadow: 0 0 10px var(--green); animation: pulse-dot 1.5s infinite; }
+        @keyframes pulse-dot { 0%,100%{ box-shadow: 0 0 4px var(--green); } 50%{ box-shadow: 0 0 14px var(--green), 0 0 24px var(--green); } }
 
-        /* ── MAIN CONTENT ──────────── */
         .main-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 12px 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: 80px;
+            flex: 1; overflow-y: auto; padding: 12px 14px; display: flex; flex-direction: column;
+            gap: 14px; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; padding-bottom: 80px;
         }
-        .main-content::-webkit-scrollbar {
-            width: 0;
-        }
+        .main-content::-webkit-scrollbar { width: 0; }
 
-        /* ── SCREENS ──────────────── */
-        .screen {
-            display: none;
-            flex-direction: column;
-            gap: 14px;
-            animation: fadeSlideIn 0.25s ease;
-        }
-        .screen.active {
-            display: flex;
-        }
-        @keyframes fadeSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        .screen { display: none; flex-direction: column; gap: 14px; animation: fadeSlideIn 0.25s ease; }
+        .screen.active { display: flex; }
+        @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ── CARDS ────────────────── */
-        .stats-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-        .stat-card {
-            background: var(--surface);
-            border-radius: var(--radius-sm);
-            padding: 14px 16px;
-            border: 1px solid var(--border);
-        }
-        .stat-card .stat-label {
-            font-size: 11px;
-            color: var(--text2);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
-        .stat-card .stat-value {
-            font-size: 22px;
-            font-weight: 700;
-        }
-        .stat-card .stat-value.green {
-            color: var(--green);
-        }
-        .stat-card .stat-value.primary {
-            color: var(--primary);
-        }
-        .stat-card .stat-sub {
-            font-size: 11px;
-            color: var(--text3);
-            margin-top: 2px;
-        }
+        .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .stat-card { background: var(--surface); border-radius: var(--radius-sm); padding: 14px 16px; border: 1px solid var(--border); }
+        .stat-card .stat-label { font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .stat-card .stat-value { font-size: 22px; font-weight: 700; }
+        .stat-card .stat-value.green { color: var(--green); }
+        .stat-card .stat-value.primary { color: var(--primary); }
+        .stat-card .stat-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
 
-        .section-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text2);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
-        .badge-count {
-            background: var(--primary);
-            color: #fff;
-            font-size: 11px;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-weight: 700;
-        }
+        .section-title { font-size: 13px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .badge-count { background: var(--primary); color: #fff; font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 700; }
 
-        /* ── ORDER CARD ───────────── */
-        .order-card {
-            background: var(--surface);
-            border-radius: var(--radius);
-            padding: 14px;
-            border: 1px solid var(--border);
-            transition: var(--transition);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-        .order-card:active {
-            transform: scale(0.985);
-        }
-        .order-card.new-order {
-            border-color: var(--primary);
-            animation: glowBorder 2s infinite;
-            background: var(--surface2);
-        }
-        @keyframes glowBorder {
-            0%,
-            100% {
-                box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.2);
-            }
-            50% {
-                box-shadow: 0 0 0 8px rgba(255, 107, 53, 0);
-            }
-        }
-        .order-card .order-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 10px;
-        }
-        .order-card .store-name {
-            font-weight: 700;
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .store-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            flex-shrink: 0;
-        }
-        .store-icon.pizza {
-            background: #3d1c1c;
-        }
-        .store-icon.burger {
-            background: #2d1f0e;
-        }
-        .store-icon.sushi {
-            background: #1a2d25;
-        }
-        .store-icon.acai {
-            background: #2a1a3a;
-        }
-        .store-icon.market {
-            background: #1a2835;
-        }
-        .order-badge {
-            font-size: 10px;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
-        }
-        .order-badge.new {
-            background: #fff3e0;
-            color: #e65100;
-        }
-        .order-badge.progress {
-            background: #e3f2fd;
-            color: #0d47a1;
-        }
-        .order-badge.done {
-            background: #e8f5e9;
-            color: #1b5e20;
-        }
-        .order-badge.cancelled {
-            background: #fce4ec;
-            color: #880e4f;
-        }
-        .address-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            color: var(--text2);
-            margin-bottom: 4px;
-            line-height: 1.3;
-        }
-        .address-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-        .address-dot.pickup {
-            background: var(--green);
-        }
-        .address-dot.dropoff {
-            background: var(--red);
-        }
-        .order-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid var(--border);
-        }
-        .order-price {
-            font-weight: 700;
-            font-size: 18px;
-            color: var(--green);
-        }
-        .order-distance {
-            font-size: 12px;
-            color: var(--text3);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .btn-row {
-            display: flex;
-            gap: 8px;
-            margin-top: 10px;
-        }
-        .btn {
-            padding: 10px 16px;
-            border-radius: 24px;
-            font-weight: 700;
-            font-size: 13px;
-            cursor: pointer;
-            border: none;
-            transition: var(--transition);
-            text-align: center;
-            flex: 1;
-            letter-spacing: 0.3px;
-        }
-        .btn:active {
-            transform: scale(0.95);
-        }
-        .btn-accept {
-            background: var(--green);
-            color: #000;
-        }
-        .btn-accept:hover {
-            background: var(--green-dark);
-        }
-        .btn-reject {
-            background: transparent;
-            color: var(--red);
-            border: 2px solid var(--red);
-        }
-        .btn-primary {
-            background: var(--primary);
-            color: #fff;
-        }
-        .btn-secondary {
-            background: var(--surface2);
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
-        .btn-sm {
-            padding: 7px 14px;
-            font-size: 11px;
-            flex: unset;
-            border-radius: 20px;
-        }
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--green);
-            color: var(--green);
-        }
-        .btn-map {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 12px;
-            padding: 6px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-        }
-        .btn-map:hover {
-            background: rgba(255,107,53,0.1);
-        }
+        .order-card { background: var(--surface); border-radius: var(--radius); padding: 14px; border: 1px solid var(--border); transition: var(--transition); cursor: pointer; position: relative; overflow: hidden; }
+        .order-card:active { transform: scale(0.985); }
+        .order-card.new-order { border-color: var(--primary); animation: glowBorder 2s infinite; background: var(--surface2); }
+        @keyframes glowBorder { 0%,100%{ box-shadow: 0 0 0 0 rgba(255,107,53,0.2); } 50%{ box-shadow: 0 0 0 8px rgba(255,107,53,0); } }
+        .order-card .order-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+        .order-card .store-name { font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 6px; }
+        .store-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+        .store-icon.pizza { background: #3d1c1c; } .store-icon.burger { background: #2d1f0e; } .store-icon.sushi { background: #1a2d25; } .store-icon.acai { background: #2a1a3a; } .store-icon.market { background: #1a2835; }
+        .order-badge { font-size: 10px; padding: 4px 10px; border-radius: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+        .order-badge.new { background: #fff3e0; color: #e65100; } .order-badge.progress { background: #e3f2fd; color: #0d47a1; } .order-badge.done { background: #e8f5e9; color: #1b5e20; } .order-badge.cancelled { background: #fce4ec; color: #880e4f; }
+        .address-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text2); margin-bottom: 4px; line-height: 1.3; }
+        .address-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .address-dot.pickup { background: var(--green); } .address-dot.dropoff { background: var(--red); }
+        .order-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+        .order-price { font-weight: 700; font-size: 18px; color: var(--green); }
+        .order-distance { font-size: 12px; color: var(--text3); display: flex; align-items: center; gap: 4px; }
+        .btn-row { display: flex; gap: 8px; margin-top: 10px; }
+        .btn { padding: 10px 16px; border-radius: 24px; font-weight: 700; font-size: 13px; cursor: pointer; border: none; transition: var(--transition); text-align: center; flex: 1; letter-spacing: 0.3px; }
+        .btn:active { transform: scale(0.95); }
+        .btn-accept { background: var(--green); color: #000; } .btn-accept:hover { background: var(--green-dark); }
+        .btn-reject { background: transparent; color: var(--red); border: 2px solid var(--red); }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+        .btn-sm { padding: 7px 14px; font-size: 11px; flex: unset; border-radius: 20px; }
+        .btn-outline { background: transparent; border: 2px solid var(--green); color: var(--green); }
+        .btn-map { background: transparent; border: 2px solid var(--primary); color: var(--primary); display: inline-flex; align-items: center; gap: 4px; font-size: 12px; padding: 6px 12px; border-radius: 20px; cursor: pointer; transition: var(--transition); text-decoration: none; }
+        .btn-map:hover { background: rgba(255,107,53,0.1); }
 
-        /* ── EMPTY STATE ──────────── */
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text3);
-        }
-        .empty-state .icon {
-            font-size: 56px;
-            margin-bottom: 12px;
-            opacity: 0.5;
-        }
-        .empty-state p {
-            font-size: 14px;
-            margin-bottom: 4px;
-        }
+        .empty-state { text-align: center; padding: 40px 20px; color: var(--text3); }
+        .empty-state .icon { font-size: 56px; margin-bottom: 12px; opacity: 0.5; }
+        .empty-state p { font-size: 14px; margin-bottom: 4px; }
 
-        /* ── BOTTOM NAV ───────────── */
-        .bottom-nav {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            display: flex;
-            z-index: 200;
-            height: var(--nav-height);
-            flex-shrink: 0;
-        }
-        .nav-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition);
-            gap: 4px;
-            color: var(--text3);
-            font-size: 10px;
-            font-weight: 600;
-            position: relative;
-        }
-        .nav-item.active {
-            color: var(--primary);
-        }
-        .nav-item .nav-icon {
-            font-size: 20px;
-            transition: var(--transition);
-        }
-        .nav-item.active .nav-icon {
-            transform: translateY(-2px);
-        }
-        .nav-item .nav-badge {
-            position: absolute;
-            top: 6px;
-            right: 50%;
-            transform: translateX(18px);
-            background: var(--red);
-            color: #fff;
-            font-size: 10px;
-            font-weight: 700;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            display: none;
-        }
-        .nav-item .nav-badge.show {
-            display: flex;
-        }
+        .bottom-nav { position: absolute; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--border); display: flex; z-index: 200; height: var(--nav-height); flex-shrink: 0; }
+        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); gap: 4px; color: var(--text3); font-size: 10px; font-weight: 600; position: relative; }
+        .nav-item.active { color: var(--primary); }
+        .nav-item .nav-icon { font-size: 20px; transition: var(--transition); }
+        .nav-item.active .nav-icon { transform: translateY(-2px); }
+        .nav-item .nav-badge { position: absolute; top: 6px; right: 50%; transform: translateX(18px); background: var(--red); color: #fff; font-size: 10px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; display: none; }
+        .nav-item .nav-badge.show { display: flex; }
 
-        /* ── MODAL ────────────────── */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 500;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            animation: fadeIn 0.2s ease;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        .modal-sheet {
-            background: var(--surface);
-            border-radius: 20px 20px 0 0;
-            width: 100%;
-            max-width: 420px;
-            padding: 20px 16px 28px;
-            animation: slideUp 0.3s ease;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-        @keyframes slideUp {
-            from {
-                transform: translateY(100%);
-            }
-            to {
-                transform: translateY(0);
-            }
-        }
-        .modal-handle {
-            width: 36px;
-            height: 4px;
-            background: var(--text3);
-            border-radius: 2px;
-            margin: 0 auto 16px;
-        }
-        .modal-title {
-            font-weight: 700;
-            font-size: 18px;
-            margin-bottom: 14px;
-            text-align: center;
-        }
-        .form-group {
-            margin-bottom: 12px;
-        }
-        .form-group label {
-            display: block;
-            font-size: 12px;
-            color: var(--text2);
-            margin-bottom: 4px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border-radius: var(--radius-xs);
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            color: var(--text);
-            font-size: 14px;
-            outline: none;
-            transition: var(--transition);
-        }
-        .form-group input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
-        }
-        .form-group input[readonly] {
-            background: #2a2a36;
-            color: var(--text);
-        }
-        .form-group select {
-            width: 100%;
-            padding: 12px;
-            border-radius: var(--radius-xs);
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            color: var(--text);
-            font-size: 14px;
-            outline: none;
-            appearance: none;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M7 10l5 5 5-5z"/></svg>');
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 16px;
-        }
-        .location-btn {
-            background: var(--surface2);
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 4px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            transition: var(--transition);
-        }
-        .location-btn:active {
-            background: var(--primary);
-            color: #fff;
-        }
-        .distance-auto {
-            font-size: 11px;
-            color: var(--green);
-            margin-top: 2px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 500; display: flex; align-items: flex-end; justify-content: center; animation: fadeIn 0.2s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal-sheet { background: var(--surface); border-radius: 20px 20px 0 0; width: 100%; max-width: 420px; padding: 20px 16px 28px; animation: slideUp 0.3s ease; max-height: 85vh; overflow-y: auto; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .modal-handle { width: 36px; height: 4px; background: var(--text3); border-radius: 2px; margin: 0 auto 16px; }
+        .modal-title { font-weight: 700; font-size: 18px; margin-bottom: 14px; text-align: center; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 12px; color: var(--text2); margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: var(--radius-xs); background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-size: 14px; outline: none; transition: var(--transition); }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(255,107,53,0.2); }
+        .form-group input[readonly] { background: #2a2a36; color: var(--text); }
+        .form-group select { appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 12px center; background-size: 16px; }
+        .location-btn { background: var(--surface2); color: var(--primary); border: 1px solid var(--primary); padding: 8px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 4px; display: inline-flex; align-items: center; gap: 4px; transition: var(--transition); }
+        .location-btn:active { background: var(--primary); color: #fff; }
+        .distance-auto { font-size: 11px; color: var(--green); margin-top: 2px; display: flex; align-items: center; gap: 4px; }
+        .save-address-btn { background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 6px 12px; border-radius: 16px; font-size: 11px; cursor: pointer; margin-left: 8px; white-space: nowrap; }
+        .saved-item { display: flex; align-items: center; justify-content: space-between; padding: 10px; background: var(--surface2); border-radius: var(--radius-xs); margin-top: 6px; cursor: pointer; transition: var(--transition); }
+        .saved-item:hover { background: var(--border); }
+        .saved-item .remove-saved { background: none; border: none; color: var(--red); font-size: 18px; cursor: pointer; padding: 4px 8px; }
 
-        /* ── TOAST ────────────────── */
-        .toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--green);
-            color: #000;
-            padding: 10px 20px;
-            border-radius: 24px;
-            font-weight: 700;
-            font-size: 13px;
-            z-index: 999;
-            animation: toastIn 0.3s ease, toastOut 0.3s ease 2s forwards;
-            pointer-events: none;
-            white-space: nowrap;
-        }
-        @keyframes toastIn {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-        }
-        @keyframes toastOut {
-            from {
-                opacity: 1;
-            }
-            to {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-20px);
-            }
-        }
+        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--green); color: #000; padding: 10px 20px; border-radius: 24px; font-weight: 700; font-size: 13px; z-index: 999; animation: toastIn 0.3s ease, toastOut 0.3s ease 2s forwards; pointer-events: none; white-space: nowrap; }
+        @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(-30px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+        @keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateX(-50%) translateY(-20px); } }
 
-        /* ── HISTORY FILTER ──────── */
-        .filter-chips {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .chip {
-            padding: 6px 14px;
-            border-radius: 16px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            border: 1px solid var(--border);
-            background: var(--surface2);
-            color: var(--text2);
-            transition: var(--transition);
-        }
-        .chip.active {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
-        }
+        .filter-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+        .chip { padding: 6px 14px; border-radius: 16px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1px solid var(--border); background: var(--surface2); color: var(--text2); transition: var(--transition); }
+        .chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
-        /* ── PROFILE ──────────────── */
-        .profile-card {
-            background: var(--surface);
-            border-radius: var(--radius);
-            padding: 20px;
-            text-align: center;
-            border: 1px solid var(--border);
-        }
-        .profile-avatar {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), #ff9a5c);
-            margin: 0 auto 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            font-weight: 700;
-            color: #fff;
-        }
-        .settings-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 16px;
-            background: var(--surface);
-            border-radius: var(--radius-xs);
-            cursor: pointer;
-            border: 1px solid var(--border);
-            transition: var(--transition);
-            margin-top: 8px;
-        }
-        .settings-item:active {
-            background: var(--surface2);
-        }
-        .btn-block {
-            width: 100%;
-            display: block;
-        }
-        /* Install button highlight */
-        .btn-install {
-            background: var(--primary);
-            color: #fff;
-            font-weight: 700;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 24px;
-            cursor: pointer;
-            transition: var(--transition);
-            display: none; /* shown via JS when available */
-        }
-        .btn-install.show {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            justify-content: center;
-        }
+        .profile-card { background: var(--surface); border-radius: var(--radius); padding: 20px; text-align: center; border: 1px solid var(--border); }
+        .profile-avatar { width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), #ff9a5c); margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; color: #fff; }
+        .settings-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: var(--surface); border-radius: var(--radius-xs); cursor: pointer; border: 1px solid var(--border); transition: var(--transition); margin-top: 8px; }
+        .settings-item:active { background: var(--surface2); }
     </style>
 </head>
 <body>
-
-    <div class="phone-frame" id="app">
-        <!-- HEADER -->
-        <div class="header">
-            <div class="header-left">
-                <div class="avatar">🏍️</div>
-                <div class="header-info">
-                    <div class="greeting">Olá,</div>
-                    <div class="name" id="headerMotoboyName">Carlos Motoboy</div>
-                </div>
-            </div>
-            <div class="online-toggle online" id="onlineToggle" onclick="toggleOnline()">
-                <div class="online-dot"></div>
-                <span id="onlineLabel">Online</span>
-            </div>
+<div class="phone-frame" id="app">
+    <div class="header">
+        <div class="header-left"><div class="avatar">🏍️</div><div class="header-info"><div class="greeting">Olá,</div><div class="name" id="headerMotoboyName">Carlos Motoboy</div></div></div>
+        <div class="online-toggle online" id="onlineToggle" onclick="toggleOnline()"><div class="online-dot"></div><span id="onlineLabel">Online</span></div>
+    </div>
+    <div class="main-content" id="mainContent">
+        <div class="screen active" id="screenDashboard">
+            <div class="stats-row"><div class="stat-card"><div class="stat-label">💰 Ganhos Hoje</div><div class="stat-value green" id="statEarnings">R$ 0,00</div><div class="stat-sub" id="statDeliveries">0 entregas</div></div><div class="stat-card"><div class="stat-label">⭐ Avaliação</div><div class="stat-value primary" id="statRating">5.0</div><div class="stat-sub">+0 avaliações</div></div></div>
+            <div class="stats-row"><div class="stat-card"><div class="stat-label">📦 Em Andamento</div><div class="stat-value" id="statActive" style="color:#fff;">0</div></div><div class="stat-card"><div class="stat-label">🏁 Concluídas Hoje</div><div class="stat-value" id="statCompleted" style="color:#fff;">0</div></div></div>
+            <div class="section-title">🆕 Novas Corridas <span class="badge-count" id="badgeNewOrders">0</span></div>
+            <div id="newOrdersContainer"><div class="empty-state"><div class="icon">📭</div><p>Nenhuma nova corrida</p><p style="font-size:11px;">Adicione uma corrida manualmente</p></div></div>
+            <button class="btn btn-primary" style="margin-top:4px;" onclick="showAddCorridaModal()">📝 Adicionar Corrida Manual</button>
+            <div class="section-title">🚀 Em Andamento</div>
+            <div id="activeOrdersContainer"><div class="empty-state"><div class="icon">🛵</div><p>Nenhuma entrega em andamento</p></div></div>
         </div>
-
-        <!-- MAIN -->
-        <div class="main-content" id="mainContent">
-            <!-- SCREEN: DASHBOARD -->
-            <div class="screen active" id="screenDashboard">
-                <div class="stats-row">
-                    <div class="stat-card">
-                        <div class="stat-label">💰 Ganhos Hoje</div>
-                        <div class="stat-value green" id="statEarnings">R$ 0,00</div>
-                        <div class="stat-sub" id="statDeliveries">0 entregas</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">⭐ Avaliação</div>
-                        <div class="stat-value primary" id="statRating">5.0</div>
-                        <div class="stat-sub">+0 avaliações</div>
-                    </div>
-                </div>
-                <div class="stats-row">
-                    <div class="stat-card">
-                        <div class="stat-label">📦 Em Andamento</div>
-                        <div class="stat-value" id="statActive" style="color:#fff;">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">🏁 Concluídas Hoje</div>
-                        <div class="stat-value" id="statCompleted" style="color:#fff;">0</div>
-                    </div>
-                </div>
-                <div class="section-title">🆕 Novas Corridas <span class="badge-count" id="badgeNewOrders">0</span></div>
-                <div id="newOrdersContainer">
-                    <div class="empty-state"><div class="icon">📭</div><p>Nenhuma nova corrida</p><p style="font-size:11px;">Adicione uma corrida manualmente</p></div>
-                </div>
-                <button class="btn btn-primary" style="margin-top:4px;" onclick="showAddCorridaModal()">
-                    📝 Adicionar Corrida Manual
-                </button>
-                <div class="section-title">🚀 Em Andamento</div>
-                <div id="activeOrdersContainer">
-                    <div class="empty-state"><div class="icon">🛵</div><p>Nenhuma entrega em andamento</p></div>
-                </div>
-            </div>
-
-            <!-- SCREEN: ORDERS -->
-            <div class="screen" id="screenOrders">
-                <div class="section-title">🆕 Disponíveis <span class="badge-count" id="badgeNewOrders2">0</span></div>
-                <div id="newOrdersContainer2"></div>
-                <button class="btn btn-primary" style="margin-top:4px;" onclick="showAddCorridaModal()">📝 Adicionar Corrida Manual</button>
-                <div class="section-title">🚀 Em Andamento</div>
-                <div id="activeOrdersContainer2"></div>
-            </div>
-
-            <!-- SCREEN: HISTORY -->
-            <div class="screen" id="screenHistory">
-                <div class="filter-chips">
-                    <div class="chip active" onclick="filterHistory('all', this)">Todas</div>
-                    <div class="chip" onclick="filterHistory('delivered', this)">✅ Entregues</div>
-                    <div class="chip" onclick="filterHistory('cancelled', this)">❌ Canceladas</div>
-                </div>
-                <div id="historyContainer">
-                    <div class="empty-state"><div class="icon">📋</div><p>Nenhum histórico</p></div>
-                </div>
-            </div>
-
-            <!-- SCREEN: PROFILE -->
-            <div class="screen" id="screenProfile">
-                <div class="profile-card">
-                    <div class="profile-avatar">🏍️</div>
-                    <h3 style="margin-bottom:2px;" id="profileMotoboyName">Carlos Motoboy</h3>
-                    <p style="color:var(--text2);font-size:13px;" id="profileMotoboyDetails">Moto: Honda CG 160 • Placa: ABC-1234</p>
-                    <button class="btn btn-secondary btn-sm" style="margin-top:10px;" onclick="showEditProfileModal()">✏️ Editar Cadastro</button>
-                </div>
-                <div class="stats-row">
-                    <div class="stat-card">
-                        <div class="stat-label">Total de Entregas</div>
-                        <div class="stat-value" id="profileTotalDeliveries" style="color:#fff;">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Ganhos Totais</div>
-                        <div class="stat-value green" id="profileTotalEarnings">R$ 0,00</div>
-                    </div>
-                </div>
-                <div class="settings-item" onclick="showAddCorridaModal()">
-                    <span>📝</span> <span style="flex:1;margin-left:10px;">Adicionar Corrida Manual</span> <span>→</span>
-                </div>
-                <div class="settings-item" onclick="resetAllData()">
-                    <span>🗑️</span> <span style="flex:1;margin-left:10px;">Limpar Todos os Dados</span> <span>→</span>
-                </div>
-                <!-- Botão de instalação do PWA -->
-                <div class="settings-item" id="installButtonContainer" style="display:none;" onclick="installApp()">
-                    <span>📲</span> <span style="flex:1;margin-left:10px;">Instalar App (Tela Inicial)</span> <span>→</span>
-                </div>
-                <p style="text-align:center;color:var(--text3);font-size:11px;margin-top:16px;">MotoDash v1.0 • App do Motoboy</p>
-            </div>
+        <div class="screen" id="screenOrders">
+            <div class="section-title">🆕 Disponíveis <span class="badge-count" id="badgeNewOrders2">0</span></div>
+            <div id="newOrdersContainer2"></div>
+            <button class="btn btn-primary" style="margin-top:4px;" onclick="showAddCorridaModal()">📝 Adicionar Corrida Manual</button>
+            <div class="section-title">🚀 Em Andamento</div>
+            <div id="activeOrdersContainer2"></div>
         </div>
-
-        <!-- BOTTOM NAV -->
-        <div class="bottom-nav">
-            <div class="nav-item active" data-screen="screenDashboard" onclick="switchScreen('screenDashboard', this)">
-                <span class="nav-icon">📊</span> Dashboard
-                <span class="nav-badge" id="navBadge">0</span>
-            </div>
-            <div class="nav-item" data-screen="screenOrders" onclick="switchScreen('screenOrders', this)">
-                <span class="nav-icon">📦</span> Corridas
-                <span class="nav-badge" id="navBadgeOrders">0</span>
-            </div>
-            <div class="nav-item" data-screen="screenHistory" onclick="switchScreen('screenHistory', this)">
-                <span class="nav-icon">📋</span> Histórico
-            </div>
-            <div class="nav-item" data-screen="screenProfile" onclick="switchScreen('screenProfile', this)">
-                <span class="nav-icon">👤</span> Perfil
-            </div>
+        <div class="screen" id="screenHistory">
+            <div class="filter-chips"><div class="chip active" onclick="filterHistory('all', this)">Todas</div><div class="chip" onclick="filterHistory('delivered', this)">✅ Entregues</div><div class="chip" onclick="filterHistory('cancelled', this)">❌ Canceladas</div></div>
+            <div id="historyContainer"><div class="empty-state"><div class="icon">📋</div><p>Nenhum histórico</p></div></div>
+        </div>
+        <div class="screen" id="screenProfile">
+            <div class="profile-card"><div class="profile-avatar">🏍️</div><h3 id="profileMotoboyName">Carlos Motoboy</h3><p id="profileMotoboyDetails">Moto: Honda CG 160 • Placa: ABC-1234</p><button class="btn btn-secondary btn-sm" style="margin-top:10px;" onclick="showEditProfileModal()">✏️ Editar Cadastro</button></div>
+            <div class="stats-row"><div class="stat-card"><div class="stat-label">Total de Entregas</div><div class="stat-value" id="profileTotalDeliveries" style="color:#fff;">0</div></div><div class="stat-card"><div class="stat-label">Ganhos Totais</div><div class="stat-value green" id="profileTotalEarnings">R$ 0,00</div></div></div>
+            <div class="section-title">🏪 Lojas Salvas</div>
+            <div id="savedAddressesContainer"><div class="empty-state"><div class="icon">🏪</div><p>Nenhuma loja salva</p></div></div>
+            <div class="settings-item" onclick="showAddCorridaModal()"><span>📝</span> <span style="flex:1;margin-left:10px;">Adicionar Corrida Manual</span> <span>→</span></div>
+            <div class="settings-item" onclick="resetAllData()"><span>🗑️</span> <span style="flex:1;margin-left:10px;">Limpar Todos os Dados</span> <span>→</span></div>
+            <div class="settings-item" id="installButtonContainer" style="display:none;" onclick="installApp()"><span>📲</span> <span style="flex:1;margin-left:10px;">Instalar App (Tela Inicial)</span> <span>→</span></div>
+            <p style="text-align:center;color:var(--text3);font-size:11px;margin-top:16px;">MotoDash v1.0 • App do Motoboy</p>
         </div>
     </div>
-
-    <!-- MODAL for new order detail -->
-    <div class="modal-overlay" id="modalOverlay" style="display:none;" onclick="closeModal(event)">
-        <div class="modal-sheet" id="modalSheet" onclick="event.stopPropagation()">
-            <div class="modal-handle"></div>
-            <div class="modal-title" id="modalTitle">Nova Corrida</div>
-            <div id="modalContent"></div>
-        </div>
+    <div class="bottom-nav">
+        <div class="nav-item active" data-screen="screenDashboard" onclick="switchScreen('screenDashboard', this)"><span class="nav-icon">📊</span> Dashboard<span class="nav-badge" id="navBadge">0</span></div>
+        <div class="nav-item" data-screen="screenOrders" onclick="switchScreen('screenOrders', this)"><span class="nav-icon">📦</span> Corridas<span class="nav-badge" id="navBadgeOrders">0</span></div>
+        <div class="nav-item" data-screen="screenHistory" onclick="switchScreen('screenHistory', this)"><span class="nav-icon">📋</span> Histórico</div>
+        <div class="nav-item" data-screen="screenProfile" onclick="switchScreen('screenProfile', this)"><span class="nav-icon">👤</span> Perfil</div>
     </div>
+</div>
 
-    <!-- MODAL for adding manual corrida -->
-    <div class="modal-overlay" id="addCorridaModalOverlay" style="display:none;" onclick="closeAddCorridaModal(event)">
-        <div class="modal-sheet" onclick="event.stopPropagation()">
-            <div class="modal-handle"></div>
-            <div class="modal-title">📝 Adicionar Corrida Manual</div>
-            <form id="addCorridaForm" onsubmit="submitManualCorrida(event)">
-                <div class="form-group">
-                    <label>Nome da Loja / Restaurante</label>
-                    <input type="text" id="manualStoreName" placeholder="Ex: Pizzaria do Zé" required>
-                </div>
-                <div class="form-group">
-                    <label>Tipo de Estabelecimento</label>
-                    <select id="manualStoreType">
-                        <option value="pizza">🍕 Pizzaria</option>
-                        <option value="burger">🍔 Hamburgueria</option>
-                        <option value="sushi">🍣 Sushi</option>
-                        <option value="acai">🥤 Açaí</option>
-                        <option value="market">🛒 Mercado</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Endereço de Coleta</label>
-                    <input type="text" id="manualPickup" placeholder="Rua, número - Cidade" required oninput="scheduleDistanceUpdate()">
-                    <button type="button" class="location-btn" onclick="getLocation('pickup')">📍 Usar minha localização</button>
-                </div>
-                <div class="form-group">
-                    <label>Endereço de Entrega</label>
-                    <input type="text" id="manualDropoff" placeholder="Rua, número - Cidade" required oninput="scheduleDistanceUpdate()">
-                    <button type="button" class="location-btn" onclick="getLocation('dropoff')">📍 Usar minha localização</button>
-                </div>
-                <div class="form-row" style="display: flex; gap: 10px;">
-                    <div class="form-group" style="flex:1;">
-                        <label>Distância (km)</label>
-                        <input type="text" id="manualDistance" readonly value="3.0" style="background:#2a2a36; color:var(--text);">
-                        <span class="distance-auto" id="distanceStatus">🔍 Calcule automaticamente</span>
-                    </div>
-                    <div class="form-group" style="flex:1;">
-                        <label>Valor (R$)</label>
-                        <input type="number" id="manualPrice" step="0.01" min="1" max="200" value="12.00" required>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-accept btn-block" style="margin-top: 8px;">✅ Criar Corrida</button>
-            </form>
-        </div>
+<div class="modal-overlay" id="modalOverlay" style="display:none;" onclick="closeModal(event)"><div class="modal-sheet" onclick="event.stopPropagation()"><div class="modal-handle"></div><div class="modal-title" id="modalTitle">Nova Corrida</div><div id="modalContent"></div></div></div>
+
+<div class="modal-overlay" id="addCorridaModalOverlay" style="display:none;" onclick="closeAddCorridaModal(event)">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+        <div class="modal-handle"></div>
+        <div class="modal-title">📝 Adicionar Corrida Manual</div>
+        <form id="addCorridaForm" onsubmit="submitManualCorrida(event)">
+            <div class="form-group">
+                <label>Nome da Loja / Restaurante</label>
+                <input type="text" id="manualStoreName" placeholder="Ex: Pizzaria do Zé" required>
+            </div>
+            <div class="form-group">
+                <label>Tipo de Estabelecimento</label>
+                <select id="manualStoreType">
+                    <option value="pizza">🍕 Pizzaria</option><option value="burger">🍔 Hamburgueria</option><option value="sushi">🍣 Sushi</option><option value="acai">🥤 Açaí</option><option value="market">🛒 Mercado</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Endereço de Coleta</label>
+                <input type="text" id="manualPickup" placeholder="Rua, número - Cidade" required oninput="scheduleDistanceUpdate()">
+                <button type="button" class="location-btn" onclick="getLocation('pickup')">📍 Usar localização</button>
+            </div>
+            <div class="form-group">
+                <label>Endereço de Entrega</label>
+                <input type="text" id="manualDropoff" placeholder="Rua, número - Cidade" required oninput="scheduleDistanceUpdate()">
+                <button type="button" class="location-btn" onclick="getLocation('dropoff')">📍 Usar localização</button>
+            </div>
+            <div class="form-row" style="display:flex; gap:10px;">
+                <div class="form-group" style="flex:1;"><label>Distância (km)</label><input type="text" id="manualDistance" readonly value="3.0" style="background:#2a2a36; color:var(--text);"><span class="distance-auto" id="distanceStatus">🔍 Calcule automaticamente</span></div>
+                <div class="form-group" style="flex:1;"><label>Valor (R$)</label><input type="number" id="manualPrice" step="0.01" min="1" max="200" value="12.00" required></div>
+            </div>
+            <div style="margin: 8px 0;">
+                <label style="font-size:12px;color:var(--text2);">Loja salva:</label>
+                <select id="savedStoreSelect" onchange="fillFromSavedStore()" style="width:100%; padding:10px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); color:var(--text);">
+                    <option value="">-- Selecionar loja salva --</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-accept btn-block" style="margin-top: 8px;">✅ Criar Corrida</button>
+        </form>
     </div>
+</div>
 
-    <!-- MODAL for editing motoboy profile -->
-    <div class="modal-overlay" id="editProfileModalOverlay" style="display:none;" onclick="closeEditProfileModal(event)">
-        <div class="modal-sheet" onclick="event.stopPropagation()">
-            <div class="modal-handle"></div>
-            <div class="modal-title">✏️ Cadastro do Motoboy</div>
-            <form id="editProfileForm" onsubmit="submitEditProfile(event)">
-                <div class="form-group">
-                    <label>Nome Completo</label>
-                    <input type="text" id="editMotoboyName" placeholder="Seu nome" required>
-                </div>
-                <div class="form-group">
-                    <label>Modelo da Moto</label>
-                    <input type="text" id="editMotoboyMotorcycle" placeholder="Ex: Honda CG 160" required>
-                </div>
-                <div class="form-group">
-                    <label>Placa</label>
-                    <input type="text" id="editMotoboyPlate" placeholder="ABC-1234" required>
-                </div>
-                <button type="submit" class="btn btn-accept btn-block" style="margin-top: 8px;">💾 Salvar Cadastro</button>
-            </form>
-        </div>
-    </div>
+<div class="modal-overlay" id="editProfileModalOverlay" style="display:none;" onclick="closeEditProfileModal(event)"><div class="modal-sheet" onclick="event.stopPropagation()"><div class="modal-handle"></div><div class="modal-title">✏️ Cadastro do Motoboy</div><form id="editProfileForm" onsubmit="submitEditProfile(event)"><div class="form-group"><label>Nome</label><input type="text" id="editMotoboyName" required></div><div class="form-group"><label>Modelo Moto</label><input type="text" id="editMotoboyMotorcycle" required></div><div class="form-group"><label>Placa</label><input type="text" id="editMotoboyPlate" required></div><button type="submit" class="btn btn-accept btn-block">💾 Salvar</button></form></div></div>
 
-    <script>
-        // ──────────────────────────────────────
-        //  PWA: MANIFEST & SERVICE WORKER
-        // ──────────────────────────────────────
-        function setupPWA() {
-            // Criar manifest como blob URL
-            const manifest = {
-                name: 'MotoDash - App do Motoboy',
-                short_name: 'MotoDash',
-                description: 'Gestão de entregas para motoboys',
-                start_url: '.',
-                display: 'standalone',
-                background_color: '#0f0f13',
-                theme_color: '#ff6b35',
-                icons: [{
-                    src: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192"><rect width="192" height="192" rx="32" fill="#ff6b35"/><text x="96" y="120" font-size="100" text-anchor="middle" fill="white">🏍️</text></svg>'),
-                    sizes: '192x192',
-                    type: 'image/svg+xml',
-                    purpose: 'any maskable'
-                }]
-            };
-            const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
-            const manifestUrl = URL.createObjectURL(manifestBlob);
-            const link = document.createElement('link');
-            link.rel = 'manifest';
-            link.href = manifestUrl;
-            document.head.appendChild(link);
+<script>
+    const STORAGE_KEY = 'motodash_data';
+    function loadData() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        let data = { orders: [], isOnline: true, totalEarnings: 0, totalDeliveries: 0, totalRatings: 0, ratingSum: 0, motoboy: null, savedAddresses: [] };
+        if (raw) { try { const p = JSON.parse(raw); data = { ...data, ...p }; } catch(e) {} }
+        if (!data.motoboy) data.motoboy = { name: 'Carlos Motoboy', motorcycle: 'Honda CG 160', plate: 'ABC-1234' };
+        if (!data.savedAddresses) data.savedAddresses = [];
+        return data;
+    }
+    function saveData(d) { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
+    let appData = loadData();
+    function persist() { saveData(appData); renderAll(); updateHeaderAndProfile(); }
 
-            // Registrar service worker
-            if ('serviceWorker' in navigator) {
-                const swCode = `
-                    const CACHE_NAME = 'motodash-v1';
-                    const urlsToCache = ['/'];
-                    self.addEventListener('install', event => {
-                        event.waitUntil(
-                            caches.open(CACHE_NAME)
-                                .then(cache => cache.addAll(urlsToCache))
-                        );
-                    });
-                    self.addEventListener('fetch', event => {
-                        event.respondWith(
-                            caches.match(event.request)
-                                .then(response => response || fetch(event.request))
-                        );
-                    });
-                `;
-                const swBlob = new Blob([swCode], { type: 'application/javascript' });
-                const swUrl = URL.createObjectURL(swBlob);
-                navigator.serviceWorker.register(swUrl)
-                    .then(reg => console.log('Service Worker registrado'))
-                    .catch(err => console.log('SW não registrado (pode ser esperado em HTTP local):', err));
-            }
-        }
+    function generateId() { return 'ord_' + Date.now() + '_' + Math.random().toString(36).substr(2,6); }
+    function formatCurrency(v) { return 'R$ ' + Number(v).toFixed(2).replace('.',','); }
+    function formatDate(iso) { const d = new Date(iso); return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
+    function timeAgo(iso) { const diff = Date.now() - new Date(iso).getTime(); const mins = Math.floor(diff/60000); if(mins<1) return 'agora'; if(mins<60) return mins+'min atrás'; const h = Math.floor(mins/60); if(h<24) return h+'h atrás'; return Math.floor(h/24)+'d atrás'; }
+    function getTodayKey() { return new Date().toISOString().split('T')[0]; }
+    function getOrdersToday() { const t = getTodayKey(); return appData.orders.filter(o => o.createdAt?.startsWith(t)); }
+    function getActiveOrders() { return appData.orders.filter(o => o.status==='accepted'||o.status==='picked_up'); }
+    function getNewOrders() { return appData.orders.filter(o => o.status==='new'); }
+    function getTodayEarnings() { return getOrdersToday().filter(o=>o.status==='delivered').reduce((s,o)=>s+(o.price||0),0); }
+    function getTodayDeliveries() { return getOrdersToday().filter(o=>o.status==='delivered').length; }
 
-        // ──────────────────────────────────────
-        //  INSTALL PROMPT
-        // ──────────────────────────────────────
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            // Mostrar botão de instalação
-            const installContainer = document.getElementById('installButtonContainer');
-            if (installContainer) installContainer.style.display = 'flex';
+    function playBeep(f=800,d=150){ try{ const c=new(window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain(); o.type='square'; o.frequency.value=f; g.gain.value=0.15; o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime+d/1000); }catch(e){} }
+    function playNotificationSound(){ playBeep(880,100); setTimeout(()=>playBeep(1100,150),120); }
+    function showToast(msg){ const e=document.querySelector('.toast'); if(e)e.remove(); const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2500); }
+
+    function toggleOnline(){ appData.isOnline=!appData.isOnline; persist(); const t=document.getElementById('onlineToggle'),l=document.getElementById('onlineLabel'); if(appData.isOnline){ t.classList.add('online'); t.classList.remove('offline'); l.textContent='Online'; showToast('🟢 ONLINE'); } else { t.classList.remove('online'); t.classList.add('offline'); l.textContent='Offline'; showToast('🔴 OFFLINE'); } }
+    function updateOnlineUI(){ const t=document.getElementById('onlineToggle'),l=document.getElementById('onlineLabel'); if(appData.isOnline){ t.classList.add('online'); t.classList.remove('offline'); l.textContent='Online'; } else { t.classList.remove('online'); t.classList.add('offline'); l.textContent='Offline'; } }
+    function updateHeaderAndProfile(){ const m=appData.motoboy; document.getElementById('headerMotoboyName').textContent=m.name; document.getElementById('profileMotoboyName').textContent=m.name; document.getElementById('profileMotoboyDetails').textContent=`Moto: ${m.motorcycle} • Placa: ${m.plate}`; }
+
+    function showEditProfileModal(){ const m=appData.motoboy; document.getElementById('editMotoboyName').value=m.name; document.getElementById('editMotoboyMotorcycle').value=m.motorcycle; document.getElementById('editMotoboyPlate').value=m.plate; document.getElementById('editProfileModalOverlay').style.display='flex'; }
+    function closeEditProfileModal(e){ if(e&&e.target!==document.getElementById('editProfileModalOverlay'))return; document.getElementById('editProfileModalOverlay').style.display='none'; }
+    function submitEditProfile(e){ e.preventDefault(); const n=document.getElementById('editMotoboyName').value.trim(), m=document.getElementById('editMotoboyMotorcycle').value.trim(), p=document.getElementById('editMotoboyPlate').value.trim(); if(!n||!m||!p){ showToast('⚠️ Preencha todos'); return; } appData.motoboy={name:n,motorcycle:m,plate:p}; persist(); showToast('✅ Cadastro atualizado!'); document.getElementById('editProfileModalOverlay').style.display='none'; }
+
+    function getLocation(target){ if(!navigator.geolocation){ showToast('Geolocalização não suportada'); return; } navigator.geolocation.getCurrentPosition(pos=>{ const lat=pos.coords.latitude.toFixed(6), lng=pos.coords.longitude.toFixed(6); const t=`Lat: ${lat}, Lng: ${lng}`; if(target==='pickup') document.getElementById('manualPickup').value=t; else document.getElementById('manualDropoff').value=t; scheduleDistanceUpdate(); showToast(`📍 Localização (${lat}, ${lng})`); }, err=>{ showToast('⚠️ Erro ao obter localização.'); }); }
+
+    let distanceTimeout;
+    function scheduleDistanceUpdate(){ clearTimeout(distanceTimeout); distanceTimeout=setTimeout(updateDistance,800); }
+    function haversineDistance(lat1,lon1,lat2,lon2){ const R=6371; const dLat=(lat2-lat1)*Math.PI/180, dLon=(lon2-lon1)*Math.PI/180; const a=Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2; return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)); }
+    function parseCoordString(s){ const m=s.match(/Lat:\s*(-?\d+\.?\d*),\s*Lng:\s*(-?\d+\.?\d*)/i); return m?{lat:parseFloat(m[1]),lng:parseFloat(m[2])}:null; }
+    async function geocodeAddress(addr){ const c=parseCoordString(addr); if(c) return c; const url=`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(addr)}&format=json&limit=1`; try{ const r=await fetch(url,{headers:{'User-Agent':'MotoDashApp/1.0'}}); if(!r.ok) return null; const d=await r.json(); if(d.length) return {lat:parseFloat(d[0].lat),lng:parseFloat(d[0].lon)}; return null; }catch(e){ return null; } }
+    async function updateDistance(){ const p=document.getElementById('manualPickup').value.trim(), d=document.getElementById('manualDropoff').value.trim(), inp=document.getElementById('manualDistance'), st=document.getElementById('distanceStatus'); if(!p||!d){ st.innerHTML='🔍 Preencha os dois endereços'; return; } st.innerHTML='⏳ Buscando...'; try{ const [c1,c2]=await Promise.all([geocodeAddress(p),geocodeAddress(d)]); if(c1&&c2){ const dist=haversineDistance(c1.lat,c1.lng,c2.lat,c2.lng); const rd=Math.round(dist*10)/10; inp.value=rd.toFixed(1); st.innerHTML=`✅ Distância: ${rd.toFixed(1)} km`; } else { st.innerHTML='⚠️ Não geocodificado. Ajuste manualmente.'; inp.removeAttribute('readonly'); } }catch(e){ st.innerHTML='⚠️ Erro ao calcular.'; } }
+
+    // Atualizar select de lojas salvas
+    function updateSavedStoreSelect(){
+        const sel = document.getElementById('savedStoreSelect');
+        sel.innerHTML = '<option value="">-- Selecionar loja salva --</option>';
+        appData.savedAddresses.forEach((addr, idx) => {
+            const opt = document.createElement('option');
+            opt.value = idx;
+            opt.textContent = `${addr.storeName} - ${addr.pickupAddr}`;
+            sel.appendChild(opt);
         });
+    }
+    function fillFromSavedStore(){
+        const sel = document.getElementById('savedStoreSelect');
+        const idx = sel.value;
+        if (idx === '') return;
+        const addr = appData.savedAddresses[idx];
+        document.getElementById('manualStoreName').value = addr.storeName.replace(/^[🍕🍔🍣🥤🛒]\s*/, '');
+        document.getElementById('manualStoreType').value = addr.storeType;
+        document.getElementById('manualPickup').value = addr.pickupAddr;
+        scheduleDistanceUpdate();
+    }
 
-        function installApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        showToast('✅ App instalado com sucesso!');
-                    }
-                    deferredPrompt = null;
-                    document.getElementById('installButtonContainer').style.display = 'none';
-                });
-            } else {
-                showToast('Instalação não disponível no momento. Use um navegador compatível em HTTPS.');
-            }
+    function saveCurrentAddress(){
+        const name = document.getElementById('manualStoreName').value.trim();
+        const type = document.getElementById('manualStoreType').value;
+        const pickup = document.getElementById('manualPickup').value.trim();
+        if (!name || !pickup) { showToast('⚠️ Preencha nome e endereço de coleta para salvar.'); return; }
+        const iconMap = { pizza:'🍕', burger:'🍔', sushi:'🍣', acai:'🥤', market:'🛒' };
+        const displayName = iconMap[type] + ' ' + name;
+        // Verificar duplicada
+        const exists = appData.savedAddresses.some(a => a.pickupAddr === pickup && a.storeName === displayName);
+        if (exists) { showToast('⚠️ Endereço já salvo.'); return; }
+        appData.savedAddresses.push({ storeName: displayName, storeType: type, pickupAddr: pickup });
+        persist();
+        updateSavedStoreSelect();
+        showToast('💾 Endereço salvo!');
+    }
+
+    function removeSavedAddress(index){
+        appData.savedAddresses.splice(index,1);
+        persist();
+        updateSavedStoreSelect();
+        showToast('🗑️ Endereço removido.');
+    }
+
+    function showAddCorridaModal(){
+        if(!appData.isOnline){ showToast('⚠️ Fique online para adicionar corridas'); return; }
+        document.getElementById('addCorridaModalOverlay').style.display='flex';
+        document.getElementById('addCorridaForm').reset();
+        document.getElementById('manualDistance').value='3.0'; document.getElementById('manualDistance').setAttribute('readonly',true);
+        document.getElementById('manualPrice').value='12.00'; document.getElementById('distanceStatus').innerHTML='🔍 Calcule automaticamente';
+        updateSavedStoreSelect();
+    }
+    function closeAddCorridaModal(e){ if(e&&e.target!==document.getElementById('addCorridaModalOverlay'))return; document.getElementById('addCorridaModalOverlay').style.display='none'; }
+
+    function submitManualCorrida(e){
+        e.preventDefault();
+        const storeName = document.getElementById('manualStoreName').value.trim();
+        const storeType = document.getElementById('manualStoreType').value;
+        const pickup = document.getElementById('manualPickup').value.trim();
+        const dropoff = document.getElementById('manualDropoff').value.trim();
+        const distance = parseFloat(document.getElementById('manualDistance').value);
+        const price = parseFloat(document.getElementById('manualPrice').value);
+        if(!storeName||!pickup||!dropoff||isNaN(distance)||isNaN(price)){ showToast('⚠️ Preencha todos corretamente'); return; }
+        const iconMap = { pizza:'🍕', burger:'🍔', sushi:'🍣', acai:'🥤', market:'🛒' };
+        const displayName = iconMap[storeType]+' '+storeName;
+        const newOrder = { id:generateId(), storeName:displayName, storeIcon:storeType, storeType, pickupAddr:pickup, dropoffAddr:dropoff, distance:Math.round(distance*10)/10, price:Math.round(price*100)/100, status:'new', createdAt:new Date().toISOString(), updatedAt:new Date().toISOString() };
+        appData.orders.unshift(newOrder);
+        // Salvar endereço automaticamente se não existir
+        const alreadySaved = appData.savedAddresses.some(a => a.pickupAddr === pickup && a.storeName === displayName);
+        if (!alreadySaved) {
+            appData.savedAddresses.push({ storeName: displayName, storeType: storeType, pickupAddr: pickup });
         }
+        persist();
+        playNotificationSound();
+        showToast('📝 Corrida adicionada!');
+        document.getElementById('addCorridaModalOverlay').style.display='none';
+        updateSavedStoreSelect();
+    }
 
-        // ──────────────────────────────────────
-        //  DATA STORE (LocalStorage)
-        // ──────────────────────────────────────
-        const STORAGE_KEY = 'motodash_data';
+    function acceptOrder(id){ const o=appData.orders.find(o=>o.id===id); if(!o||o.status!=='new')return; o.status='accepted'; o.updatedAt=new Date().toISOString(); persist(); playBeep(600,200); showToast('✅ Aceita!'); }
+    function rejectOrder(id){ const o=appData.orders.find(o=>o.id===id); if(!o||o.status!=='new')return; o.status='cancelled'; o.updatedAt=new Date().toISOString(); persist(); showToast('❌ Recusada'); }
+    function markPickedUp(id){ const o=appData.orders.find(o=>o.id===id); if(!o||o.status!=='accepted')return; o.status='picked_up'; o.updatedAt=new Date().toISOString(); persist(); playBeep(700,150); showToast('📦 Coletado!'); }
+    function markDelivered(id){ const o=appData.orders.find(o=>o.id===id); if(!o||o.status!=='picked_up')return; o.status='delivered'; o.updatedAt=new Date().toISOString(); appData.totalDeliveries++; appData.totalEarnings+=o.price; appData.totalRatings++; appData.ratingSum+=Math.random()>0.1?5:4; persist(); playBeep(1000,200); showToast('🏁 Entregue! +'+formatCurrency(o.price)); }
+    function cancelOrder(id){ const o=appData.orders.find(o=>o.id===id); if(!o||(o.status!=='accepted'&&o.status!=='picked_up'))return; if(!confirm('Cancelar entrega?'))return; o.status='cancelled'; o.updatedAt=new Date().toISOString(); persist(); showToast('❌ Cancelada'); }
+    function openMap(addr){ window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}`,'_blank'); }
 
-        function loadData() {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            let data = { orders: [], isOnline: true, totalEarnings: 0, totalDeliveries: 0, totalRatings: 0, ratingSum: 0, motoboy: null };
-            if (raw) {
-                try {
-                    const parsed = JSON.parse(raw);
-                    data = { ...data, ...parsed };
-                } catch (e) {}
-            }
-            if (!data.motoboy) {
-                data.motoboy = { name: 'Carlos Motoboy', motorcycle: 'Honda CG 160', plate: 'ABC-1234' };
-            }
-            return data;
-        }
+    function showOrderModal(id){
+        const o=appData.orders.find(o=>o.id===id); if(!o)return;
+        const modal=document.getElementById('modalOverlay'), title=document.getElementById('modalTitle'), content=document.getElementById('modalContent');
+        const statusMap={new:'Nova',accepted:'Aceita',picked_up:'Em Rota',delivered:'Entregue',cancelled:'Cancelada'};
+        title.textContent='Detalhes da Corrida';
+        const mapBtn=(o.status==='accepted'||o.status==='picked_up')?`<button class="btn-map" onclick="openMap('${o.dropoffAddr.replace(/'/g,"\\'")}')">🗺️ Ver mapa</button>`:'';
+        content.innerHTML=`
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><div class="store-icon ${o.storeIcon}" style="width:40px;height:40px;">${o.storeName.split(' ')[0]}</div><div><strong>${o.storeName}</strong><br><span style="font-size:11px;color:var(--text3);">${statusMap[o.status]}</span></div></div>
+            <div class="address-row"><div class="address-dot pickup"></div><strong>Coleta:</strong> ${o.pickupAddr}</div>
+            <div class="address-row"><div class="address-dot dropoff"></div><strong>Entrega:</strong> ${o.dropoffAddr} ${mapBtn}</div>
+            <div style="display:flex;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);"><span>📏 ${o.distance.toFixed(1)} km</span><span>💰 <strong style="color:var(--green);">${formatCurrency(o.price)}</strong></span></div>
+            <p style="font-size:10px;color:var(--text3);margin-top:8px;">Criado: ${formatDate(o.createdAt)}</p>
+            ${o.status==='new'?`<div class="btn-row" style="margin-top:14px;"><button class="btn btn-reject" onclick="rejectOrder('${o.id}');closeModalDirect();">❌ Recusar</button><button class="btn btn-accept" onclick="acceptOrder('${o.id}');closeModalDirect();">✅ Aceitar</button></div>`:''}
+            ${o.status==='accepted'?`<button class="btn btn-primary" style="margin-top:14px;width:100%;" onclick="markPickedUp('${o.id}');closeModalDirect();">📦 Coletado</button>`:''}
+            ${o.status==='picked_up'?`<button class="btn btn-accept" style="margin-top:14px;width:100%;" onclick="markDelivered('${o.id}');closeModalDirect();">🏁 Entregue</button>`:''}
+        `;
+        modal.style.display='flex';
+    }
+    function closeModal(e){ if(e&&e.target!==document.getElementById('modalOverlay'))return; document.getElementById('modalOverlay').style.display='none'; }
+    function closeModalDirect(){ document.getElementById('modalOverlay').style.display='none'; }
 
-        function saveData(data) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        }
+    function buildOrderCard(o){
+        const s={new:{label:'Nova',cls:'new'},accepted:{label:'Aceita',cls:'progress'},picked_up:{label:'Em Rota',cls:'progress'},delivered:{label:'Entregue',cls:'done'},cancelled:{label:'Cancelada',cls:'cancelled'}}[o.status]||{label:o.status,cls:''};
+        const isNew=o.status==='new';
+        let btns='';
+        if(isNew) btns=`<div class="btn-row"><button class="btn btn-reject btn-sm" onclick="event.stopPropagation();rejectOrder('${o.id}')">❌ Recusar</button><button class="btn btn-accept btn-sm" onclick="event.stopPropagation();acceptOrder('${o.id}')">✅ Aceitar</button></div>`;
+        else if(o.status==='accepted') btns=`<div class="btn-row"><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();cancelOrder('${o.id}')">❌ Cancelar</button><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();markPickedUp('${o.id}')">📦 Coletado</button></div>`;
+        else if(o.status==='picked_up') btns=`<div class="btn-row"><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();cancelOrder('${o.id}')">❌ Cancelar</button><button class="btn btn-accept btn-sm" onclick="event.stopPropagation();markDelivered('${o.id}')">🏁 Entregue</button></div>`;
+        return `<div class="order-card${isNew?' new-order':''}" onclick="showOrderModal('${o.id}')"><div class="order-header"><div class="store-name"><div class="store-icon ${o.storeIcon}">${o.storeName.split(' ')[0].replace(/[🍕🍔🍣🥤🛒]/g,'')}</div>${o.storeName}</div><span class="order-badge ${s.cls}">${s.label}</span></div><div class="address-row"><div class="address-dot pickup"></div>${o.pickupAddr}</div><div class="address-row"><div class="address-dot dropoff"></div>${o.dropoffAddr}</div><div class="order-footer"><span class="order-price">${formatCurrency(o.price)}</span><span class="order-distance">📏 ${o.distance.toFixed(1)} km • ${timeAgo(o.createdAt)}</span></div>${btns}</div>`;
+    }
 
-        let appData = loadData();
-
-        function persist() {
-            saveData(appData);
-            renderAll();
-            updateHeaderAndProfile();
-        }
-
-        // ──────────────────────────────────────
-        //  HELPERS
-        // ──────────────────────────────────────
-        function generateId() {
-            return 'ord_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
-        }
-
-        function formatCurrency(val) {
-            return 'R$ ' + Number(val).toFixed(2).replace('.', ',');
-        }
-
-        function formatDate(iso) {
-            const d = new Date(iso);
-            return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' }) +
-                ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-        }
-
-        function timeAgo(iso) {
-            const diff = Date.now() - new Date(iso).getTime();
-            const mins = Math.floor(diff / 60000);
-            if (mins < 1) return 'agora';
-            if (mins < 60) return mins + 'min atrás';
-            const hours = Math.floor(mins / 60);
-            if (hours < 24) return hours + 'h atrás';
-            return Math.floor(hours / 24) + 'd atrás';
-        }
-
-        function getTodayKey() {
-            return new Date().toISOString().split('T')[0];
-        }
-
-        function getOrdersToday() {
-            const today = getTodayKey();
-            return appData.orders.filter(o => o.createdAt && o.createdAt.startsWith(today));
-        }
-
-        function getActiveOrders() {
-            return appData.orders.filter(o => o.status === 'accepted' || o.status === 'picked_up');
-        }
-
-        function getNewOrders() {
-            return appData.orders.filter(o => o.status === 'new');
-        }
-
-        function getTodayEarnings() {
-            return getOrdersToday()
-                .filter(o => o.status === 'delivered')
-                .reduce((sum, o) => sum + (o.price || 0), 0);
-        }
-
-        function getTodayDeliveries() {
-            return getOrdersToday().filter(o => o.status === 'delivered').length;
-        }
-
-        // ──────────────────────────────────────
-        //  AUDIO
-        // ──────────────────────────────────────
-        function playBeep(freq = 800, duration = 150) {
-            try {
-                const ctx = new(window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'square';
-                osc.frequency.value = freq;
-                gain.gain.value = 0.15;
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start();
-                osc.stop(ctx.currentTime + duration / 1000);
-            } catch (e) { /* ignore */ }
-        }
-
-        function playNotificationSound() {
-            playBeep(880, 100);
-            setTimeout(() => playBeep(1100, 150), 120);
-        }
-
-        function showToast(msg) {
-            const existing = document.querySelector('.toast');
-            if (existing) existing.remove();
-            const t = document.createElement('div');
-            t.className = 'toast';
-            t.textContent = msg;
-            document.body.appendChild(t);
-            setTimeout(() => t.remove(), 2500);
-        }
-
-        // ──────────────────────────────────────
-        //  ONLINE/OFFLINE TOGGLE
-        // ──────────────────────────────────────
-        function toggleOnline() {
-            appData.isOnline = !appData.isOnline;
-            persist();
-            const toggle = document.getElementById('onlineToggle');
-            const label = document.getElementById('onlineLabel');
-            if (appData.isOnline) {
-                toggle.classList.add('online');
-                toggle.classList.remove('offline');
-                label.textContent = 'Online';
-                showToast('🟢 Você está ONLINE');
-            } else {
-                toggle.classList.remove('online');
-                toggle.classList.add('offline');
-                label.textContent = 'Offline';
-                showToast('🔴 Você está OFFLINE');
-            }
-        }
-
-        function updateOnlineUI() {
-            const toggle = document.getElementById('onlineToggle');
-            const label = document.getElementById('onlineLabel');
-            if (appData.isOnline) {
-                toggle.classList.add('online');
-                toggle.classList.remove('offline');
-                label.textContent = 'Online';
-            } else {
-                toggle.classList.remove('online');
-                toggle.classList.add('offline');
-                label.textContent = 'Offline';
-            }
-        }
-
-        // ──────────────────────────────────────
-        //  UPDATE HEADER & PROFILE WITH CURRENT MOTOBOY
-        // ──────────────────────────────────────
-        function updateHeaderAndProfile() {
-            const m = appData.motoboy;
-            document.getElementById('headerMotoboyName').textContent = m.name;
-            document.getElementById('profileMotoboyName').textContent = m.name;
-            document.getElementById('profileMotoboyDetails').textContent = `Moto: ${m.motorcycle} • Placa: ${m.plate}`;
-        }
-
-        // ──────────────────────────────────────
-        //  EDIT PROFILE MODAL
-        // ──────────────────────────────────────
-        function showEditProfileModal() {
-            const m = appData.motoboy;
-            document.getElementById('editMotoboyName').value = m.name;
-            document.getElementById('editMotoboyMotorcycle').value = m.motorcycle;
-            document.getElementById('editMotoboyPlate').value = m.plate;
-            document.getElementById('editProfileModalOverlay').style.display = 'flex';
-        }
-
-        function closeEditProfileModal(e) {
-            if (e && e.target !== document.getElementById('editProfileModalOverlay')) return;
-            document.getElementById('editProfileModalOverlay').style.display = 'none';
-        }
-
-        function submitEditProfile(event) {
-            event.preventDefault();
-            const name = document.getElementById('editMotoboyName').value.trim();
-            const motorcycle = document.getElementById('editMotoboyMotorcycle').value.trim();
-            const plate = document.getElementById('editMotoboyPlate').value.trim();
-            if (!name || !motorcycle || !plate) {
-                showToast('⚠️ Preencha todos os campos');
-                return;
-            }
-            appData.motoboy = { name, motorcycle, plate };
-            persist();
-            showToast('✅ Cadastro atualizado!');
-            document.getElementById('editProfileModalOverlay').style.display = 'none';
-        }
-
-        // ──────────────────────────────────────
-        //  GEOLOCATION FOR MANUAL FORM
-        // ──────────────────────────────────────
-        function getLocation(target) {
-            if (!navigator.geolocation) {
-                showToast('Geolocalização não suportada');
-                return;
-            }
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const lat = position.coords.latitude.toFixed(6);
-                    const lng = position.coords.longitude.toFixed(6);
-                    const coordText = `Lat: ${lat}, Lng: ${lng}`;
-                    if (target === 'pickup') {
-                        document.getElementById('manualPickup').value = coordText;
-                    } else if (target === 'dropoff') {
-                        document.getElementById('manualDropoff').value = coordText;
-                    }
-                    scheduleDistanceUpdate();
-                    showToast(`📍 Localização capturada (${lat}, ${lng})`);
-                },
-                (error) => {
-                    showToast('⚠️ Erro ao obter localização. Verifique as permissões.');
-                }
-            );
-        }
-
-        // ──────────────────────────────────────
-        //  AUTO DISTANCE CALCULATION
-        // ──────────────────────────────────────
-        let distanceTimeout = null;
-
-        function scheduleDistanceUpdate() {
-            clearTimeout(distanceTimeout);
-            distanceTimeout = setTimeout(updateDistance, 800);
-        }
-
-        function haversineDistance(lat1, lon1, lat2, lon2) {
-            const R = 6371;
-            const dLat = (lat2 - lat1) * Math.PI / 180;
-            const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                      Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
-                      Math.sin(dLon/2) * Math.sin(dLon/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c;
-        }
-
-        function parseCoordString(str) {
-            const match = str.match(/Lat:\s*(-?\d+\.?\d*),\s*Lng:\s*(-?\d+\.?\d*)/i);
-            if (match) {
-                return { lat: parseFloat(match[1]), lng: parseFloat(match[2]) };
-            }
-            return null;
-        }
-
-        async function geocodeAddress(address) {
-            const coords = parseCoordString(address);
-            if (coords) return coords;
-            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1`;
-            try {
-                const response = await fetch(url, { headers: { 'User-Agent': 'MotoDashApp/1.0' } });
-                if (!response.ok) return null;
-                const data = await response.json();
-                if (data.length > 0) {
-                    return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
-                }
-                return null;
-            } catch (e) {
-                return null;
-            }
-        }
-
-        async function updateDistance() {
-            const pickup = document.getElementById('manualPickup').value.trim();
-            const dropoff = document.getElementById('manualDropoff').value.trim();
-            const distanceInput = document.getElementById('manualDistance');
-            const statusSpan = document.getElementById('distanceStatus');
-
-            if (!pickup || !dropoff) {
-                statusSpan.innerHTML = '🔍 Preencha os dois endereços';
-                return;
-            }
-
-            statusSpan.innerHTML = '⏳ Buscando coordenadas...';
-            try {
-                const [coords1, coords2] = await Promise.all([geocodeAddress(pickup), geocodeAddress(dropoff)]);
-                if (coords1 && coords2) {
-                    const dist = haversineDistance(coords1.lat, coords1.lng, coords2.lat, coords2.lng);
-                    const roundedDist = Math.round(dist * 10) / 10;
-                    distanceInput.value = roundedDist.toFixed(1);
-                    statusSpan.innerHTML = `✅ Distância calculada: ${roundedDist.toFixed(1)} km`;
-                } else {
-                    statusSpan.innerHTML = '⚠️ Não foi possível geocodificar. Ajuste manualmente.';
-                    distanceInput.removeAttribute('readonly');
-                }
-            } catch (e) {
-                statusSpan.innerHTML = '⚠️ Erro ao calcular. Tente novamente.';
-            }
-        }
-
-        // ──────────────────────────────────────
-        //  MANUAL CORRIDA MODAL
-        // ──────────────────────────────────────
-        function showAddCorridaModal() {
-            if (!appData.isOnline) {
-                showToast('⚠️ Fique online para adicionar corridas');
-                return;
-            }
-            document.getElementById('addCorridaModalOverlay').style.display = 'flex';
-            document.getElementById('addCorridaForm').reset();
-            document.getElementById('manualDistance').value = '3.0';
-            document.getElementById('manualDistance').setAttribute('readonly', true);
-            document.getElementById('manualPrice').value = '12.00';
-            document.getElementById('distanceStatus').innerHTML = '🔍 Calcule automaticamente';
-        }
-
-        function closeAddCorridaModal(e) {
-            if (e && e.target !== document.getElementById('addCorridaModalOverlay')) return;
-            document.getElementById('addCorridaModalOverlay').style.display = 'none';
-        }
-
-        function submitManualCorrida(event) {
-            event.preventDefault();
-            const storeName = document.getElementById('manualStoreName').value.trim();
-            const storeType = document.getElementById('manualStoreType').value;
-            const pickup = document.getElementById('manualPickup').value.trim();
-            const dropoff = document.getElementById('manualDropoff').value.trim();
-            const distance = parseFloat(document.getElementById('manualDistance').value);
-            const price = parseFloat(document.getElementById('manualPrice').value);
-
-            if (!storeName || !pickup || !dropoff || isNaN(distance) || isNaN(price)) {
-                showToast('⚠️ Preencha todos os campos corretamente');
-                return;
-            }
-
-            const iconMap = {
-                pizza: '🍕',
-                burger: '🍔',
-                sushi: '🍣',
-                acai: '🥤',
-                market: '🛒'
-            };
-            const storeIcon = storeType;
-            const displayName = iconMap[storeType] + ' ' + storeName;
-
-            const newOrder = {
-                id: generateId(),
-                storeName: displayName,
-                storeIcon: storeIcon,
-                storeType: storeType,
-                pickupAddr: pickup,
-                dropoffAddr: dropoff,
-                distance: Math.round(distance * 10) / 10,
-                price: Math.round(price * 100) / 100,
-                status: 'new',
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-            };
-
-            appData.orders.unshift(newOrder);
-            persist();
-            playNotificationSound();
-            showToast('📝 Corrida manual adicionada!');
-            document.getElementById('addCorridaModalOverlay').style.display = 'none';
-        }
-
-        // ──────────────────────────────────────
-        //  ORDER ACTIONS
-        // ──────────────────────────────────────
-        function acceptOrder(orderId) {
-            const order = appData.orders.find(o => o.id === orderId);
-            if (!order || order.status !== 'new') return;
-            order.status = 'accepted';
-            order.updatedAt = new Date().toISOString();
-            persist();
-            playBeep(600, 200);
-            showToast('✅ Corrida ACEITA! Vá até a coleta.');
-        }
-
-        function rejectOrder(orderId) {
-            const order = appData.orders.find(o => o.id === orderId);
-            if (!order || order.status !== 'new') return;
-            order.status = 'cancelled';
-            order.updatedAt = new Date().toISOString();
-            persist();
-            showToast('❌ Corrida recusada');
-        }
-
-        function markPickedUp(orderId) {
-            const order = appData.orders.find(o => o.id === orderId);
-            if (!order || order.status !== 'accepted') return;
-            order.status = 'picked_up';
-            order.updatedAt = new Date().toISOString();
-            persist();
-            playBeep(700, 150);
-            showToast('📦 Coletado! Siga para a entrega.');
-        }
-
-        function markDelivered(orderId) {
-            const order = appData.orders.find(o => o.id === orderId);
-            if (!order || order.status !== 'picked_up') return;
-            order.status = 'delivered';
-            order.updatedAt = new Date().toISOString();
-            appData.totalDeliveries++;
-            appData.totalEarnings += order.price;
-            appData.totalRatings++;
-            appData.ratingSum += Math.random() > 0.1 ? 5 : 4;
-            persist();
-            playBeep(1000, 200);
-            showToast('🏁 Entregue! +' + formatCurrency(order.price));
-        }
-
-        function cancelOrder(orderId) {
-            const order = appData.orders.find(o => o.id === orderId);
-            if (!order || (order.status !== 'accepted' && order.status !== 'picked_up')) return;
-            if (!confirm('Tem certeza que deseja cancelar esta entrega?')) return;
-            order.status = 'cancelled';
-            order.updatedAt = new Date().toISOString();
-            persist();
-            showToast('❌ Entrega cancelada');
-        }
-
-        function openMap(address) {
-            const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
-            window.open(url, '_blank');
-        }
-
-        function showOrderModal(orderId) {
-            const order = appData.orders.find(o => o.id === orderId);
-            if (!order) return;
-            const modal = document.getElementById('modalOverlay');
-            const title = document.getElementById('modalTitle');
-            const content = document.getElementById('modalContent');
-
-            const statusMap = { new: 'Nova', accepted: 'Aceita (Coletar)', picked_up: 'Em Rota de Entrega',
-                delivered: 'Entregue', cancelled: 'Cancelada' };
-            title.textContent = 'Detalhes da Corrida';
-
-            const mapButtonHtml = (order.status === 'accepted' || order.status === 'picked_up') ?
-                `<button class="btn-map" onclick="openMap('${order.dropoffAddr.replace(/'/g, "\\'")}')">🗺️ Ver no mapa</button>` :
-                '';
-
-            content.innerHTML = `
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-              <div class="store-icon ${order.storeIcon}" style="width:40px;height:40px;font-size:20px;">${order.storeName.split(' ')[0]}</div>
-              <div><strong>${order.storeName}</strong><br><span style="font-size:11px;color:var(--text3);">${statusMap[order.status] || order.status}</span></div>
-            </div>
-            <div class="address-row"><div class="address-dot pickup"></div><strong>Coleta:</strong> ${order.pickupAddr}</div>
-            <div class="address-row"><div class="address-dot dropoff"></div><strong>Entrega:</strong> ${order.dropoffAddr} ${mapButtonHtml}</div>
-            <div style="display:flex;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);">
-              <span>📏 Distância: <strong>${order.distance.toFixed(1)} km</strong></span>
-              <span>💰 Valor: <strong style="color:var(--green);">${formatCurrency(order.price)}</strong></span>
-            </div>
-            <p style="font-size:10px;color:var(--text3);margin-top:8px;">Criado: ${formatDate(order.createdAt)}</p>
-            ${order.status === 'new' ? `
-            <div class="btn-row" style="margin-top:14px;">
-              <button class="btn btn-reject" onclick="rejectOrder('${order.id}');closeModalDirect();">❌ Recusar</button>
-              <button class="btn btn-accept" onclick="acceptOrder('${order.id}');closeModalDirect();">✅ Aceitar</button>
-            </div>` : ''}
-            ${order.status === 'accepted' ? `
-            <button class="btn btn-primary" style="margin-top:14px;width:100%;" onclick="markPickedUp('${order.id}');closeModalDirect();">📦 Marcar como Coletado</button>` : ''}
-            ${order.status === 'picked_up' ? `
-            <button class="btn btn-accept" style="margin-top:14px;width:100%;" onclick="markDelivered('${order.id}');closeModalDirect();">🏁 Marcar como Entregue</button>` : ''}
-          `;
-            modal.style.display = 'flex';
-        }
-
-        function closeModal(e) {
-            if (e && e.target !== document.getElementById('modalOverlay')) return;
-            document.getElementById('modalOverlay').style.display = 'none';
-        }
-
-        function closeModalDirect() {
-            document.getElementById('modalOverlay').style.display = 'none';
-        }
-
-        // ──────────────────────────────────────
-        //  RENDER
-        // ──────────────────────────────────────
-        function buildOrderCard(order) {
-            const statusMap = {
-                new: { label: 'Nova', cls: 'new' },
-                accepted: { label: 'Aceita', cls: 'progress' },
-                picked_up: { label: 'Em Rota', cls: 'progress' },
-                delivered: { label: 'Entregue', cls: 'done' },
-                cancelled: { label: 'Cancelada', cls: 'cancelled' },
-            };
-            const s = statusMap[order.status] || { label: order.status, cls: '' };
-            const isNew = order.status === 'new';
-
-            let actionButtons = '';
-            if (isNew) {
-                actionButtons = `
-              <div class="btn-row">
-                <button class="btn btn-reject btn-sm" onclick="event.stopPropagation();rejectOrder('${order.id}')">❌ Recusar</button>
-                <button class="btn btn-accept btn-sm" onclick="event.stopPropagation();acceptOrder('${order.id}')">✅ Aceitar</button>
-              </div>`;
-            } else if (order.status === 'accepted') {
-                actionButtons = `
-              <div class="btn-row">
-                <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();cancelOrder('${order.id}')">❌ Cancelar</button>
-                <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();markPickedUp('${order.id}')">📦 Coletado</button>
-              </div>`;
-            } else if (order.status === 'picked_up') {
-                actionButtons = `
-              <div class="btn-row">
-                <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();cancelOrder('${order.id}')">❌ Cancelar</button>
-                <button class="btn btn-accept btn-sm" onclick="event.stopPropagation();markDelivered('${order.id}')">🏁 Entregue</button>
-              </div>`;
-            }
-
-            const cardClass = isNew ? 'order-card new-order' : 'order-card';
-
-            return `
-            <div class="${cardClass}" onclick="showOrderModal('${order.id}')">
-              <div class="order-header">
-                <div class="store-name">
-                  <div class="store-icon ${order.storeIcon}">${order.storeName.split(' ')[0].replace(/[🍕🍔🍣🥤🛒]/g,'')}</div>
-                  ${order.storeName}
+    function renderAll(){
+        updateOnlineUI(); updateHeaderAndProfile();
+        const newOrders=getNewOrders(), activeOrders=getActiveOrders(), todayEarnings=getTodayEarnings(), todayDeliveries=getTodayDeliveries(), avgRating=appData.totalRatings>0?(appData.ratingSum/appData.totalRatings).toFixed(1):'5.0', newCount=newOrders.length;
+        document.getElementById('statEarnings').textContent=formatCurrency(todayEarnings); document.getElementById('statDeliveries').textContent=todayDeliveries+' entregas';
+        document.getElementById('statRating').textContent=avgRating; document.getElementById('statActive').textContent=activeOrders.length; document.getElementById('statCompleted').textContent=todayDeliveries;
+        document.getElementById('badgeNewOrders').textContent=newCount; document.getElementById('badgeNewOrders2').textContent=newCount;
+        const nb=document.getElementById('navBadge'), nbo=document.getElementById('navBadgeOrders'); nb.textContent=newCount; nbo.textContent=newCount;
+        if(newCount>0){ nb.classList.add('show'); nbo.classList.add('show'); } else { nb.classList.remove('show'); nbo.classList.remove('show'); }
+        const nc=document.getElementById('newOrdersContainer'), ac=document.getElementById('activeOrdersContainer'), nc2=document.getElementById('newOrdersContainer2'), ac2=document.getElementById('activeOrdersContainer2');
+        if(newOrders.length===0){ const e='<div class="empty-state"><div class="icon">📭</div><p>Nenhuma nova corrida</p></div>'; nc.innerHTML=e; nc2.innerHTML=e; } else { const c=newOrders.map(buildOrderCard).join(''); nc.innerHTML=c; nc2.innerHTML=c; }
+        if(activeOrders.length===0){ const e='<div class="empty-state"><div class="icon">🛵</div><p>Nenhuma em andamento</p></div>'; ac.innerHTML=e; ac2.innerHTML=e; } else { const c=activeOrders.map(buildOrderCard).join(''); ac.innerHTML=c; ac2.innerHTML=c; }
+        renderHistory();
+        document.getElementById('profileTotalDeliveries').textContent=appData.totalDeliveries; document.getElementById('profileTotalEarnings').textContent=formatCurrency(appData.totalEarnings);
+        // Render saved addresses
+        const savedContainer = document.getElementById('savedAddressesContainer');
+        if (appData.savedAddresses.length === 0) {
+            savedContainer.innerHTML = '<div class="empty-state"><div class="icon">🏪</div><p>Nenhuma loja salva</p></div>';
+        } else {
+            savedContainer.innerHTML = appData.savedAddresses.map((addr, i) => `
+                <div class="saved-item">
+                    <span>${addr.storeName} - ${addr.pickupAddr}</span>
+                    <button class="remove-saved" onclick="removeSavedAddress(${i})">✕</button>
                 </div>
-                <span class="order-badge ${s.cls}">${s.label}</span>
-              </div>
-              <div class="address-row"><div class="address-dot pickup"></div> ${order.pickupAddr}</div>
-              <div class="address-row"><div class="address-dot dropoff"></div> ${order.dropoffAddr}</div>
-              <div class="order-footer">
-                <span class="order-price">${formatCurrency(order.price)}</span>
-                <span class="order-distance">📏 ${order.distance.toFixed(1)} km • ${timeAgo(order.createdAt)}</span>
-              </div>
-              ${actionButtons}
-            </div>`;
+            `).join('');
         }
+        updateSavedStoreSelect();
+    }
 
-        function renderAll() {
-            updateOnlineUI();
-            updateHeaderAndProfile();
-            const newOrders = getNewOrders();
-            const activeOrders = getActiveOrders();
-            const todayEarnings = getTodayEarnings();
-            const todayDeliveries = getTodayDeliveries();
-            const avgRating = appData.totalRatings > 0 ? (appData.ratingSum / appData.totalRatings).toFixed(1) : '5.0';
-            const newCount = newOrders.length;
+    let historyFilter='all';
+    function filterHistory(f,el){ historyFilter=f; document.querySelectorAll('#screenHistory .chip').forEach(c=>c.classList.remove('active')); if(el)el.classList.add('active'); renderHistory(); }
+    function renderHistory(){
+        const container=document.getElementById('historyContainer');
+        let orders=[...appData.orders].sort((a,b)=>new Date(b.updatedAt)-new Date(a.updatedAt));
+        if(historyFilter==='delivered') orders=orders.filter(o=>o.status==='delivered');
+        if(historyFilter==='cancelled') orders=orders.filter(o=>o.status==='cancelled');
+        orders=orders.filter(o=>o.status==='delivered'||o.status==='cancelled');
+        if(orders.length===0){ container.innerHTML='<div class="empty-state"><div class="icon">📋</div><p>Nenhum histórico</p></div>'; return; }
+        container.innerHTML=orders.map(buildOrderCard).join('');
+    }
 
-            document.getElementById('statEarnings').textContent = formatCurrency(todayEarnings);
-            document.getElementById('statDeliveries').textContent = todayDeliveries + ' entregas';
-            document.getElementById('statRating').textContent = avgRating;
-            document.getElementById('statActive').textContent = activeOrders.length;
-            document.getElementById('statCompleted').textContent = todayDeliveries;
+    function switchScreen(id,el){
+        document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+        document.getElementById(id).classList.add('active'); if(el)el.classList.add('active'); document.getElementById('mainContent').scrollTop=0; renderAll();
+    }
 
-            document.getElementById('badgeNewOrders').textContent = newCount;
-            document.getElementById('badgeNewOrders2').textContent = newCount;
-            const navBadge = document.getElementById('navBadge');
-            const navBadgeOrders = document.getElementById('navBadgeOrders');
-            navBadge.textContent = newCount;
-            navBadgeOrders.textContent = newCount;
-            if (newCount > 0) {
-                navBadge.classList.add('show');
-                navBadgeOrders.classList.add('show');
-            } else {
-                navBadge.classList.remove('show');
-                navBadgeOrders.classList.remove('show');
-            }
+    function resetAllData(){ if(!confirm('Apagar TODOS os dados?'))return; appData={orders:[],isOnline:true,totalEarnings:0,totalDeliveries:0,totalRatings:0,ratingSum:0,motoboy:{name:'Carlos Motoboy',motorcycle:'Honda CG 160',plate:'ABC-1234'},savedAddresses:[]}; persist(); historyFilter='all'; document.querySelectorAll('#screenHistory .chip').forEach((c,i)=>c.classList.toggle('active',i===0)); showToast('🗑️ Dados limpos!'); }
 
-            const newContainer = document.getElementById('newOrdersContainer');
-            const activeContainer = document.getElementById('activeOrdersContainer');
-            const newContainer2 = document.getElementById('newOrdersContainer2');
-            const activeContainer2 = document.getElementById('activeOrdersContainer2');
+    // PWA
+    function setupPWA(){
+        const manifest={name:'MotoDash',short_name:'MotoDash',start_url:'.',display:'standalone',background_color:'#0f0f13',theme_color:'#ff6b35',icons:[{src:'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192"><rect width="192" height="192" rx="32" fill="#ff6b35"/><text x="96" y="120" font-size="100" text-anchor="middle" fill="white">🏍️</text></svg>'),sizes:'192x192',type:'image/svg+xml'}]};
+        const link=document.createElement('link'); link.rel='manifest'; link.href=URL.createObjectURL(new Blob([JSON.stringify(manifest)],{type:'application/json'})); document.head.appendChild(link);
+        if('serviceWorker' in navigator){ const swBlob=new Blob(["self.addEventListener('fetch',e=>{})"],{type:'application/javascript'}); navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{}); }
+    }
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installButtonContainer').style.display='flex'; });
+    function installApp(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(r=>{ if(r.outcome==='accepted')showToast('✅ Instalado!'); deferredPrompt=null; document.getElementById('installButtonContainer').style.display='none'; }); } else showToast('Instalação indisponível.'); }
 
-            if (newOrders.length === 0) {
-                const empty = '<div class="empty-state"><div class="icon">📭</div><p>Nenhuma nova corrida</p><p style="font-size:11px;">Adicione uma corrida manualmente</p></div>';
-                newContainer.innerHTML = empty;
-                newContainer2.innerHTML = empty;
-            } else {
-                const cards = newOrders.map(o => buildOrderCard(o)).join('');
-                newContainer.innerHTML = cards;
-                newContainer2.innerHTML = cards;
-            }
-
-            if (activeOrders.length === 0) {
-                const empty2 = '<div class="empty-state"><div class="icon">🛵</div><p>Nenhuma entrega em andamento</p></div>';
-                activeContainer.innerHTML = empty2;
-                activeContainer2.innerHTML = empty2;
-            } else {
-                const cards = activeOrders.map(o => buildOrderCard(o)).join('');
-                activeContainer.innerHTML = cards;
-                activeContainer2.innerHTML = cards;
-            }
-
-            renderHistory();
-
-            document.getElementById('profileTotalDeliveries').textContent = appData.totalDeliveries;
-            document.getElementById('profileTotalEarnings').textContent = formatCurrency(appData.totalEarnings);
-        }
-
-        let historyFilter = 'all';
-
-        function filterHistory(filter, el) {
-            historyFilter = filter;
-            document.querySelectorAll('#screenHistory .chip').forEach(c => c.classList.remove('active'));
-            if (el) el.classList.add('active');
-            renderHistory();
-        }
-
-        function renderHistory() {
-            const container = document.getElementById('historyContainer');
-            let orders = [...appData.orders].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
-            if (historyFilter === 'delivered') orders = orders.filter(o => o.status === 'delivered');
-            if (historyFilter === 'cancelled') orders = orders.filter(o => o.status === 'cancelled');
-            orders = orders.filter(o => o.status === 'delivered' || o.status === 'cancelled');
-
-            if (orders.length === 0) {
-                container.innerHTML = '<div class="empty-state"><div class="icon">📋</div><p>Nenhum histórico encontrado</p></div>';
-                return;
-            }
-            container.innerHTML = orders.map(o => buildOrderCard(o)).join('');
-        }
-
-        function switchScreen(screenId, navEl) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            const screen = document.getElementById(screenId);
-            if (screen) screen.classList.add('active');
-            if (navEl) navEl.classList.add('active');
-            document.getElementById('mainContent').scrollTop = 0;
-            renderAll();
-        }
-
-        function resetAllData() {
-            if (!confirm('Tem certeza? Isso apagará TODOS os dados permanentemente.')) return;
-            appData = {
-                orders: [],
-                isOnline: true,
-                totalEarnings: 0,
-                totalDeliveries: 0,
-                totalRatings: 0,
-                ratingSum: 0,
-                motoboy: { name: 'Carlos Motoboy', motorcycle: 'Honda CG 160', plate: 'ABC-1234' }
-            };
-            persist();
-            historyFilter = 'all';
-            document.querySelectorAll('#screenHistory .chip').forEach((c, i) => c.classList.toggle('active', i === 0));
-            showToast('🗑️ Dados limpos!');
-        }
-
-        // ──────────────────────────────────────
-        //  INIT
-        // ──────────────────────────────────────
-        function init() {
-            setupPWA();
-            updateOnlineUI();
-            updateHeaderAndProfile();
-            renderAll();
-            document.getElementById('modalOverlay').addEventListener('click', closeModal);
-            document.getElementById('addCorridaModalOverlay').addEventListener('click', closeAddCorridaModal);
-            document.getElementById('editProfileModalOverlay').addEventListener('click', closeEditProfileModal);
-            console.log('🏍️ MotoDash iniciado! PWA pronto para instalar na tela inicial.');
-        }
-
-        init();
-
-        window.addEventListener('beforeunload', () => {
-            saveData(appData);
-        });
-
-        setInterval(() => {
-            saveData(appData);
-        }, 5000);
-    </script>
+    function init(){
+        setupPWA();
+        updateOnlineUI(); updateHeaderAndProfile(); renderAll();
+        document.getElementById('modalOverlay').addEventListener('click',closeModal);
+        document.getElementById('addCorridaModalOverlay').addEventListener('click',closeAddCorridaModal);
+        document.getElementById('editProfileModalOverlay').addEventListener('click',closeEditProfileModal);
+        console.log('🏍️ MotoDash com salvamento de endereços.');
+    }
+    init();
+    window.addEventListener('beforeunload',()=>saveData(appData));
+    setInterval(()=>saveData(appData),5000);
+</script>
 </body>
 </html>
