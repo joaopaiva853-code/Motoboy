@@ -130,6 +130,12 @@
             transition: var(--transition); text-decoration: none; margin-left: 8px;
         }
         .btn-whatsapp-sm:hover { background: #1ebc5a; }
+        .btn-delete {
+            background: transparent; color: var(--red); border: 1px solid var(--red); padding: 4px 10px;
+            border-radius: 15px; font-size: 11px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;
+            transition: var(--transition);
+        }
+        .btn-delete:hover { background: rgba(255,61,61,0.1); }
 
         .empty-state { text-align: center; padding: 40px 20px; color: var(--text3); }
         .empty-state .icon { font-size: 56px; margin-bottom: 12px; opacity: 0.5; }
@@ -389,6 +395,13 @@
         showToast('🗑️ Destino removido.');
     }
 
+    function deleteOrder(id) {
+        if (!confirm('Excluir esta corrida permanentemente?')) return;
+        appData.orders = appData.orders.filter(o => o.id !== id);
+        persist();
+        showToast('🗑️ Corrida excluída.');
+    }
+
     function showAddCorridaModal(){
         if(!appData.isOnline){ showToast('⚠️ Fique online para adicionar corridas'); return; }
         document.getElementById('addCorridaModalOverlay').style.display='flex';
@@ -448,20 +461,25 @@
             ${o.status==='new'?`<div class="btn-row" style="margin-top:14px;"><button class="btn btn-reject" onclick="rejectOrder('${o.id}');closeModalDirect();">❌ Recusar</button><button class="btn btn-accept" onclick="acceptOrder('${o.id}');closeModalDirect();">✅ Aceitar</button></div>`:''}
             ${o.status==='accepted'?`<button class="btn btn-primary" style="margin-top:14px;width:100%;" onclick="markPickedUp('${o.id}');closeModalDirect();">📦 Coletado</button>`:''}
             ${o.status==='picked_up'?`<button class="btn btn-accept" style="margin-top:14px;width:100%;" onclick="markDelivered('${o.id}');closeModalDirect();">🏁 Entregue</button>`:''}
+            ${o.status==='delivered'||o.status==='cancelled'?`<button class="btn btn-delete" style="margin-top:8px;" onclick="deleteOrder('${o.id}');closeModalDirect();">🗑️ Excluir</button>`:''}
         `;
         modal.style.display='flex';
     }
     function closeModal(e){ if(e&&e.target!==document.getElementById('modalOverlay'))return; document.getElementById('modalOverlay').style.display='none'; }
     function closeModalDirect(){ document.getElementById('modalOverlay').style.display='none'; }
 
-    function buildOrderCard(o){
+    function buildOrderCard(o, showDelete = false){
         const s={new:{label:'Nova',cls:'new'},accepted:{label:'Aceita',cls:'progress'},picked_up:{label:'Em Rota',cls:'progress'},delivered:{label:'Entregue',cls:'done'},cancelled:{label:'Cancelada',cls:'cancelled'}}[o.status]||{label:o.status,cls:''};
         const isNew=o.status==='new';
         const whatsappBtn = o.clientPhone ? `<button class="btn-whatsapp-sm" onclick="event.stopPropagation();openWhatsApp('${o.clientPhone.replace(/'/g,"\\'")}')">💬</button>` : '';
         let btns='';
-        if(isNew) btns=`<div class="btn-row"><button class="btn btn-reject btn-sm" onclick="event.stopPropagation();rejectOrder('${o.id}')">❌ Recusar</button><button class="btn btn-accept btn-sm" onclick="event.stopPropagation();acceptOrder('${o.id}')">✅ Aceitar</button></div>`;
-        else if(o.status==='accepted') btns=`<div class="btn-row"><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();cancelOrder('${o.id}')">❌ Cancelar</button><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();markPickedUp('${o.id}')">📦 Coletado</button></div>`;
-        else if(o.status==='picked_up') btns=`<div class="btn-row"><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();cancelOrder('${o.id}')">❌ Cancelar</button><button class="btn btn-accept btn-sm" onclick="event.stopPropagation();markDelivered('${o.id}')">🏁 Entregue</button></div>`;
+        if(!showDelete) {
+            if(isNew) btns=`<div class="btn-row"><button class="btn btn-reject btn-sm" onclick="event.stopPropagation();rejectOrder('${o.id}')">❌ Recusar</button><button class="btn btn-accept btn-sm" onclick="event.stopPropagation();acceptOrder('${o.id}')">✅ Aceitar</button></div>`;
+            else if(o.status==='accepted') btns=`<div class="btn-row"><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();cancelOrder('${o.id}')">❌ Cancelar</button><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();markPickedUp('${o.id}')">📦 Coletado</button></div>`;
+            else if(o.status==='picked_up') btns=`<div class="btn-row"><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();cancelOrder('${o.id}')">❌ Cancelar</button><button class="btn btn-accept btn-sm" onclick="event.stopPropagation();markDelivered('${o.id}')">🏁 Entregue</button></div>`;
+        } else {
+            btns = `<div style="margin-top:8px;display:flex;justify-content:flex-end;"><button class="btn btn-delete" onclick="event.stopPropagation();deleteOrder('${o.id}')">🗑️ Excluir</button></div>`;
+        }
         return `<div class="order-card${isNew?' new-order':''}" onclick="showOrderModal('${o.id}')"><div class="order-header"><div class="store-name"><div class="store-icon ${o.storeIcon}">${o.storeName.split(' ')[0].replace(/[🍕🍔🍣🥤🛒]/g,'')}</div>${o.storeName}</div><span class="order-badge ${s.cls}">${s.label}</span></div>${o.clientName ? `<div style="font-size:12px;color:var(--text2);margin-bottom:4px;">👤 ${o.clientName} ${whatsappBtn}</div>` : ''}<div class="address-row"><div class="address-dot dropoff"></div>${o.dropoffAddr}</div><div class="order-footer"><span class="order-price">${formatCurrency(o.price)}</span><span class="order-distance">📏 ${o.distance.toFixed(1)} km • ${timeAgo(o.createdAt)}</span></div>${btns}</div>`;
     }
 
@@ -474,8 +492,8 @@
         const nb=document.getElementById('navBadge'), nbo=document.getElementById('navBadgeOrders'); nb.textContent=newCount; nbo.textContent=newCount;
         if(newCount>0){ nb.classList.add('show'); nbo.classList.add('show'); } else { nb.classList.remove('show'); nbo.classList.remove('show'); }
         const nc=document.getElementById('newOrdersContainer'), ac=document.getElementById('activeOrdersContainer'), nc2=document.getElementById('newOrdersContainer2'), ac2=document.getElementById('activeOrdersContainer2');
-        if(newOrders.length===0){ const e='<div class="empty-state"><div class="icon">📭</div><p>Nenhuma nova corrida</p></div>'; nc.innerHTML=e; nc2.innerHTML=e; } else { const c=newOrders.map(buildOrderCard).join(''); nc.innerHTML=c; nc2.innerHTML=c; }
-        if(activeOrders.length===0){ const e='<div class="empty-state"><div class="icon">🛵</div><p>Nenhuma em andamento</p></div>'; ac.innerHTML=e; ac2.innerHTML=e; } else { const c=activeOrders.map(buildOrderCard).join(''); ac.innerHTML=c; ac2.innerHTML=c; }
+        if(newOrders.length===0){ const e='<div class="empty-state"><div class="icon">📭</div><p>Nenhuma nova corrida</p></div>'; nc.innerHTML=e; nc2.innerHTML=e; } else { const c=newOrders.map(o=>buildOrderCard(o)).join(''); nc.innerHTML=c; nc2.innerHTML=c; }
+        if(activeOrders.length===0){ const e='<div class="empty-state"><div class="icon">🛵</div><p>Nenhuma em andamento</p></div>'; ac.innerHTML=e; ac2.innerHTML=e; } else { const c=activeOrders.map(o=>buildOrderCard(o)).join(''); ac.innerHTML=c; ac2.innerHTML=c; }
         renderHistory();
         document.getElementById('profileTotalDeliveries').textContent=appData.totalDeliveries; document.getElementById('profileTotalEarnings').textContent=formatCurrency(appData.totalEarnings);
         const savedContainer = document.getElementById('savedAddressesContainer');
@@ -501,7 +519,7 @@
         if(historyFilter==='cancelled') orders=orders.filter(o=>o.status==='cancelled');
         orders=orders.filter(o=>o.status==='delivered'||o.status==='cancelled');
         if(orders.length===0){ container.innerHTML='<div class="empty-state"><div class="icon">📋</div><p>Nenhum histórico</p></div>'; return; }
-        container.innerHTML=orders.map(buildOrderCard).join('');
+        container.innerHTML=orders.map(o=>buildOrderCard(o, true)).join('');
     }
 
     function switchScreen(id,el){
@@ -527,7 +545,7 @@
         document.getElementById('modalOverlay').addEventListener('click',closeModal);
         document.getElementById('addCorridaModalOverlay').addEventListener('click',closeAddCorridaModal);
         document.getElementById('editProfileModalOverlay').addEventListener('click',closeEditProfileModal);
-        console.log('🏍️ MotoDash com WhatsApp e nome do cliente.');
+        console.log('🏍️ MotoDash com exclusão de corridas no histórico.');
     }
     init();
     window.addEventListener('beforeunload',()=>saveData(appData));
