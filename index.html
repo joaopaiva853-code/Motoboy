@@ -2,584 +2,688 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#0f0f1a">
-    <title>MotoDash Pro</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>MotoDelivery Pro - Gestão de Corridas</title>
+    <!-- Font Awesome 6 (ícones para ações visuais) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        :root {
-            --gradient-start: #1a1a2e;
-            --gradient-end: #16213e;
-            --surface: rgba(255, 255, 255, 0.05);
-            --surface2: rgba(255, 255, 255, 0.08);
-            --primary: #ff6b35;
-            --primary-light: #ff8c5a;
-            --accent: #e94560;
-            --green: #00e676;
-            --green-dark: #00c853;
-            --red: #ff3d3d;
-            --text: #f0f0f5;
-            --text2: #a0a0b8;
-            --text3: #6b6b80;
-            --border: rgba(255, 255, 255, 0.08);
-            --radius: 20px;
-            --radius-sm: 14px;
-            --radius-xs: 10px;
-            --nav-height: 70px;
-            --header-height: 60px;
-            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
-            --glass-bg: rgba(255, 255, 255, 0.04);
-            --glass-border: rgba(255, 255, 255, 0.08);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
-            color: var(--text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            -webkit-user-select: none;
+            font-family: system-ui, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            background: #f4f7fc;
+            padding: 16px 12px 40px;
+            color: #1e2a3e;
         }
 
-        .phone-frame {
-            width: 100%;
-            max-width: 420px;
-            height: 100vh;
-            max-height: 900px;
-            background: transparent;
-            position: relative;
+        /* container central com max-width para telas grandes, mas confortável em mobile */
+        .app-container {
+            max-width: 650px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: var(--shadow-md), 0 0 0 2px rgba(255, 255, 255, 0.05);
-            border-radius: 0;
-            backdrop-filter: blur(10px);
+            padding: 20px 18px 28px;
         }
 
-        @media (min-width: 440px) {
-            .phone-frame {
-                border-radius: 32px;
-                height: 92vh;
-                max-height: 850px;
-            }
-        }
-
+        /* cabeçalho */
         .header {
-            background: rgba(20, 20, 35, 0.7);
-            backdrop-filter: blur(16px);
-            padding: 12px 18px;
             display: flex;
             align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #ffe2c4;
+            padding-bottom: 12px;
+        }
+        .header i {
+            font-size: 2.4rem;
+            color: #f97316;
+            background: #fff0e6;
+            padding: 10px;
+            border-radius: 24px;
+        }
+        .header h1 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #ea580c;
+            letter-spacing: -0.3px;
+        }
+        .header span {
+            font-size: 0.8rem;
+            background: #fef3c7;
+            padding: 4px 10px;
+            border-radius: 40px;
+            margin-left: auto;
+            font-weight: 500;
+            color: #b45309;
+        }
+
+        /* cards de resumo */
+        .stats {
+            display: flex;
             justify-content: space-between;
-            z-index: 100;
-            border-bottom: 1px solid var(--border);
-            min-height: var(--header-height);
-            flex-shrink: 0;
-            border-radius: 0;
+            gap: 12px;
+            margin-bottom: 28px;
         }
-        .header-left { display: flex; align-items: center; gap: 12px; }
-        .avatar {
-            width: 42px; height: 42px; border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 18px; color: #fff;
-            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
-            overflow: hidden;
-        }
-        .avatar img {
-            width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
-        }
-        .header-info .greeting { font-size: 11px; color: var(--text2); line-height: 1; letter-spacing: 0.5px; }
-        .header-info .name { font-weight: 700; font-size: 16px; line-height: 1.3; color: #fff; }
-        .online-toggle {
-            display: flex; align-items: center; gap: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px 16px; border-radius: 28px; cursor: pointer; font-size: 13px;
-            font-weight: 600; transition: var(--transition);
-            border: 2px solid transparent;
-            backdrop-filter: blur(4px);
-        }
-        .online-toggle.online { border-color: var(--green); color: var(--green); background: rgba(0, 230, 118, 0.1); }
-        .online-toggle.offline { border-color: var(--text3); color: var(--text2); }
-        .online-dot {
-            width: 10px; height: 10px; border-radius: 50%; background: var(--text3); transition: var(--transition);
-        }
-        .online-toggle.online .online-dot {
-            background: var(--green);
-            box-shadow: 0 0 12px var(--green), 0 0 24px var(--green);
-            animation: pulse-dot 1.5s infinite;
-        }
-        @keyframes pulse-dot { 0%,100%{ box-shadow: 0 0 6px var(--green); } 50%{ box-shadow: 0 0 18px var(--green), 0 0 30px var(--green); } }
-
-        .main-content {
-            flex: 1; overflow-y: auto; padding: 14px 16px;
-            display: flex; flex-direction: column; gap: 16px;
-            scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
-            padding-bottom: 85px;
-        }
-        .main-content::-webkit-scrollbar { width: 0; }
-
-        .screen { display: none; flex-direction: column; gap: 16px; animation: fadeSlideIn 0.3s ease; }
-        .screen.active { display: flex; }
-        @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .stat-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(8px);
-            border-radius: var(--radius-sm);
-            padding: 16px;
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
+            background: #fef9f0;
+            flex: 1;
+            border-radius: 24px;
+            padding: 12px 8px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            border: 1px solid #ffedd5;
         }
-        .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-        .stat-card .stat-label {
-            font-size: 11px; color: var(--text2); text-transform: uppercase;
-            letter-spacing: 0.8px; margin-bottom: 6px; font-weight: 600;
+        .stat-card i {
+            font-size: 1.6rem;
+            color: #f97316;
+            margin-bottom: 6px;
+            display: inline-block;
         }
-        .stat-card .stat-value { font-size: 24px; font-weight: 700; }
-        .stat-card .stat-value.green { color: var(--green); }
-        .stat-card .stat-value.primary { color: var(--primary); }
-        .stat-card .stat-sub { font-size: 11px; color: var(--text3); margin-top: 4px; }
-
-        .section-title {
-            font-size: 13px; font-weight: 700; color: var(--text2);
-            text-transform: uppercase; letter-spacing: 1px;
-            display: flex; align-items: center; gap: 8px;
+        .stat-card .label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #6b4e2e;
+            text-transform: uppercase;
         }
-        .section-title::after {
-            content: ''; flex: 1; height: 1px;
-            background: linear-gradient(90deg, var(--primary), transparent);
+        .stat-card .value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1e293b;
+            line-height: 1.2;
         }
-        .badge-count {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: #fff; font-size: 11px; padding: 2px 10px;
-            border-radius: 14px; font-weight: 700; letter-spacing: 0.5px;
+        .stat-card .small-value {
+            font-size: 1.1rem;
         }
 
-        .order-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius);
-            padding: 16px;
-            border: 1px solid var(--glass-border);
-            transition: var(--transition);
+        /* formulário de edição / nova corrida */
+        .form-card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 18px 16px;
+            margin-bottom: 28px;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.04);
+            border: 1px solid #ffe0c0;
+        }
+        .form-title {
+            font-weight: 600;
+            margin-bottom: 14px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #c2410c;
+        }
+        .input-group {
+            margin-bottom: 14px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #475569;
+        }
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 1rem;
+            border-radius: 20px;
+            border: 1.5px solid #e2e8f0;
+            background: #fefefe;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #f97316;
+            box-shadow: 0 0 0 3px rgba(249,115,22,0.2);
+        }
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        button {
+            background: #f97316;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
+            transition: 0.2s;
+            flex: 1;
+            font-family: inherit;
         }
-        .order-card:active { transform: scale(0.98); }
-        .order-card.new-order {
-            border-color: var(--primary);
-            background: rgba(255, 107, 53, 0.08);
-            animation: glowBorder 2.5s infinite;
-        }
-        @keyframes glowBorder {
-            0%,100%{ box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.15); }
-            50%{ box-shadow: 0 0 0 12px rgba(255, 107, 53, 0); }
-        }
-        .order-card .order-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-        .order-card .store-name { font-weight: 700; font-size: 16px; display: flex; align-items: center; gap: 8px; }
-        .store-icon {
-            width: 36px; height: 36px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 18px; flex-shrink: 0;
-            background: rgba(255,255,255,0.05);
-        }
-        .store-icon.pizza { background: linear-gradient(135deg, #e74c3c, #c0392b); }
-        .store-icon.burger { background: linear-gradient(135deg, #f39c12, #e67e22); }
-        .store-icon.sushi { background: linear-gradient(135deg, #2ecc71, #27ae60); }
-        .store-icon.acai { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
-        .store-icon.market { background: linear-gradient(135deg, #3498db, #2980b9); }
-        .order-badge {
-            font-size: 10px; padding: 4px 12px; border-radius: 14px;
-            font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-            white-space: nowrap;
-            backdrop-filter: blur(4px);
-        }
-        .order-badge.new { background: rgba(255, 107, 53, 0.15); color: #ff8c5a; }
-        .order-badge.progress { background: rgba(0, 230, 118, 0.15); color: var(--green); }
-        .order-badge.done { background: rgba(0, 200, 83, 0.15); color: #00c853; }
-        .order-badge.cancelled { background: rgba(255, 61, 61, 0.15); color: #ff6b6b; }
-        .address-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text2); margin-bottom: 6px; }
-        .address-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-        .address-dot.dropoff { background: var(--red); }
-        .order-footer {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-top: 12px; padding-top: 12px;
-            border-top: 1px solid var(--border);
-        }
-        .order-price { font-weight: 800; font-size: 20px; color: var(--green); }
-        .order-distance { font-size: 12px; color: var(--text3); display: flex; align-items: center; gap: 4px; }
-        .btn-row { display: flex; gap: 8px; margin-top: 12px; }
-        .btn {
-            padding: 12px 18px; border-radius: 28px; font-weight: 700; font-size: 13px;
-            cursor: pointer; border: none; transition: var(--transition); text-align: center;
-            flex: 1; letter-spacing: 0.3px; position: relative; overflow: hidden;
-        }
-        .btn::after {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255,255,255,0.1); opacity: 0; transition: opacity 0.2s;
-        }
-        .btn:active::after { opacity: 1; }
-        .btn-accept {
-            background: linear-gradient(135deg, #00e676, #00c853);
-            color: #000; box-shadow: 0 4px 12px rgba(0, 230, 118, 0.3);
-        }
-        .btn-reject {
-            background: transparent; color: var(--red); border: 2px solid var(--red);
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: #fff; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25);
+        button i {
+            font-size: 0.9rem;
         }
         .btn-secondary {
-            background: rgba(255,255,255,0.08); color: var(--text);
-            border: 1px solid var(--border);
+            background: #e2e8f0;
+            color: #1e293b;
         }
-        .btn-sm { padding: 8px 14px; font-size: 11px; flex: unset; border-radius: 22px; }
+        .btn-danger {
+            background: #ef4444;
+        }
         .btn-outline {
-            background: transparent; border: 2px solid var(--green); color: var(--green);
+            background: transparent;
+            border: 1.5px solid #f97316;
+            color: #f97316;
         }
-        .btn-map {
-            background: rgba(255, 107, 53, 0.1); border: 1px solid var(--primary);
-            color: var(--primary); display: inline-flex; align-items: center; gap: 4px;
-            font-size: 12px; padding: 8px 14px; border-radius: 22px; cursor: pointer;
-            transition: var(--transition);
+        .btn-outline:hover {
+            background: #fff0e6;
         }
-        .btn-whatsapp {
-            background: linear-gradient(135deg, #25D366, #1ebc5a);
-            color: #fff; border: none; display: inline-flex; align-items: center; gap: 6px;
-            padding: 10px 16px; border-radius: 24px; font-size: 13px; font-weight: 600;
-            cursor: pointer; transition: var(--transition); box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
-        }
-        .btn-whatsapp-sm {
-            background: linear-gradient(135deg, #25D366, #1ebc5a);
-            color: #fff; border: none; display: inline-flex; align-items: center; gap: 4px;
-            padding: 6px 12px; border-radius: 16px; font-size: 11px; font-weight: 600;
-            cursor: pointer; transition: var(--transition); margin-left: 8px;
-        }
-        .btn-delete {
-            background: transparent; color: var(--red); border: 1px solid var(--red);
-            padding: 6px 12px; border-radius: 16px; font-size: 11px; cursor: pointer;
-            display: inline-flex; align-items: center; gap: 4px;
+        button:active {
+            transform: scale(0.97);
         }
 
-        .empty-state { text-align: center; padding: 40px 20px; color: var(--text3); }
-        .empty-state .icon { font-size: 56px; margin-bottom: 12px; opacity: 0.5; }
-        .empty-state p { font-size: 14px; margin-bottom: 4px; }
+        /* filtros */
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            background: #f1f5f9;
+            padding: 6px;
+            border-radius: 48px;
+        }
+        .filter-btn {
+            background: transparent;
+            color: #334155;
+            flex: 1;
+            padding: 8px 0;
+            border-radius: 40px;
+            font-size: 0.8rem;
+        }
+        .filter-btn.active {
+            background: #f97316;
+            color: white;
+            box-shadow: 0 2px 8px rgba(249,115,22,0.3);
+        }
 
-        .bottom-nav {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            background: rgba(20, 20, 35, 0.8);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border);
-            display: flex; z-index: 200; height: var(--nav-height); flex-shrink: 0;
-            padding-bottom: env(safe-area-inset-bottom, 0);
+        /* lista de corridas */
+        .rides-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 8px;
+            max-height: 520px;
+            overflow-y: auto;
+            padding-right: 4px;
         }
-        .nav-item {
-            flex: 1; display: flex; flex-direction: column; align-items: center;
-            justify-content: center; cursor: pointer; transition: var(--transition);
-            gap: 4px; color: var(--text3); font-size: 10px; font-weight: 600;
-            position: relative;
+        .ride-card {
+            background: white;
+            border-radius: 24px;
+            padding: 16px;
+            border-left: 6px solid #f97316;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.1s ease;
         }
-        .nav-item.active { color: var(--primary); }
-        .nav-item .nav-icon { font-size: 20px; transition: var(--transition); }
-        .nav-item.active .nav-icon { transform: translateY(-2px); }
-        .nav-item .nav-badge {
-            position: absolute; top: 6px; right: 50%; transform: translateX(18px);
-            background: linear-gradient(135deg, var(--red), var(--accent));
-            color: #fff; font-size: 10px; font-weight: 700;
-            width: 18px; height: 18px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            display: none; box-shadow: 0 2px 6px rgba(233, 69, 96, 0.4);
+        .ride-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
         }
-        .nav-item .nav-badge.show { display: flex; }
+        .client-name {
+            font-weight: 800;
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .status-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 40px;
+            background: #f1f5f9;
+            color: #334155;
+        }
+        .status-Pendente { background: #fed7aa; color: #9b4a0c; }
+        .status-Emrota { background: #bfdbfe; color: #1e40af; }
+        .status-Entregue { background: #bbf7d0; color: #166534; }
 
-        .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-            z-index: 500; display: flex; align-items: flex-end; justify-content: center;
-            animation: fadeIn 0.2s ease;
+        .ride-details {
+            font-size: 0.85rem;
+            color: #475569;
+            margin: 10px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .modal-sheet {
-            background: linear-gradient(145deg, #1e1e32, #16162a);
-            border-radius: 24px 24px 0 0; width: 100%; max-width: 420px;
-            padding: 20px 18px 30px; animation: slideUp 0.3s ease;
-            max-height: 85vh; overflow-y: auto; box-shadow: 0 -4px 30px rgba(0,0,0,0.5);
+        .ride-details i {
+            width: 22px;
+            color: #f97316;
         }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        .modal-handle { width: 36px; height: 4px; background: var(--text3); border-radius: 2px; margin: 0 auto 16px; }
-        .modal-title { font-weight: 700; font-size: 20px; margin-bottom: 18px; text-align: center; }
-        .form-group { margin-bottom: 14px; }
-        .form-group label { display: block; font-size: 12px; color: var(--text2); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .form-group input, .form-group select {
-            width: 100%; padding: 14px; border-radius: var(--radius-xs);
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-            color: #fff; font-size: 14px; outline: none; transition: var(--transition);
+        .ride-value {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #0f172a;
+            margin-top: 6px;
         }
-        .form-group input:focus, .form-group select:focus {
-            border-color: var(--primary); box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
         }
-        .form-group select {
-            appearance: none;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M7 10l5 5 5-5z"/></svg>');
-            background-repeat: no-repeat; background-position: right 14px center; background-size: 16px;
+        .btn-group button {
+            flex: 1;
+            padding: 8px 0;
+            font-size: 0.75rem;
+            background: #f1f5f9;
+            color: #1e293b;
         }
-        .location-btn {
-            background: rgba(255,107,53,0.1); color: var(--primary);
-            border: 1px solid var(--primary); padding: 8px 14px;
-            border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer;
-            margin-top: 6px; display: inline-flex; align-items: center; gap: 4px;
+        .btn-group .btn-primary {
+            background: #f97316;
+            color: white;
         }
-        .distance-auto { font-size: 11px; color: var(--green); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
-        .saved-item {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 12px; background: rgba(255,255,255,0.03); border-radius: var(--radius-xs);
-            margin-top: 8px; cursor: pointer; border: 1px solid var(--border);
+        .btn-group .btn-warning {
+            background: #facc15;
+            color: #422006;
         }
-        .saved-item .remove-saved { background: none; border: none; color: var(--red); font-size: 18px; cursor: pointer; }
+        .empty-message {
+            text-align: center;
+            padding: 40px 20px;
+            background: #f8fafc;
+            border-radius: 32px;
+            color: #64748b;
+            font-weight: 500;
+        }
 
-        .toast {
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            background: linear-gradient(135deg, #00e676, #00c853);
-            color: #000; padding: 12px 24px; border-radius: 28px;
-            font-weight: 700; font-size: 14px; z-index: 999;
-            animation: toastIn 0.3s ease, toastOut 0.3s ease 2s forwards;
-            pointer-events: none; white-space: nowrap; box-shadow: 0 4px 20px rgba(0,230,118,0.3);
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            margin-top: 28px;
+            color: #94a3b8;
         }
-        @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(-30px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-        @keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateX(-50%) translateY(-20px); } }
-
-        .filter-chips { display: flex; gap: 8px; flex-wrap: wrap; }
-        .chip {
-            padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 600;
-            cursor: pointer; border: 1px solid var(--border);
-            background: var(--glass-bg); color: var(--text2);
-            transition: var(--transition);
+        @media (max-width: 480px) {
+            .app-container {
+                padding: 16px;
+            }
+            .btn-group button {
+                font-size: 0.7rem;
+            }
+            .stat-card .value {
+                font-size: 1.4rem;
+            }
         }
-        .chip.active { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; border-color: transparent; }
-
-        .profile-card {
-            background: var(--glass-bg); backdrop-filter: blur(10px);
-            border-radius: var(--radius); padding: 24px; text-align: center;
-            border: 1px solid var(--border); box-shadow: var(--shadow-sm);
-        }
-        .profile-avatar {
-            width: 80px; height: 80px; border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;
-            font-size: 32px; font-weight: 700; color: #fff;
-            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
-            overflow: hidden;
-        }
-        .profile-avatar img {
-            width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
-        }
-        .settings-item {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 16px; background: var(--glass-bg);
-            border-radius: var(--radius-xs); cursor: pointer;
-            border: 1px solid var(--border); transition: var(--transition); margin-top: 8px;
-        }
-        .settings-item:active { background: rgba(255,255,255,0.08); }
     </style>
 </head>
 <body>
-<div class="phone-frame" id="app">
+<div class="app-container">
     <div class="header">
-        <div class="header-left">
-            <div class="avatar">
-                <img src="https://i.im.ge/QMIQKIq/WhatsApp_Image_2026-05-19_at_03.31.27.jpg" alt="Logo MotoDash" onerror="this.style.display='none'; this.parentElement.innerHTML='🏍️';">
-            </div>
-            <div class="header-info">
-                <div class="greeting">Olá,</div>
-                <div class="name" id="headerMotoboyName">Carlos Motoboy</div>
-            </div>
+        <i class="fas fa-motorcycle"></i>
+        <h1>MotoDelivery</h1>
+        <span>v.2.0</span>
+    </div>
+
+    <!-- Resumo financeiro e entregas -->
+    <div class="stats">
+        <div class="stat-card">
+            <i class="fas fa-truck-fast"></i>
+            <div class="label">Ativas</div>
+            <div class="value" id="activeCount">0</div>
         </div>
-        <div class="online-toggle online" id="onlineToggle" onclick="toggleOnline()">
-            <div class="online-dot"></div>
-            <span id="onlineLabel">Online</span>
+        <div class="stat-card">
+            <i class="fas fa-check-circle"></i>
+            <div class="label">Entregues</div>
+            <div class="value" id="completedCount">0</div>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-money-bill-wave"></i>
+            <div class="label">Faturamento</div>
+            <div class="value small-value" id="totalEarned">R$0</div>
         </div>
     </div>
-    <div class="main-content" id="mainContent">
-        <div class="screen active" id="screenDashboard">
-            <div class="stats-row"><div class="stat-card"><div class="stat-label">💰 Ganhos Hoje</div><div class="stat-value green" id="statEarnings">R$ 0,00</div><div class="stat-sub" id="statDeliveries">0 entregas</div></div><div class="stat-card"><div class="stat-label">⭐ Avaliação</div><div class="stat-value primary" id="statRating">5.0</div><div class="stat-sub">+0 avaliações</div></div></div>
-            <div class="stats-row"><div class="stat-card"><div class="stat-label">📦 Em Andamento</div><div class="stat-value" id="statActive" style="color:#fff;">0</div></div><div class="stat-card"><div class="stat-label">🏁 Concluídas Hoje</div><div class="stat-value" id="statCompleted" style="color:#fff;">0</div></div></div>
-            <div class="section-title">🆕 Novas Corridas <span class="badge-count" id="badgeNewOrders">0</span></div>
-            <div id="newOrdersContainer"><div class="empty-state"><div class="icon">📭</div><p>Nenhuma nova corrida</p><p style="font-size:11px;">Adicione uma corrida manualmente</p></div></div>
-            <button class="btn btn-primary" style="margin-top:4px;" onclick="showAddCorridaModal()">📝 Adicionar Corrida Manual</button>
-            <div class="section-title">🚀 Em Andamento</div>
-            <div id="activeOrdersContainer"><div class="empty-state"><div class="icon">🛵</div><p>Nenhuma entrega em andamento</p></div></div>
+
+    <!-- Formulário para adicionar ou editar corridas -->
+    <div class="form-card">
+        <div class="form-title"><i class="fas fa-edit"></i> <span id="formModeText">Nova Corrida</span></div>
+        <div class="input-group">
+            <label><i class="fas fa-user"></i> Cliente</label>
+            <input type="text" id="clienteInput" placeholder="Ex: Joana Martins" autocomplete="off">
         </div>
-        <div class="screen" id="screenOrders">
-            <div class="section-title">🆕 Disponíveis <span class="badge-count" id="badgeNewOrders2">0</span></div>
-            <div id="newOrdersContainer2"></div>
-            <button class="btn btn-primary" style="margin-top:4px;" onclick="showAddCorridaModal()">📝 Adicionar Corrida Manual</button>
-            <div class="section-title">🚀 Em Andamento</div>
-            <div id="activeOrdersContainer2"></div>
+        <div class="input-group">
+            <label><i class="fas fa-map-marker-alt"></i> Endereço (bairro / rua)</label>
+            <input type="text" id="enderecoInput" placeholder="Rua das Laranjeiras, 245 - Centro">
         </div>
-        <div class="screen" id="screenHistory">
-            <div class="filter-chips"><div class="chip active" onclick="filterHistory('all', this)">Todas</div><div class="chip" onclick="filterHistory('delivered', this)">✅ Entregues</div><div class="chip" onclick="filterHistory('cancelled', this)">❌ Canceladas</div></div>
-            <div id="historyContainer"><div class="empty-state"><div class="icon">📋</div><p>Nenhum histórico</p></div></div>
+        <div class="input-group">
+            <label><i class="fas fa-tag"></i> Valor (R$)</label>
+            <input type="number" id="valorInput" step="0.01" placeholder="0,00" value="0">
         </div>
-        <div class="screen" id="screenProfile">
-            <div class="profile-card">
-                <div class="profile-avatar">
-                    <img src="https://i.im.ge/QMIQKIq/WhatsApp_Image_2026-05-19_at_03.31.27.jpg" alt="Logo MotoDash" onerror="this.style.display='none'; this.parentElement.innerHTML='🏍️';">
-                </div>
-                <h3 id="profileMotoboyName">Carlos Motoboy</h3>
-                <p id="profileMotoboyDetails">Moto: Honda CG 160 • Placa: ABC-1234</p>
-                <button class="btn btn-secondary btn-sm" style="margin-top:14px;" onclick="showEditProfileModal()">✏️ Editar Cadastro</button>
-            </div>
-            <div class="stats-row"><div class="stat-card"><div class="stat-label">Total de Entregas</div><div class="stat-value" id="profileTotalDeliveries" style="color:#fff;">0</div></div><div class="stat-card"><div class="stat-label">Ganhos Totais</div><div class="stat-value green" id="profileTotalEarnings">R$ 0,00</div></div></div>
-            <div class="section-title">🏪 Destinos Salvos</div>
-            <div id="savedAddressesContainer"><div class="empty-state"><div class="icon">🏪</div><p>Nenhum destino salvo</p></div></div>
-            <div class="settings-item" onclick="showAddCorridaModal()"><span>📝</span> <span style="flex:1;margin-left:12px;">Adicionar Corrida Manual</span> <span>→</span></div>
-            <div class="settings-item" onclick="resetAllData()"><span>🗑️</span> <span style="flex:1;margin-left:12px;">Limpar Todos os Dados</span> <span>→</span></div>
-            <div class="settings-item" id="installButtonContainer" style="display:none;" onclick="installApp()"><span>📲</span> <span style="flex:1;margin-left:12px;">Instalar App</span> <span>→</span></div>
-            <p style="text-align:center;color:var(--text3);font-size:11px;margin-top:20px;">MotoDash Pro • Versão 2.0</p>
+        <div class="input-group">
+            <label><i class="fas fa-chart-line"></i> Status</label>
+            <select id="statusSelect">
+                <option value="Pendente">Pendente</option>
+                <option value="Em rota">Em rota</option>
+                <option value="Entregue">Entregue</option>
+            </select>
+        </div>
+        <div class="form-actions">
+            <button id="saveRideBtn"><i class="fas fa-save"></i> Salvar</button>
+            <button id="cancelEditBtn" class="btn-secondary"><i class="fas fa-times"></i> Cancelar</button>
         </div>
     </div>
-    <div class="bottom-nav">
-        <div class="nav-item active" data-screen="screenDashboard" onclick="switchScreen('screenDashboard', this)"><span class="nav-icon">📊</span> Dashboard<span class="nav-badge" id="navBadge">0</span></div>
-        <div class="nav-item" data-screen="screenOrders" onclick="switchScreen('screenOrders', this)"><span class="nav-icon">📦</span> Corridas<span class="nav-badge" id="navBadgeOrders">0</span></div>
-        <div class="nav-item" data-screen="screenHistory" onclick="switchScreen('screenHistory', this)"><span class="nav-icon">📋</span> Histórico</div>
-        <div class="nav-item" data-screen="screenProfile" onclick="switchScreen('screenProfile', this)"><span class="nav-icon">👤</span> Perfil</div>
+
+    <!-- Filtros -->
+    <div class="filter-bar">
+        <button data-filter="active" class="filter-btn active"><i class="fas fa-play-circle"></i> Ativas</button>
+        <button data-filter="all" class="filter-btn"><i class="fas fa-list"></i> Todas</button>
+        <button data-filter="completed" class="filter-btn"><i class="fas fa-check-double"></i> Concluídas</button>
     </div>
+
+    <!-- Listagem de corridas -->
+    <div class="rides-list" id="ridesListContainer">
+        <!-- cards serão inseridos via JS -->
+        <div class="empty-message">Carregando suas corridas...</div>
+    </div>
+    <footer>
+        <i class="fas fa-map-marked-alt"></i> Suas corridas ficam salvas no dispositivo. Edite, inicie rotas e finalize entregas!
+    </footer>
 </div>
-
-<div class="modal-overlay" id="modalOverlay" style="display:none;" onclick="closeModal(event)"><div class="modal-sheet" onclick="event.stopPropagation()"><div class="modal-handle"></div><div class="modal-title" id="modalTitle">Nova Corrida</div><div id="modalContent"></div></div></div>
-
-<div class="modal-overlay" id="addCorridaModalOverlay" style="display:none;" onclick="closeAddCorridaModal(event)">
-    <div class="modal-sheet" onclick="event.stopPropagation()">
-        <div class="modal-handle"></div>
-        <div class="modal-title">📝 Adicionar Corrida Manual</div>
-        <form id="addCorridaForm" onsubmit="submitManualCorrida(event)">
-            <div class="form-group"><label>Nome da Loja / Restaurante</label><input type="text" id="manualStoreName" placeholder="Ex: Pizzaria do Zé" required></div>
-            <div class="form-group"><label>Tipo de Estabelecimento</label><select id="manualStoreType"><option value="pizza">🍕 Pizzaria</option><option value="burger">🍔 Hamburgueria</option><option value="sushi">🍣 Sushi</option><option value="acai">🥤 Açaí</option><option value="market">🛒 Mercado</option></select></div>
-            <div class="form-group"><label>Nome do Cliente</label><input type="text" id="manualClientName" placeholder="Nome do cliente" required></div>
-            <div class="form-group"><label>WhatsApp do Cliente (com DDD)</label><input type="tel" id="manualClientPhone" placeholder="11999999999" required></div>
-            <div class="form-group"><label>Endereço de Entrega</label><input type="text" id="manualDropoff" placeholder="Rua, número - Cidade" required oninput="scheduleDistanceUpdate()"><button type="button" class="location-btn" onclick="getLocation('dropoff')">📍 Usar localização do destino</button></div>
-            <div class="form-row" style="display:flex; gap:10px;"><div class="form-group" style="flex:1;"><label>Distância (km)</label><input type="text" id="manualDistance" readonly value="3.0" style="background:rgba(255,255,255,0.08);"><span class="distance-auto" id="distanceStatus">🔍 Calcule a partir da sua localização</span></div><div class="form-group" style="flex:1;"><label>Valor (R$)</label><input type="number" id="manualPrice" step="0.01" min="1" max="200" value="12.00" required></div></div>
-            <div style="margin: 8px 0;"><label style="font-size:12px;color:var(--text2);">Destino salvo:</label><select id="savedStoreSelect" onchange="fillFromSavedStore()" style="width:100%; padding:12px; border-radius:10px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:#fff;"><option value="">-- Selecionar destino salvo --</option></select></div>
-            <button type="submit" class="btn btn-accept btn-block" style="margin-top: 12px;">✅ Criar Corrida</button>
-        </form>
-    </div>
-</div>
-
-<div class="modal-overlay" id="editProfileModalOverlay" style="display:none;" onclick="closeEditProfileModal(event)"><div class="modal-sheet" onclick="event.stopPropagation()"><div class="modal-handle"></div><div class="modal-title">✏️ Cadastro do Motoboy</div><form id="editProfileForm" onsubmit="submitEditProfile(event)"><div class="form-group"><label>Nome</label><input type="text" id="editMotoboyName" required></div><div class="form-group"><label>Modelo Moto</label><input type="text" id="editMotoboyMotorcycle" required></div><div class="form-group"><label>Placa</label><input type="text" id="editMotoboyPlate" required></div><button type="submit" class="btn btn-accept btn-block">💾 Salvar</button></form></div></div>
 
 <script>
-    const STORAGE_KEY = 'motodash_data';
-    const LOGO_URL = 'https://i.im.ge/QMIQKIq/WhatsApp_Image_2026-05-19_at_03.31.27.jpg';
+    // ---------- DADOS E CONFIGURAÇÕES ----------
+    let corridas = [];            // array de objetos
+    let currentEditId = null;    // null = modo criação
+    let currentFilter = "active"; // 'active', 'all', 'completed'
 
-    function loadData() {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        let data = { orders: [], isOnline: true, totalEarnings: 0, totalDeliveries: 0, totalRatings: 0, ratingSum: 0, motoboy: null, savedAddresses: [] };
-        if (raw) { try { const p = JSON.parse(raw); data = { ...data, ...p }; } catch(e) {} }
-        if (!data.motoboy) data.motoboy = { name: 'Carlos Motoboy', motorcycle: 'Honda CG 160', plate: 'ABC-1234' };
-        if (!data.savedAddresses) data.savedAddresses = [];
-        return data;
+    // Elementos DOM
+    const clienteInput = document.getElementById('clienteInput');
+    const enderecoInput = document.getElementById('enderecoInput');
+    const valorInput = document.getElementById('valorInput');
+    const statusSelect = document.getElementById('statusSelect');
+    const saveBtn = document.getElementById('saveRideBtn');
+    const cancelBtn = document.getElementById('cancelEditBtn');
+    const ridesContainer = document.getElementById('ridesListContainer');
+    const activeCountSpan = document.getElementById('activeCount');
+    const completedCountSpan = document.getElementById('completedCount');
+    const totalEarnedSpan = document.getElementById('totalEarned');
+    const formModeText = document.getElementById('formModeText');
+
+    // Função de escape para evitar XSS
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
     }
-    function saveData(d) { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
-    let appData = loadData();
-    function persist() { saveData(appData); renderAll(); updateHeaderAndProfile(); }
 
-    function generateId() { return 'ord_' + Date.now() + '_' + Math.random().toString(36).substr(2,6); }
-    function formatCurrency(v) { return 'R$ ' + Number(v).toFixed(2).replace('.',','); }
-    function formatDate(iso) { const d = new Date(iso); return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
-    function timeAgo(iso) { const diff = Date.now() - new Date(iso).getTime(); const mins = Math.floor(diff/60000); if(mins<1) return 'agora'; if(mins<60) return mins+'min atrás'; const h = Math.floor(mins/60); if(h<24) return h+'h atrás'; return Math.floor(h/24)+'d atrás'; }
-    function getTodayKey() { return new Date().toISOString().split('T')[0]; }
-    function getOrdersToday() { const t = getTodayKey(); return appData.orders.filter(o => o.createdAt?.startsWith(t)); }
-    function getActiveOrders() { return appData.orders.filter(o => o.status==='accepted'||o.status==='picked_up'); }
-    function getNewOrders() { return appData.orders.filter(o => o.status==='new'); }
-    function getTodayEarnings() { return getOrdersToday().filter(o=>o.status==='delivered').reduce((s,o)=>s+(o.price||0),0); }
-    function getTodayDeliveries() { return getOrdersToday().filter(o=>o.status==='delivered').length; }
+    // Carregar dados do localStorage ou iniciar com exemplo
+    function loadData() {
+        const stored = localStorage.getItem('motoboy_delivery_corridas');
+        if (stored) {
+            corridas = JSON.parse(stored);
+        } else {
+            // dados de demonstração (cidade local)
+            corridas = [
+                { id: 101, cliente: "Ana Beatriz", endereco: "Rua da Prata, 88 - Jardim América", valor: 18.90, status: "Pendente", dataCriacao: "2025-02-18 11:30" },
+                { id: 102, cliente: "Carlos Eduardo", endereco: "Av. Central, 1200 - Centro", valor: 25.00, status: "Em rota", dataCriacao: "2025-02-18 10:15" },
+                { id: 103, cliente: "Fernanda Lima", endereco: "Rua das Margaridas, 55 - Vila Nova", valor: 32.50, status: "Entregue", dataCriacao: "2025-02-17 18:20" },
+                { id: 104, cliente: "Ricardo Alves", endereco: "Travessa São Bento, 9 - Centro Histórico", valor: 14.75, status: "Pendente", dataCriacao: "2025-02-18 09:45" }
+            ];
+            saveToLocal();
+        }
+        renderizarLista();
+        atualizarResumo();
+    }
 
-    function playBeep(f=800,d=150){ try{ const c=new(window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain(); o.type='square'; o.frequency.value=f; g.gain.value=0.15; o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime+d/1000); }catch(e){} }
-    function playNotificationSound(){ playBeep(880,100); setTimeout(()=>playBeep(1100,150),120); }
-    function showToast(msg){ const e=document.querySelector('.toast'); if(e)e.remove(); const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2500); }
+    function saveToLocal() {
+        localStorage.setItem('motoboy_delivery_corridas', JSON.stringify(corridas));
+    }
 
-    function toggleOnline(){ appData.isOnline=!appData.isOnline; persist(); const t=document.getElementById('onlineToggle'),l=document.getElementById('onlineLabel'); if(appData.isOnline){ t.classList.add('online'); t.classList.remove('offline'); l.textContent='Online'; showToast('🟢 ONLINE'); } else { t.classList.remove('online'); t.classList.add('offline'); l.textContent='Offline'; showToast('🔴 OFFLINE'); } }
-    function updateOnlineUI(){ const t=document.getElementById('onlineToggle'),l=document.getElementById('onlineLabel'); if(appData.isOnline){ t.classList.add('online'); t.classList.remove('offline'); l.textContent='Online'; } else { t.classList.remove('online'); t.classList.add('offline'); l.textContent='Offline'; } }
-    function updateHeaderAndProfile(){ const m=appData.motoboy; document.getElementById('headerMotoboyName').textContent=m.name; document.getElementById('profileMotoboyName').textContent=m.name; document.getElementById('profileMotoboyDetails').textContent=`Moto: ${m.motorcycle} • Placa: ${m.plate}`; }
+    // Atualizar cards de resumo
+    function atualizarResumo() {
+        const ativas = corridas.filter(c => c.status !== "Entregue").length;
+        const concluidas = corridas.filter(c => c.status === "Entregue").length;
+        const totalReceita = corridas.filter(c => c.status === "Entregue").reduce((sum, c) => sum + (c.valor || 0), 0);
+        activeCountSpan.innerText = ativas;
+        completedCountSpan.innerText = concluidas;
+        totalEarnedSpan.innerHTML = `R$ ${totalReceita.toFixed(2)}`;
+    }
 
-    function showEditProfileModal(){ const m=appData.motoboy; document.getElementById('editMotoboyName').value=m.name; document.getElementById('editMotoboyMotorcycle').value=m.motorcycle; document.getElementById('editMotoboyPlate').value=m.plate; document.getElementById('editProfileModalOverlay').style.display='flex'; }
-    function closeEditProfileModal(e){ if(e&&e.target!==document.getElementById('editProfileModalOverlay'))return; document.getElementById('editProfileModalOverlay').style.display='none'; }
-    function submitEditProfile(e){ e.preventDefault(); const n=document.getElementById('editMotoboyName').value.trim(), m=document.getElementById('editMotoboyMotorcycle').value.trim(), p=document.getElementById('editMotoboyPlate').value.trim(); if(!n||!m||!p){ showToast('⚠️ Preencha todos'); return; } appData.motoboy={name:n,motorcycle:m,plate:p}; persist(); showToast('✅ Cadastro atualizado!'); document.getElementById('editProfileModalOverlay').style.display='none'; }
+    // Filtrar conforme currentFilter
+    function getFilteredRides() {
+        if (currentFilter === 'active') {
+            return corridas.filter(c => c.status !== "Entregue");
+        } else if (currentFilter === 'completed') {
+            return corridas.filter(c => c.status === "Entregue");
+        }
+        return [...corridas];
+    }
 
-    function openWhatsApp(phone) { const cleaned = phone.replace(/\D/g, ''); if (!cleaned) { showToast('⚠️ Número inválido'); return; } window.open(`https://wa.me/55${cleaned}`, '_blank'); }
+    // Renderizar a lista de corridas (cards)
+    function renderizarLista() {
+        const filtradas = getFilteredRides();
+        if (filtradas.length === 0) {
+            ridesContainer.innerHTML = `<div class="empty-message"><i class="fas fa-motorcycle"></i> Nenhuma corrida ${currentFilter === 'active' ? 'ativa' : (currentFilter === 'completed' ? 'concluída' : 'cadastrada')}.<br> Adicione uma nova corrida!</div>`;
+            return;
+        }
 
-    function getLocation(target){ if(!navigator.geolocation){ showToast('Geolocalização não suportada'); return; } navigator.geolocation.getCurrentPosition(pos=>{ const lat=pos.coords.latitude.toFixed(6), lng=pos.coords.longitude.toFixed(6); const t=`Lat: ${lat}, Lng: ${lng}`; if(target==='dropoff') document.getElementById('manualDropoff').value=t; scheduleDistanceUpdate(); showToast(`📍 Localização (${lat}, ${lng})`); }, err=>{ showToast('⚠️ Erro ao obter localização.'); }); }
+        ridesContainer.innerHTML = '';
+        filtradas.forEach(ride => {
+            const card = document.createElement('div');
+            card.className = 'ride-card';
+            // status badge style dinâmico
+            let statusClass = '';
+            if (ride.status === 'Pendente') statusClass = 'status-Pendente';
+            else if (ride.status === 'Em rota') statusClass = 'status-Emrota';
+            else if (ride.status === 'Entregue') statusClass = 'status-Entregue';
 
-    let distanceTimeout;
-    function scheduleDistanceUpdate(){ clearTimeout(distanceTimeout); distanceTimeout=setTimeout(updateDistance,800); }
-    function haversineDistance(lat1,lon1,lat2,lon2){ const R=6371; const dLat=(lat2-lat1)*Math.PI/180, dLon=(lon2-lon1)*Math.PI/180; const a=Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2; return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)); }
-    function parseCoordString(s){ const m=s.match(/Lat:\s*(-?\d+\.?\d*),\s*Lng:\s*(-?\d+\.?\d*)/i); return m?{lat:parseFloat(m[1]),lng:parseFloat(m[2])}:null; }
-    async function geocodeAddress(addr){ const c=parseCoordString(addr); if(c) return c; const url=`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(addr)}&format=json&limit=1`; try{ const r=await fetch(url,{headers:{'User-Agent':'MotoDashApp/1.0'}}); if(!r.ok) return null; const d=await r.json(); if(d.length) return {lat:parseFloat(d[0].lat),lng:parseFloat(d[0].lon)}; return null; }catch(e){ return null; } }
-    async function updateDistance(){ const dropoff = document.getElementById('manualDropoff').value.trim(); const inp = document.getElementById('manualDistance'); const st = document.getElementById('distanceStatus'); if(!dropoff){ st.innerHTML='🔍 Insira o endereço de entrega'; return; } st.innerHTML='⏳ Obtendo sua localização...'; if(!navigator.geolocation){ st.innerHTML='⚠️ Geolocalização indisponível.'; inp.removeAttribute('readonly'); return; } navigator.geolocation.getCurrentPosition(async pos => { const myLat = pos.coords.latitude, myLng = pos.coords.longitude; const destCoords = await geocodeAddress(dropoff); if(destCoords){ const dist = haversineDistance(myLat, myLng, destCoords.lat, destCoords.lng); const rd = Math.round(dist*10)/10; inp.value = rd.toFixed(1); st.innerHTML = `✅ Distância: ${rd.toFixed(1)} km`; } else { st.innerHTML = '⚠️ Endereço não encontrado.'; inp.removeAttribute('readonly'); } }, err => { st.innerHTML = '⚠️ Permita localização.'; inp.removeAttribute('readonly'); }); }
+            // formata data (se existir)
+            const dataInfo = ride.dataCriacao ? `<small><i class="far fa-calendar-alt"></i> ${escapeHtml(ride.dataCriacao)}</small>` : '';
 
-    function updateSavedStoreSelect(){ const sel = document.getElementById('savedStoreSelect'); sel.innerHTML = '<option value="">-- Selecionar destino salvo --</option>'; appData.savedAddresses.forEach((addr, idx) => { const opt = document.createElement('option'); opt.value = idx; opt.textContent = `${addr.storeName} - ${addr.dropoffAddr}`; sel.appendChild(opt); }); }
-    function fillFromSavedStore(){ const sel = document.getElementById('savedStoreSelect'); const idx = sel.value; if (idx === '') return; const addr = appData.savedAddresses[idx]; document.getElementById('manualStoreName').value = addr.storeName.replace(/^[🍕🍔🍣🥤🛒]\s*/, ''); document.getElementById('manualStoreType').value = addr.storeType; document.getElementById('manualDropoff').value = addr.dropoffAddr; scheduleDistanceUpdate(); }
-    function removeSavedAddress(index){ appData.savedAddresses.splice(index,1); persist(); updateSavedStoreSelect(); showToast('🗑️ Destino removido.'); }
+            card.innerHTML = `
+                <div class="ride-header">
+                    <div class="client-name"><i class="fas fa-user-circle"></i> ${escapeHtml(ride.cliente)}</div>
+                    <div class="status-badge ${statusClass}">${escapeHtml(ride.status)}</div>
+                </div>
+                <div class="ride-details">
+                    <div><i class="fas fa-location-dot"></i> ${escapeHtml(ride.endereco)}</div>
+                    <div class="ride-value"><i class="fas fa-coins"></i> R$ ${ride.valor.toFixed(2)}</div>
+                    ${dataInfo ? `<div>${dataInfo}</div>` : ''}
+                </div>
+                <div class="btn-group">
+                    <button class="btn-editar" data-id="${ride.id}"><i class="fas fa-pen"></i> Editar</button>
+                    <button class="btn-excluir" data-id="${ride.id}"><i class="fas fa-trash-alt"></i> Excluir</button>
+                    ${ride.status !== 'Entregue' ? `<button class="btn-iniciar-rota" data-id="${ride.id}"><i class="fas fa-road"></i> Iniciar Rota</button>` : ''}
+                    ${ride.status !== 'Entregue' ? `<button class="btn-finalizar" data-id="${ride.id}"><i class="fas fa-flag-checkered"></i> Finalizar</button>` : ''}
+                </div>
+            `;
+            ridesContainer.appendChild(card);
+        });
 
-    function deleteOrder(id) { if (!confirm('Excluir esta corrida?')) return; appData.orders = appData.orders.filter(o => o.id !== id); persist(); showToast('🗑️ Corrida excluída.'); }
+        // Adicionar eventos nos botões dinâmicos (delegação)
+        document.querySelectorAll('.btn-editar').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = parseInt(btn.dataset.id);
+                editarCorrida(id);
+            });
+        });
+        document.querySelectorAll('.btn-excluir').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = parseInt(btn.dataset.id);
+                if (confirm('Remover esta corrida permanentemente?')) {
+                    excluirCorrida(id);
+                }
+            });
+        });
+        document.querySelectorAll('.btn-iniciar-rota').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = parseInt(btn.dataset.id);
+                alterarStatus(id, 'Em rota');
+            });
+        });
+        document.querySelectorAll('.btn-finalizar').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = parseInt(btn.dataset.id);
+                alterarStatus(id, 'Entregue');
+            });
+        });
+    }
 
-    function showAddCorridaModal(){ if(!appData.isOnline){ showToast('⚠️ Fique online'); return; } document.getElementById('addCorridaModalOverlay').style.display='flex'; document.getElementById('addCorridaForm').reset(); document.getElementById('manualDistance').value='3.0'; document.getElementById('manualDistance').setAttribute('readonly',true); document.getElementById('manualPrice').value='12.00'; document.getElementById('distanceStatus').innerHTML='🔍 Calcule a distância'; updateSavedStoreSelect(); }
-    function closeAddCorridaModal(e){ if(e&&e.target!==document.getElementById('addCorridaModalOverlay'))return; document.getElementById('addCorridaModalOverlay').style.display='none'; }
+    // função para alterar status (usado nos botões de ação)
+    function alterarStatus(id, novoStatus) {
+        const index = corridas.findIndex(c => c.id === id);
+        if (index !== -1) {
+            corridas[index].status = novoStatus;
+            saveToLocal();
+            renderizarLista();
+            atualizarResumo();
+            // se estiver editando a mesma corrida e ela mudou, resetar formulário para evitar inconsistência
+            if (currentEditId === id) {
+                limparFormulario();
+            }
+        }
+    }
 
-    function submitManualCorrida(e){ e.preventDefault(); const storeName = document.getElementById('manualStoreName').value.trim(); const storeType = document.getElementById('manualStoreType').value; const clientName = document.getElementById('manualClientName').value.trim(); const clientPhone = document.getElementById('manualClientPhone').value.trim(); const dropoff = document.getElementById('manualDropoff').value.trim(); const distance = parseFloat(document.getElementById('manualDistance').value); const price = parseFloat(document.getElementById('manualPrice').value); if(!storeName||!clientName||!clientPhone||!dropoff||isNaN(distance)||isNaN(price)){ showToast('⚠️ Preencha todos'); return; } const iconMap = { pizza:'🍕', burger:'🍔', sushi:'🍣', acai:'🥤', market:'🛒' }; const displayName = iconMap[storeType]+' '+storeName; const newOrder = { id:generateId(), storeName:displayName, storeIcon:storeType, storeType, clientName, clientPhone, dropoffAddr:dropoff, distance:Math.round(distance*10)/10, price:Math.round(price*100)/100, status:'new', createdAt:new Date().toISOString(), updatedAt:new Date().toISOString() }; appData.orders.unshift(newOrder); const alreadySaved = appData.savedAddresses.some(a => a.dropoffAddr === dropoff && a.storeName === displayName); if (!alreadySaved) appData.savedAddresses.push({ storeName: displayName, storeType, dropoffAddr: dropoff }); persist(); playNotificationSound(); showToast('📝 Corrida adicionada!'); document.getElementById('addCorridaModalOverlay').style.display='none'; updateSavedStoreSelect(); }
+    // excluir corrida
+    function excluirCorrida(id) {
+        corridas = corridas.filter(c => c.id !== id);
+        if (currentEditId === id) limparFormulario();
+        saveToLocal();
+        renderizarLista();
+        atualizarResumo();
+    }
 
-    function acceptOrder(id){ const o=appData.orders.find(o=>o.id===id); if(!o||o.status!=='new')return; o.status='accepted'; o.updatedAt=new Date().toISOString(); persist(); playBeep(600,200); showToast('✅ Aceita!'); }
-    function rejectOrder(id){ const o=appData.orders.find(o=>o.id===id); if(!o||o.status!=='new')return; o.status='cancelled'; o.updatedAt=new Date().toISOString(); persist(); showToast('❌ Recusada'); }
-    function markPickedUp(id){ const o=appData.orders.find(o=>o.id===id); if(!o||o.status!=='accepted')return; o.status='picked_up'; o.updatedAt=new Date().toISOString(); persist(); playBeep(700,150); showToast('📦 Coletado!'); }
-    function markDelivered(id){ const o=appData.orders.find(o=>o.id===id); if(!o||o.status!=='picked_up')return; o.status='delivered'; o.updatedAt=new Date().toISOString(); appData.totalDeliveries++; appData.totalEarnings+=o.price; appData.totalRatings++; appData.ratingSum+=Math.random()>0.1?5:4; persist(); playBeep(1000,200); showToast('🏁 Entregue! +'+formatCurrency(o.price)); }
-    function cancelOrder(id){ const o=appData.orders.find(o=>o.id===id); if(!o||(o.status!=='accepted'&&o.status!=='picked_up'))return; if(!confirm('Cancelar entrega?'))return; o.status='cancelled'; o.updatedAt=new Date().toISOString(); persist(); showToast('❌ Cancelada'); }
-    function openMap(addr){ window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}`,'_blank'); }
+    // preencher formulário para edição
+    function editarCorrida(id) {
+        const ride = corridas.find(c => c.id === id);
+        if (!ride) return;
+        currentEditId = ride.id;
+        clienteInput.value = ride.cliente;
+        enderecoInput.value = ride.endereco;
+        valorInput.value = ride.valor;
+        statusSelect.value = ride.status;
+        formModeText.innerText = "✏️ Editando Corrida";
+        saveBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Atualizar';
+        // rolar suavemente para o formulário
+        document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
 
-    function showOrderModal(id){ const o=appData.orders.find(o=>o.id===id); if(!o)return; const modal=document.getElementById('modalOverlay'), title=document.getElementById('modalTitle'), content=document.getElementById('modalContent'); const statusMap={new:'Nova',accepted:'Aceita',picked_up:'Em Rota',delivered:'Entregue',cancelled:'Cancelada'}; title.textContent='Detalhes da Corrida'; const mapBtn=(o.status==='accepted'||o.status==='picked_up')?`<button class="btn-map" onclick="openMap('${o.dropoffAddr.replace(/'/g,"\\'")}')">🗺️ Mapa</button>`:''; const whatsappBtn = o.clientPhone ? `<button class="btn-whatsapp" onclick="openWhatsApp('${o.clientPhone.replace(/'/g,"\\'")}')">💬 WhatsApp</button>` : ''; content.innerHTML=`<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;"><div class="store-icon ${o.storeIcon}" style="width:44px;height:44px;">${o.storeName.split(' ')[0]}</div><div><strong>${o.storeName}</strong><br><span style="font-size:11px;color:var(--text3);">${statusMap[o.status]}</span></div></div>${o.clientName ? `<div style="margin-bottom:10px;"><strong>👤 Cliente:</strong> ${o.clientName}</div>` : ''}<div class="address-row"><div class="address-dot dropoff"></div><strong>Entrega:</strong> ${o.dropoffAddr} ${mapBtn}</div><div style="display:flex;justify-content:space-between;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);"><span>📏 ${o.distance.toFixed(1)} km</span><span>💰 <strong style="color:var(--green);">${formatCurrency(o.price)}</strong></span></div>${whatsappBtn ? `<div style="margin-top:12px;">${whatsappBtn}</div>` : ''}<p style="font-size:10px;color:var(--text3);margin-top:10px;">Criado: ${formatDate(o.createdAt)}</p>${o.status==='new'?`<div class="btn-row" style="margin-top:14px;"><button class="btn btn-reject" onclick="rejectOrder('${o.id}');closeModalDirect();">❌ Recusar</button><button class="btn btn-accept" onclick="acceptOrder('${o.id}');closeModalDirect();">✅ Aceitar</button></div>`:''}${o.status==='accepted'?`<button class="btn btn-primary" style="margin-top:14px;width:100%;" onclick="markPickedUp('${o.id}');closeModalDirect();">📦 Coletado</button>`:''}${o.status==='picked_up'?`<button class="btn btn-accept" style="margin-top:14px;width:100%;" onclick="markDelivered('${o.id}');closeModalDirect();">🏁 Entregue</button>`:''}${o.status==='delivered'||o.status==='cancelled'?`<button class="btn btn-delete" style="margin-top:10px;" onclick="deleteOrder('${o.id}');closeModalDirect();">🗑️ Excluir</button>`:''}`; modal.style.display='flex'; }
-    function closeModal(e){ if(e&&e.target!==document.getElementById('modalOverlay'))return; document.getElementById('modalOverlay').style.display='none'; }
-    function closeModalDirect(){ document.getElementById('modalOverlay').style.display='none'; }
+    function limparFormulario() {
+        currentEditId = null;
+        clienteInput.value = '';
+        enderecoInput.value = '';
+        valorInput.value = '';
+        statusSelect.value = 'Pendente';
+        formModeText.innerText = "➕ Nova Corrida";
+        saveBtn.innerHTML = '<i class="fas fa-save"></i> Salvar';
+    }
 
-    function buildOrderCard(o, showDelete = false){ const s={new:{label:'Nova',cls:'new'},accepted:{label:'Aceita',cls:'progress'},picked_up:{label:'Em Rota',cls:'progress'},delivered:{label:'Entregue',cls:'done'},cancelled:{label:'Cancelada',cls:'cancelled'}}[o.status]||{label:o.status,cls:''}; const isNew=o.status==='new'; const whatsappBtn = o.clientPhone ? `<button class="btn-whatsapp-sm" onclick="event.stopPropagation();openWhatsApp('${o.clientPhone.replace(/'/g,"\\'")}')">💬</button>` : ''; let btns=''; if(!showDelete) { if(isNew) btns=`<div class="btn-row"><button class="btn btn-reject btn-sm" onclick="event.stopPropagation();rejectOrder('${o.id}')">❌ Recusar</button><button class="btn btn-accept btn-sm" onclick="event.stopPropagation();acceptOrder('${o.id}')">✅ Aceitar</button></div>`; else if(o.status==='accepted') btns=`<div class="btn-row"><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();cancelOrder('${o.id}')">❌ Cancelar</button><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();markPickedUp('${o.id}')">📦 Coletado</button></div>`; else if(o.status==='picked_up') btns=`<div class="btn-row"><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();cancelOrder('${o.id}')">❌ Cancelar</button><button class="btn btn-accept btn-sm" onclick="event.stopPropagation();markDelivered('${o.id}')">🏁 Entregue</button></div>`; } else { btns = `<div style="margin-top:10px;display:flex;justify-content:flex-end;"><button class="btn btn-delete" onclick="event.stopPropagation();deleteOrder('${o.id}')">🗑️ Excluir</button></div>`; } return `<div class="order-card${isNew?' new-order':''}" onclick="showOrderModal('${o.id}')"><div class="order-header"><div class="store-name"><div class="store-icon ${o.storeIcon}">${o.storeName.split(' ')[0].replace(/[🍕🍔🍣🥤🛒]/g,'')}</div>${o.storeName}</div><span class="order-badge ${s.cls}">${s.label}</span></div>${o.clientName ? `<div style="font-size:12px;color:var(--text2);margin-bottom:6px;">👤 ${o.clientName} ${whatsappBtn}</div>` : ''}<div class="address-row"><div class="address-dot dropoff"></div>${o.dropoffAddr}</div><div class="order-footer"><span class="order-price">${formatCurrency(o.price)}</span><span class="order-distance">📏 ${o.distance.toFixed(1)} km • ${timeAgo(o.createdAt)}</span></div>${btns}</div>`; }
+    // salvar (criar ou atualizar)
+    function salvarCorrida() {
+        const cliente = clienteInput.value.trim();
+        const endereco = enderecoInput.value.trim();
+        let valor = parseFloat(valorInput.value);
+        if (isNaN(valor)) valor = 0;
+        const status = statusSelect.value;
 
-    function renderAll(){ updateOnlineUI(); updateHeaderAndProfile(); const newOrders=getNewOrders(), activeOrders=getActiveOrders(), todayEarnings=getTodayEarnings(), todayDeliveries=getTodayDeliveries(), avgRating=appData.totalRatings>0?(appData.ratingSum/appData.totalRatings).toFixed(1):'5.0', newCount=newOrders.length; document.getElementById('statEarnings').textContent=formatCurrency(todayEarnings); document.getElementById('statDeliveries').textContent=todayDeliveries+' entregas'; document.getElementById('statRating').textContent=avgRating; document.getElementById('statActive').textContent=activeOrders.length; document.getElementById('statCompleted').textContent=todayDeliveries; document.getElementById('badgeNewOrders').textContent=newCount; document.getElementById('badgeNewOrders2').textContent=newCount; const nb=document.getElementById('navBadge'), nbo=document.getElementById('navBadgeOrders'); nb.textContent=newCount; nbo.textContent=newCount; if(newCount>0){ nb.classList.add('show'); nbo.classList.add('show'); } else { nb.classList.remove('show'); nbo.classList.remove('show'); } const nc=document.getElementById('newOrdersContainer'), ac=document.getElementById('activeOrdersContainer'), nc2=document.getElementById('newOrdersContainer2'), ac2=document.getElementById('activeOrdersContainer2'); if(newOrders.length===0){ const e='<div class="empty-state"><div class="icon">📭</div><p>Nenhuma nova corrida</p></div>'; nc.innerHTML=e; nc2.innerHTML=e; } else { const c=newOrders.map(o=>buildOrderCard(o)).join(''); nc.innerHTML=c; nc2.innerHTML=c; } if(activeOrders.length===0){ const e='<div class="empty-state"><div class="icon">🛵</div><p>Nenhuma em andamento</p></div>'; ac.innerHTML=e; ac2.innerHTML=e; } else { const c=activeOrders.map(o=>buildOrderCard(o)).join(''); ac.innerHTML=c; ac2.innerHTML=c; } renderHistory(); document.getElementById('profileTotalDeliveries').textContent=appData.totalDeliveries; document.getElementById('profileTotalEarnings').textContent=formatCurrency(appData.totalEarnings); const savedContainer = document.getElementById('savedAddressesContainer'); if (appData.savedAddresses.length === 0) { savedContainer.innerHTML = '<div class="empty-state"><div class="icon">🏪</div><p>Nenhum destino salvo</p></div>'; } else { savedContainer.innerHTML = appData.savedAddresses.map((addr, i) => `<div class="saved-item"><span>${addr.storeName} - ${addr.dropoffAddr}</span><button class="remove-saved" onclick="removeSavedAddress(${i})">✕</button></div>`).join(''); } updateSavedStoreSelect(); }
+        if (cliente === '' || endereco === '') {
+            alert('Por favor, preencha o nome do cliente e endereço.');
+            return;
+        }
+        if (valor < 0) {
+            alert('Valor não pode ser negativo.');
+            return;
+        }
 
-    let historyFilter='all';
-    function filterHistory(f,el){ historyFilter=f; document.querySelectorAll('#screenHistory .chip').forEach(c=>c.classList.remove('active')); if(el)el.classList.add('active'); renderHistory(); }
-    function renderHistory(){ const container=document.getElementById('historyContainer'); let orders=[...appData.orders].sort((a,b)=>new Date(b.updatedAt)-new Date(a.updatedAt)); if(historyFilter==='delivered') orders=orders.filter(o=>o.status==='delivered'); if(historyFilter==='cancelled') orders=orders.filter(o=>o.status==='cancelled'); orders=orders.filter(o=>o.status==='delivered'||o.status==='cancelled'); if(orders.length===0){ container.innerHTML='<div class="empty-state"><div class="icon">📋</div><p>Nenhum histórico</p></div>'; return; } container.innerHTML=orders.map(o=>buildOrderCard(o, true)).join(''); }
+        if (currentEditId !== null) {
+            // atualizar corrida existente
+            const index = corridas.findIndex(c => c.id === currentEditId);
+            if (index !== -1) {
+                corridas[index] = {
+                    ...corridas[index],
+                    cliente: cliente,
+                    endereco: endereco,
+                    valor: valor,
+                    status: status
+                    // dataCriacao permanece original
+                };
+                saveToLocal();
+                limparFormulario();
+                renderizarLista();
+                atualizarResumo();
+            }
+        } else {
+            // nova corrida com id único
+            const novoId = Date.now();
+            const nowStr = new Date().toLocaleString('pt-BR');
+            const novaCorrida = {
+                id: novoId,
+                cliente: cliente,
+                endereco: endereco,
+                valor: valor,
+                status: status,
+                dataCriacao: nowStr
+            };
+            corridas.push(novaCorrida);
+            saveToLocal();
+            limparFormulario();
+            renderizarLista();
+            atualizarResumo();
+        }
+    }
 
-    function switchScreen(id,el){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active')); document.getElementById(id).classList.add('active'); if(el)el.classList.add('active'); document.getElementById('mainContent').scrollTop=0; renderAll(); }
+    // eventos dos filtros
+    function configurarFiltros() {
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filterValue = btn.dataset.filter;
+                if (filterValue === 'active') currentFilter = 'active';
+                else if (filterValue === 'completed') currentFilter = 'completed';
+                else currentFilter = 'all';
+                renderizarLista();
+                atualizarResumo(); // apenas para manter sincronia
+            });
+        });
+    }
 
-    function resetAllData(){ if(!confirm('Apagar TODOS os dados?'))return; appData={orders:[],isOnline:true,totalEarnings:0,totalDeliveries:0,totalRatings:0,ratingSum:0,motoboy:{name:'Carlos Motoboy',motorcycle:'Honda CG 160',plate:'ABC-1234'},savedAddresses:[]}; persist(); historyFilter='all'; document.querySelectorAll('#screenHistory .chip').forEach((c,i)=>c.classList.toggle('active',i===0)); showToast('🗑️ Dados limpos!'); }
+    // resetar edição se clicar em cancelar
+    cancelBtn.addEventListener('click', () => {
+        limparFormulario();
+    });
 
-    function setupPWA(){ const manifest={name:'MotoDash Pro',short_name:'MotoDash',start_url:'.',display:'standalone',background_color:'#0f0f1a',theme_color:'#ff6b35',icons:[{src:'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192"><rect width="192" height="192" rx="40" fill="#ff6b35"/><text x="96" y="125" font-size="100" text-anchor="middle" fill="white">🏍️</text></svg>'),sizes:'192x192',type:'image/svg+xml'}]}; const link=document.createElement('link'); link.rel='manifest'; link.href=URL.createObjectURL(new Blob([JSON.stringify(manifest)],{type:'application/json'})); document.head.appendChild(link); if('serviceWorker' in navigator){ const swBlob=new Blob(["self.addEventListener('fetch',e=>{})"],{type:'application/javascript'}); navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{}); } }
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installButtonContainer').style.display='flex'; });
-    function installApp(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(r=>{ if(r.outcome==='accepted')showToast('✅ Instalado!'); deferredPrompt=null; document.getElementById('installButtonContainer').style.display='none'; }); } else showToast('Instalação indisponível.'); }
+    saveBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        salvarCorrida();
+    });
 
-    function init(){ setupPWA(); updateOnlineUI(); updateHeaderAndProfile(); renderAll(); document.getElementById('modalOverlay').addEventListener('click',closeModal); document.getElementById('addCorridaModalOverlay').addEventListener('click',closeAddCorridaModal); document.getElementById('editProfileModalOverlay').addEventListener('click',closeEditProfileModal); console.log('🏍️ MotoDash Pro com imagem personalizada!'); }
+    // Inicialização
+    function init() {
+        loadData();
+        configurarFiltros();
+        // se houver algum evento de tecla enter opcional
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') salvarCorrida();
+            });
+        });
+    }
+
     init();
-    window.addEventListener('beforeunload',()=>saveData(appData));
-    setInterval(()=>saveData(appData),5000);
 </script>
 </body>
 </html>
