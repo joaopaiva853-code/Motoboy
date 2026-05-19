@@ -2,12 +2,16 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1.0">
-    <title>MotoDash · Entregas Profissional</title>
-    <!-- Font Awesome 6 (ícones) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#ff8c42">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/6WqQ7pK.png">
+    <title>MotoFlash · Entregas com Distância</title>
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts: Inter + Poppins para um toque moderno -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -17,563 +21,510 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: radial-gradient(circle at 10% 20%, #0b1120, #0a0f1c);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px;
+            font-family: 'Poppins', sans-serif;
+            background: #f4f7fc;
+            padding: 20px 16px 36px;
+            color: #1a2c3e;
         }
 
-        /* Container principal estilo "app screen" */
         .app-wrapper {
-            max-width: 480px;
-            width: 100%;
+            max-width: 600px;
             margin: 0 auto;
-            background: rgba(18, 25, 45, 0.65);
-            backdrop-filter: blur(18px);
-            border-radius: 48px;
-            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            position: relative;
+            padding: 24px 20px 32px;
         }
 
-        /* conteúdo rolável principal */
-        .main-content {
-            padding: 24px 20px 90px 20px;
-            max-height: 85vh;
-            overflow-y: auto;
-            scrollbar-width: thin;
-        }
-
-        .main-content::-webkit-scrollbar {
-            width: 4px;
-        }
-        .main-content::-webkit-scrollbar-track {
-            background: #1e2a3e;
-            border-radius: 10px;
-        }
-        .main-content::-webkit-scrollbar-thumb {
-            background: #e11d48;
-            border-radius: 10px;
-        }
-
-        /* cabeçalho minimalista com gradiente */
-        .header-mini {
+        .app-header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 28px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #ff8c42;
         }
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .brand-icon {
-            background: linear-gradient(145deg, #e11d48, #f97316);
-            width: 48px;
-            height: 48px;
+        .icon-badge {
+            background: #ff8c42;
+            width: 56px;
+            height: 56px;
             border-radius: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 28px;
             color: white;
-            font-size: 24px;
-            box-shadow: 0 6px 12px rgba(225,29,72,0.3);
+            box-shadow: 0 6px 12px rgba(255, 140, 66, 0.3);
         }
-        .brand-text h2 {
-            font-size: 1.6rem;
+        .header-text h1 {
+            font-size: 1.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #fff, #facc15);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            letter-spacing: -0.5px;
+            color: #1e4668;
+            letter-spacing: -0.3px;
         }
-        .brand-text p {
-            font-size: 0.7rem;
-            color: #94a3b8;
+        .header-text p {
+            font-size: 0.75rem;
             font-weight: 500;
+            color: #5f7f9e;
         }
 
-        /* cards de estatísticas - glassmorph */
         .stats-row {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 12px;
             margin-bottom: 28px;
         }
-        .stat-glass {
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(4px);
-            border-radius: 32px;
+        .stat-card {
+            background: #f0f6fa;
+            border-radius: 28px;
             padding: 14px 6px;
-            flex: 1;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: 0.2s;
         }
         .stat-number {
-            font-size: 2rem;
+            font-size: 1.9rem;
             font-weight: 800;
-            color: white;
-            line-height: 1;
+            color: #ff8c42;
+            line-height: 1.2;
         }
-        .stat-label-sm {
+        .stat-label {
             font-size: 0.7rem;
-            font-weight: 500;
-            color: #cbd5e1;
-            margin-top: 6px;
-            letter-spacing: 0.3px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #3a6b92;
         }
 
-        /* filtros estilo chips */
-        .filter-chips {
+        .filter-section {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
             margin-bottom: 24px;
             justify-content: center;
         }
-        .chip {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(4px);
+        .filter-chip {
+            background: #eef3f9;
             border: none;
-            padding: 8px 18px;
+            padding: 8px 20px;
             border-radius: 40px;
             font-weight: 600;
             font-size: 0.8rem;
-            color: #e2e8f0;
-            transition: all 0.2s;
+            color: #2c577c;
             cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.2s;
         }
-        .chip.active {
-            background: linear-gradient(95deg, #e11d48, #f97316);
+        .filter-chip.active {
+            background: #ff8c42;
             color: white;
-            box-shadow: 0 4px 12px rgba(225,29,72,0.4);
+            box-shadow: 0 4px 10px rgba(255, 140, 66, 0.3);
         }
 
-        /* cards de entrega (novo formato elegante) */
-        .delivery-list {
+        .deliveries-container {
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            margin-bottom: 10px;
+            gap: 18px;
+            max-height: 520px;
+            overflow-y: auto;
+            padding-right: 6px;
+            margin-bottom: 28px;
         }
-        .delivery-item {
-            background: rgba(20, 30, 50, 0.7);
-            backdrop-filter: blur(8px);
+        .delivery-card {
+            background: white;
             border-radius: 32px;
-            padding: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: transform 0.1s, background 0.2s;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e6edf2;
         }
-        .delivery-header {
+        .card-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
+            margin-bottom: 12px;
         }
-        .client {
+        .customer-name {
+            font-weight: 800;
+            font-size: 1.25rem;
             display: flex;
             align-items: center;
             gap: 10px;
-            font-weight: 800;
-            font-size: 1.2rem;
-            color: #f1f5f9;
+            color: #1e4668;
         }
-        .client i {
-            color: #f97316;
-            font-size: 1.2rem;
-        }
-        .status-badge {
-            font-size: 0.65rem;
-            font-weight: 800;
-            padding: 5px 12px;
-            border-radius: 50px;
+        .status-pill {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 40px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
-        .badge-pendente { background: #ffedd5; color: #b45309; }
-        .badge-andamento { background: #dbeafe; color: #1e40af; }
-        .badge-entregue { background: #dcfce7; color: #15803d; }
+        .status-pendente { background: #fff1e0; color: #cc6b2c; }
+        .status-em_andamento { background: #e3f2fd; color: #0b5e7e; }
+        .status-entregue { background: #e0f2e9; color: #2b6e47; }
 
-        .address-line {
-            display: flex;
-            gap: 10px;
-            align-items: flex-start;
-            font-size: 0.85rem;
-            color: #cbd5e6;
-            margin: 10px 0;
-            word-break: break-word;
-        }
-        .address-line i {
-            margin-top: 2px;
-            color: #facc15;
-        }
-        .price {
-            font-weight: 800;
-            font-size: 1.2rem;
-            color: #facc15;
-            margin: 8px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .meta-row {
+        .address-info {
             display: flex;
             gap: 12px;
+            margin: 12px 0 10px;
+            font-size: 0.85rem;
+            color: #3a6b92;
+            word-break: break-word;
+        }
+        .price-distance {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .price-highlight {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #1e4668;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .distance-badge {
+            background: #eef3f9;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #ff8c42;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .meta-details {
             font-size: 0.7rem;
-            color: #94a3b8;
-            margin-top: 10px;
+            color: #6f9bc0;
+            display: flex;
+            gap: 14px;
+            margin-top: 8px;
             flex-wrap: wrap;
         }
-        .card-buttons {
+        .action-group {
             display: flex;
-            justify-content: flex-end;
-            gap: 10px;
+            gap: 12px;
             margin-top: 16px;
+            justify-content: flex-end;
             flex-wrap: wrap;
         }
         .action-btn {
-            background: rgba(255, 255, 255, 0.1);
             border: none;
+            font-size: 0.75rem;
+            font-weight: 600;
             padding: 8px 16px;
             border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.75rem;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             cursor: pointer;
-            transition: 0.1s;
-            color: #e2e8f0;
+            background: #f0f6fa;
+            color: #2c577c;
         }
-        .action-btn i { font-size: 0.8rem; }
-        .edit-btn { background: rgba(37, 99, 235, 0.2); color: #60a5fa; }
-        .delete-btn { background: rgba(225, 29, 72, 0.2); color: #fb7185; }
-        .start-btn { background: rgba(2, 132, 199, 0.2); color: #7dd3fc; }
-        .finish-btn { background: rgba(34, 197, 94, 0.2); color: #86efac; }
+        .btn-edit { background: #eef2ff; color: #3b82f6; }
+        .btn-delete { background: #fee9e6; color: #e11d48; }
+        .btn-start { background: #e3f2fd; color: #0284c7; }
+        .btn-finish { background: #e0f2e9; color: #2e7d32; }
         .map-link {
-            background: rgba(255,255,255,0.05);
-            padding: 5px 12px;
+            background: #f0f6fa;
+            padding: 4px 12px;
             border-radius: 40px;
             text-decoration: none;
             font-size: 0.7rem;
             font-weight: 600;
-            color: #a78bfa;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #ff8c42;
+        }
+        .empty-placeholder {
+            text-align: center;
+            padding: 50px 20px;
+            color: #8bb3d0;
+            font-weight: 500;
         }
 
-        /* Botão flutuante (FAB) estiloso */
-        .fab-new {
-            position: fixed;
-            bottom: 85px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(145deg, #e11d48, #f97316);
-            width: 60px;
-            height: 60px;
-            border-radius: 36px;
+        .fab-button {
+            background: #ff8c42;
+            width: 64px;
+            height: 64px;
+            border-radius: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: 8px auto 0;
             border: none;
             color: white;
-            font-size: 28px;
-            box-shadow: 0 8px 20px rgba(225,29,72,0.5);
+            font-size: 30px;
+            box-shadow: 0 12px 24px rgba(255, 140, 66, 0.4);
             cursor: pointer;
-            z-index: 20;
             transition: 0.15s;
         }
-        .fab-new:active { transform: translateX(-50%) scale(0.94); }
+        .fab-button:active { transform: scale(0.94); }
 
-        /* Bottom navigation (novo formato) */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 480px;
-            background: rgba(10, 15, 27, 0.85);
-            backdrop-filter: blur(20px);
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 20px 22px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            border-radius: 32px 32px 0 0;
-            z-index: 15;
+        footer {
+            text-align: center;
+            font-size: 0.65rem;
+            color: #8bb3d0;
+            margin-top: 18px;
         }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            background: transparent;
-            border: none;
-            color: #94a3b8;
-            font-size: 0.7rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .nav-item i { font-size: 1.4rem; }
-        .nav-item.active { color: #f97316; text-shadow: 0 0 6px #f97316; }
 
-        /* MODAL redesign */
-        .modal {
+        .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
             align-items: center;
             justify-content: center;
-            z-index: 1000;
+            z-index: 1200;
             padding: 20px;
         }
-        .modal-card-grad {
-            background: #111827;
+        .modal-panel {
+            background: white;
             border-radius: 48px;
+            max-width: 540px;
             width: 100%;
-            max-width: 500px;
             padding: 28px 24px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 30px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 30px 40px rgba(0,0,0,0.2);
+            animation: fadeUp 0.2s;
         }
-        .modal-card-grad h3 {
-            font-size: 1.6rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #fff, #facc15);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .modal-panel h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff8c42;
             margin-bottom: 20px;
         }
-        .input-group {
+        .input-field {
             margin-bottom: 20px;
         }
-        .input-group label {
-            display: block;
-            font-size: 0.75rem;
+        .input-field label {
             font-weight: 600;
-            margin-bottom: 8px;
-            color: #cbd5e1;
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 6px;
+            color: #1e4668;
         }
-        .input-group input, .input-group select, .input-group textarea {
+        .input-field input, .input-field select, .input-field textarea {
             width: 100%;
-            padding: 14px 16px;
-            border-radius: 32px;
-            background: #1e293b;
-            border: 1px solid #334155;
-            color: white;
-            font-family: 'Inter', sans-serif;
+            padding: 14px 18px;
+            border-radius: 30px;
+            border: 1.5px solid #e2edf2;
+            font-family: 'Poppins', sans-serif;
             font-size: 0.9rem;
+            background: #fefefe;
         }
-        .modal-buttons {
+        .distance-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .distance-row input {
+            flex: 2;
+        }
+        .calc-distance-btn {
+            background: #ff8c42;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+        .modal-buttons-row {
             display: flex;
             gap: 12px;
             justify-content: flex-end;
-            margin-top: 24px;
+            margin-top: 28px;
         }
-        .modal-btn-save {
-            background: linear-gradient(95deg, #e11d48, #f97316);
+        .btn-save-orange {
+            background: #ff8c42;
             border: none;
-            padding: 12px 24px;
+            padding: 12px 26px;
             border-radius: 40px;
             font-weight: 700;
             color: white;
+            cursor: pointer;
         }
-        .modal-btn-cancel {
-            background: #334155;
+        .btn-cancel-gray {
+            background: #eef3f9;
             border: none;
             padding: 12px 24px;
             border-radius: 40px;
             font-weight: 600;
-            color: white;
+            color: #3a6b92;
+            cursor: pointer;
         }
-        .empty-message {
-            text-align: center;
-            padding: 40px 20px;
-            color: #94a3b8;
+        .small-note {
+            font-size: 0.7rem;
+            color: #6f9bc0;
+            margin-top: 6px;
         }
-        footer {
-            text-align: center;
-            font-size: 0.6rem;
-            color: #5b6e8c;
-            margin-top: 24px;
-        }
+        .deliveries-container::-webkit-scrollbar { width: 3px; }
+        .deliveries-container::-webkit-scrollbar-track { background: #e2edf2; border-radius: 10px; }
+        .deliveries-container::-webkit-scrollbar-thumb { background: #ff8c42; border-radius: 10px; }
     </style>
 </head>
 <body>
 <div class="app-wrapper">
-    <div class="main-content" id="mainContent">
-        <!-- cabeçalho -->
-        <div class="header-mini">
-            <div class="brand">
-                <div class="brand-icon"><i class="fas fa-bolt"></i></div>
-                <div class="brand-text">
-                    <h2>MotoDash</h2>
-                    <p>entregas inteligentes</p>
-                </div>
-            </div>
+    <div class="app-header">
+        <div class="icon-badge"><i class="fas fa-motorcycle"></i></div>
+        <div class="header-text">
+            <h1>MotoFlash</h1>
+            <p>Distância automática · entregas locais</p>
         </div>
-
-        <!-- estatísticas em vidro -->
-        <div class="stats-row">
-            <div class="stat-glass"><div class="stat-number" id="totalCount">0</div><div class="stat-label-sm">Total</div></div>
-            <div class="stat-glass"><div class="stat-number" id="pendingCount">0</div><div class="stat-label-sm">Pendentes</div></div>
-            <div class="stat-glass"><div class="stat-number" id="earningsAmount">R$0</div><div class="stat-label-sm">Receita</div></div>
-        </div>
-
-        <!-- filtros tipo chips -->
-        <div class="filter-chips" id="filterChips">
-            <button class="chip active" data-filter="all">📋 Todas</button>
-            <button class="chip" data-filter="pendente">⏳ Pendentes</button>
-            <button class="chip" data-filter="em_andamento">🏍️ Andamento</button>
-            <button class="chip" data-filter="entregue">✅ Entregues</button>
-        </div>
-
-        <!-- lista dinâmica -->
-        <div id="deliveriesContainer" class="delivery-list">
-            <div class="empty-message"><i class="fas fa-motorcycle" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>Nenhuma corrida.<br>Toque no botão + para criar</div>
-        </div>
-        <footer>Edição completa • dados salvos localmente</footer>
     </div>
 
-    <!-- Botão + flutuante -->
-    <button class="fab-new" id="openModalBtn"><i class="fas fa-plus"></i></button>
-
-    <!-- Bottom navigation (novo formato) -->
-    <div class="bottom-nav">
-        <button class="nav-item active" data-nav="all"><i class="fas fa-list-ul"></i><span>Corridas</span></button>
-        <button class="nav-item" data-nav="pendente"><i class="fas fa-hourglass-half"></i><span>Pendentes</span></button>
-        <button class="nav-item" data-nav="em_andamento"><i class="fas fa-motorcycle"></i><span>Ativas</span></button>
-        <button class="nav-item" data-nav="entregue"><i class="fas fa-check-circle"></i><span>Histórico</span></button>
+    <div class="stats-row">
+        <div class="stat-card"><div class="stat-number" id="totalCount">0</div><div class="stat-label">Total</div></div>
+        <div class="stat-card"><div class="stat-number" id="pendingCount">0</div><div class="stat-label">Pendentes</div></div>
+        <div class="stat-card"><div class="stat-number" id="totalEarnings">R$0</div><div class="stat-label">Ganhos</div></div>
     </div>
+
+    <div class="filter-section">
+        <button class="filter-chip active" data-filter="all">Todas</button>
+        <button class="filter-chip" data-filter="pendente">Pendentes</button>
+        <button class="filter-chip" data-filter="em_andamento">Andamento</button>
+        <button class="filter-chip" data-filter="entregue">Entregues</button>
+    </div>
+
+    <div id="deliveryList" class="deliveries-container">
+        <div class="empty-placeholder"><i class="fas fa-shipping-fast" style="font-size: 2rem; margin-bottom: 8px; display: block;"></i> Nenhuma entrega. Clique em + para começar</div>
+    </div>
+
+    <button class="fab-button" id="openModalFab"><i class="fas fa-plus"></i></button>
+    <footer><i class="fas fa-edit"></i> Calcule a distância da sua localização até o cliente</footer>
 </div>
 
-<!-- MODAL -->
-<div id="modal" class="modal">
-    <div class="modal-card-grad">
-        <h3 id="modalTitle">➕ Nova entrega</h3>
+<!-- MODAL com campo de distância e botão de cálculo -->
+<div id="globalModal" class="modal-overlay">
+    <div class="modal-panel">
+        <h2 id="modalTitle">➕ Nova corrida</h2>
         <form id="deliveryForm">
-            <input type="hidden" id="editId" value="">
-            <div class="input-group">
-                <label><i class="fas fa-user"></i> Cliente</label>
-                <input type="text" id="cliente" placeholder="Nome completo" required>
+            <input type="hidden" id="editId">
+            <div class="input-field">
+                <label><i class="fas fa-user"></i> Cliente *</label>
+                <input type="text" id="clientName" placeholder="Ex: João Silva" required>
             </div>
-            <div class="input-group">
-                <label><i class="fas fa-location-dot"></i> Endereço completo</label>
-                <input type="text" id="endereco" placeholder="Rua, número, bairro, cidade" required>
+            <div class="input-field">
+                <label><i class="fas fa-location-dot"></i> Endereço completo *</label>
+                <input type="text" id="address" placeholder="Rua, número, bairro, cidade" required>
             </div>
-            <div class="input-group">
-                <label><i class="fas fa-dollar-sign"></i> Valor (R$)</label>
-                <input type="number" id="valor" step="0.01" placeholder="0,00" value="0">
+            <div class="input-field">
+                <label><i class="fas fa-tag"></i> Valor (R$)</label>
+                <input type="number" id="price" step="0.01" placeholder="0,00" value="0">
             </div>
-            <div class="input-group">
-                <label><i class="fas fa-tasks"></i> Status</label>
+            <div class="input-field">
+                <label><i class="fas fa-road"></i> Distância (km)</label>
+                <div class="distance-row">
+                    <input type="number" id="distance" step="0.1" placeholder="0,0" value="0">
+                    <button type="button" class="calc-distance-btn" id="calcDistanceBtn"><i class="fas fa-location-dot"></i> Calcular</button>
+                </div>
+                <div class="small-note">🔍 Clique em "Calcular" para usar sua localização atual e obter a distância por estrada até o endereço.</div>
+            </div>
+            <div class="input-field">
+                <label><i class="fas fa-chart-line"></i> Status</label>
                 <select id="statusSelect">
                     <option value="pendente">Pendente</option>
                     <option value="em_andamento">Em andamento</option>
                     <option value="entregue">Entregue</option>
                 </select>
             </div>
-            <div class="input-group">
-                <label><i class="fas fa-pen"></i> Observações</label>
-                <textarea id="obs" rows="2" placeholder="Portão, ponto de referência..."></textarea>
+            <div class="input-field">
+                <label><i class="fas fa-comment-dots"></i> Observações</label>
+                <textarea id="notes" rows="2" placeholder="Portão, ponto de referência..."></textarea>
             </div>
-            <div class="modal-buttons">
-                <button type="button" class="modal-btn-cancel" id="closeModalBtn">Cancelar</button>
-                <button type="submit" class="modal-btn-save">Salvar</button>
+            <div class="modal-buttons-row">
+                <button type="button" class="btn-cancel-gray" id="closeModalBtn">Cancelar</button>
+                <button type="submit" class="btn-save-orange">Salvar corrida</button>
             </div>
         </form>
     </div>
 </div>
 
 <script>
-    // ---------- DADOS E LÓGICA COMPLETA ----------
+    // ========== DADOS ==========
     let deliveries = [];
-    let currentFilter = "all"; // usado pelos chips e nav
+    let currentFilter = "all";
 
-    // Carregar do localStorage
     function loadData() {
-        const stored = localStorage.getItem("motodash_deliveries");
+        const stored = localStorage.getItem("motoflash_dist_data");
         if(stored) {
             deliveries = JSON.parse(stored);
         } else {
-            // dados iniciais (cidade local)
             deliveries = [
                 {
                     id: "d1",
-                    cliente: "Mariana Costa",
-                    endereco: "Rua da Consolação, 2323 - Consolação, São Paulo",
-                    valor: 18.50,
+                    cliente: "Amanda Ribeiro",
+                    endereco: "Rua Augusta, 1234 - Consolação, São Paulo",
+                    valor: 21.50,
+                    distancia: 5.2,
                     status: "pendente",
-                    observacoes: "Apto 808, tocar interfone 8",
-                    criado_em: new Date(Date.now() - 7200000).toISOString(),
-                    entregue_em: null
-                },
-                {
-                    id: "d2",
-                    cliente: "Rafael Souza",
-                    endereco: "Alameda Santos, 1450 - Jardins, São Paulo",
-                    valor: 25.00,
-                    status: "em_andamento",
-                    observacoes: "Próximo ao shopping",
+                    observacoes: "Apto 101",
                     criado_em: new Date(Date.now() - 3600000).toISOString(),
                     entregue_em: null
                 },
                 {
+                    id: "d2",
+                    cliente: "Bruno Torres",
+                    endereco: "Av. Paulista, 1578 - Bela Vista, São Paulo",
+                    valor: 18.90,
+                    distancia: 3.7,
+                    status: "em_andamento",
+                    observacoes: "Próximo ao shopping",
+                    criado_em: new Date(Date.now() - 7200000).toISOString(),
+                    entregue_em: null
+                },
+                {
                     id: "d3",
-                    cliente: "Fernanda Lopes",
-                    endereco: "Rua Oscar Freire, 850 - Cerqueira César",
-                    valor: 32.90,
+                    cliente: "Carla Menezes",
+                    endereco: "Rua Oscar Freire, 850 - Jardins, São Paulo",
+                    valor: 27.00,
+                    distancia: 4.1,
                     status: "entregue",
-                    observacoes: "Entregue na mão do porteiro",
+                    observacoes: "Entregue na portaria",
                     criado_em: new Date(Date.now() - 172800000).toISOString(),
                     entregue_em: new Date(Date.now() - 86400000).toISOString()
                 }
             ];
             saveToLocal();
         }
-        refreshUI();
+        renderStatsAndList();
     }
 
     function saveToLocal() {
-        localStorage.setItem("motodash_deliveries", JSON.stringify(deliveries));
+        localStorage.setItem("motoflash_dist_data", JSON.stringify(deliveries));
     }
 
     function generateId() {
-        return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+        return Date.now().toString(36) + Math.random().toString(36).substring(2);
     }
 
-    function refreshUI() {
-        renderStats();
-        renderDeliveries();
-        syncNavAndChips();
-    }
-
-    function renderStats() {
+    function updateStats() {
         const total = deliveries.length;
-        const pendentes = deliveries.filter(d => d.status === "pendente").length;
+        const pending = deliveries.filter(d => d.status === "pendente").length;
         const earnings = deliveries.filter(d => d.status === "entregue").reduce((sum, d) => sum + (d.valor || 0), 0);
         document.getElementById("totalCount").innerText = total;
-        document.getElementById("pendingCount").innerText = pendentes;
-        document.getElementById("earningsAmount").innerHTML = `R$${earnings.toFixed(2)}`;
+        document.getElementById("pendingCount").innerText = pending;
+        document.getElementById("totalEarnings").innerHTML = `R$${earnings.toFixed(2)}`;
     }
 
-    function renderDeliveries() {
+    function renderList() {
         let filtered = [...deliveries];
         if(currentFilter !== "all") {
             filtered = filtered.filter(d => d.status === currentFilter);
         }
-        // ordenação: pendentes e em andamento primeiro
         filtered.sort((a,b) => {
             const order = { pendente: 1, em_andamento: 2, entregue: 3 };
             const oa = order[a.status] || 4;
@@ -582,63 +533,63 @@
             return new Date(b.criado_em) - new Date(a.criado_em);
         });
 
-        const container = document.getElementById("deliveriesContainer");
+        const container = document.getElementById("deliveryList");
         if(filtered.length === 0) {
-            container.innerHTML = `<div class="empty-message"><i class="fas fa-road" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>Nenhuma corrida aqui.<br>Toque no botão + para adicionar</div>`;
+            container.innerHTML = `<div class="empty-placeholder"><i class="fas fa-road" style="font-size: 2rem;"></i><br>Nenhuma corrida com este filtro.<br>Toque em + para adicionar</div>`;
             return;
         }
 
         container.innerHTML = filtered.map(del => {
             const statusText = { pendente: "Pendente", em_andamento: "Em andamento", entregue: "Entregue" }[del.status];
-            let statusClass = "";
-            if(del.status === "pendente") statusClass = "badge-pendente";
-            else if(del.status === "em_andamento") statusClass = "badge-andamento";
-            else statusClass = "badge-entregue";
+            const statusClass = `status-${del.status}`;
             const valorFormat = (del.valor || 0).toFixed(2);
-            const criadoData = new Date(del.criado_em).toLocaleDateString("pt-BR", { day:"2-digit", month:"short", hour:"2-digit", minute:"2-digit" });
+            const distanciaFormat = (del.distancia || 0).toFixed(1);
+            const dateFormatted = new Date(del.criado_em).toLocaleDateString("pt-BR", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
             let actionButtons = "";
             if(del.status === "pendente") {
-                actionButtons = `<button class="action-btn start-btn" data-action="start" data-id="${del.id}"><i class="fas fa-play"></i> Iniciar</button>`;
+                actionButtons = `<button class="action-btn btn-start" data-action="start" data-id="${del.id}"><i class="fas fa-play"></i> Iniciar</button>`;
             } else if(del.status === "em_andamento") {
-                actionButtons = `<button class="action-btn finish-btn" data-action="finish" data-id="${del.id}"><i class="fas fa-flag-checkered"></i> Concluir</button>`;
+                actionButtons = `<button class="action-btn btn-finish" data-action="finish" data-id="${del.id}"><i class="fas fa-check-circle"></i> Concluir</button>`;
             }
             const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(del.endereco)}`;
             return `
-                <div class="delivery-item" data-id="${del.id}">
-                    <div class="delivery-header">
-                        <div class="client"><i class="fas fa-user-circle"></i> ${escapeHtml(del.cliente)}</div>
-                        <div class="status-badge ${statusClass}">${statusText}</div>
+                <div class="delivery-card">
+                    <div class="card-top">
+                        <div class="customer-name"><i class="fas fa-user-circle"></i> ${escapeHtml(del.cliente)}</div>
+                        <div class="status-pill ${statusClass}">${statusText}</div>
                     </div>
-                    <div class="address-line">
+                    <div class="address-info">
                         <i class="fas fa-map-marker-alt"></i> <span>${escapeHtml(del.endereco)}</span>
-                        <a href="${mapsLink}" target="_blank" class="map-link" rel="noopener"><i class="fas fa-external-link-alt"></i> mapa</a>
+                        <a href="${mapsLink}" target="_blank" class="map-link"><i class="fas fa-external-link-alt"></i> mapa</a>
                     </div>
-                    <div class="price"><i class="fas fa-tag"></i> R$ ${valorFormat}</div>
-                    <div class="meta-row">
-                        <span><i class="far fa-clock"></i> ${criadoData}</span>
-                        ${del.observacoes ? `<span><i class="fas fa-comment"></i> ${escapeHtml(del.observacoes.substring(0, 40))}</span>` : ''}
+                    <div class="price-distance">
+                        <div class="price-highlight"><i class="fas fa-money-bill-wave"></i> R$ ${valorFormat}</div>
+                        <div class="distance-badge"><i class="fas fa-road"></i> ${distanciaFormat} km</div>
                     </div>
-                    <div class="card-buttons">
-                        <button class="action-btn edit-btn" data-action="edit" data-id="${del.id}"><i class="fas fa-pencil-alt"></i> Editar</button>
+                    <div class="meta-details">
+                        <span><i class="far fa-clock"></i> ${dateFormatted}</span>
+                        ${del.observacoes ? `<span><i class="fas fa-note-sticky"></i> ${escapeHtml(del.observacoes.substring(0, 40))}</span>` : ''}
+                    </div>
+                    <div class="action-group">
+                        <button class="action-btn btn-edit" data-action="edit" data-id="${del.id}"><i class="fas fa-pen"></i> Editar</button>
                         ${actionButtons}
-                        <button class="action-btn delete-btn" data-action="delete" data-id="${del.id}"><i class="fas fa-trash-alt"></i> Excluir</button>
+                        <button class="action-btn btn-delete" data-action="delete" data-id="${del.id}"><i class="fas fa-trash-alt"></i> Excluir</button>
                     </div>
                 </div>
             `;
         }).join("");
 
-        // Anexar eventos
         document.querySelectorAll("[data-action='edit']").forEach(btn => {
-            btn.addEventListener("click", (e) => { e.stopPropagation(); openEditModal(btn.getAttribute("data-id")); });
+            btn.addEventListener("click", (e) => { e.stopPropagation(); openEditModal(btn.dataset.id); });
         });
         document.querySelectorAll("[data-action='delete']").forEach(btn => {
-            btn.addEventListener("click", (e) => { e.stopPropagation(); deleteDelivery(btn.getAttribute("data-id")); });
+            btn.addEventListener("click", (e) => { e.stopPropagation(); deleteDelivery(btn.dataset.id); });
         });
         document.querySelectorAll("[data-action='start']").forEach(btn => {
-            btn.addEventListener("click", (e) => { e.stopPropagation(); quickUpdate(btn.getAttribute("data-id"), "em_andamento"); });
+            btn.addEventListener("click", (e) => { e.stopPropagation(); changeStatus(btn.dataset.id, "em_andamento"); });
         });
         document.querySelectorAll("[data-action='finish']").forEach(btn => {
-            btn.addEventListener("click", (e) => { e.stopPropagation(); quickUpdate(btn.getAttribute("data-id"), "entregue"); });
+            btn.addEventListener("click", (e) => { e.stopPropagation(); changeStatus(btn.dataset.id, "entregue"); });
         });
     }
 
@@ -647,66 +598,20 @@
         return str.replace(/[&<>]/g, (m) => m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;'));
     }
 
-    function quickUpdate(id, newStatus) {
-        const index = deliveries.findIndex(d => d.id === id);
-        if(index !== -1) {
-            const oldStatus = deliveries[index].status;
-            deliveries[index].status = newStatus;
-            if(newStatus === "entregue" && oldStatus !== "entregue") {
-                deliveries[index].entregue_em = new Date().toISOString();
-            } else if(newStatus !== "entregue") {
-                deliveries[index].entregue_em = null;
-            }
-            saveToLocal();
-            refreshUI();
-        }
+    function renderStatsAndList() {
+        updateStats();
+        renderList();
     }
 
-    function deleteDelivery(id) {
-        if(confirm("Remover esta corrida permanentemente?")) {
-            deliveries = deliveries.filter(d => d.id !== id);
-            saveToLocal();
-            refreshUI();
-        }
-    }
-
-    function openEditModal(id) {
-        const d = deliveries.find(d => d.id === id);
-        if(d) {
-            document.getElementById("modalTitle").innerText = "✏️ Editar entrega";
-            document.getElementById("editId").value = d.id;
-            document.getElementById("cliente").value = d.cliente;
-            document.getElementById("endereco").value = d.endereco;
-            document.getElementById("valor").value = d.valor;
-            document.getElementById("statusSelect").value = d.status;
-            document.getElementById("obs").value = d.observacoes || "";
-            document.getElementById("modal").style.display = "flex";
-        }
-    }
-
-    function openCreateModal() {
-        document.getElementById("modalTitle").innerText = "➕ Nova entrega";
-        document.getElementById("editId").value = "";
-        document.getElementById("cliente").value = "";
-        document.getElementById("endereco").value = "";
-        document.getElementById("valor").value = "0";
-        document.getElementById("statusSelect").value = "pendente";
-        document.getElementById("obs").value = "";
-        document.getElementById("modal").style.display = "flex";
-    }
-
-    function closeModal() {
-        document.getElementById("modal").style.display = "none";
-    }
-
-    function saveForm(event) {
+    function saveDeliveryHandler(event) {
         event.preventDefault();
         const id = document.getElementById("editId").value;
-        const cliente = document.getElementById("cliente").value.trim();
-        const endereco = document.getElementById("endereco").value.trim();
-        const valor = parseFloat(document.getElementById("valor").value) || 0;
+        const cliente = document.getElementById("clientName").value.trim();
+        const endereco = document.getElementById("address").value.trim();
+        const valor = parseFloat(document.getElementById("price").value) || 0;
+        const distancia = parseFloat(document.getElementById("distance").value) || 0;
         const status = document.getElementById("statusSelect").value;
-        const observacoes = document.getElementById("obs").value.trim();
+        const observacoes = document.getElementById("notes").value.trim();
 
         if(!cliente || !endereco) {
             alert("Preencha cliente e endereço");
@@ -720,67 +625,170 @@
                 deliveries[index].cliente = cliente;
                 deliveries[index].endereco = endereco;
                 deliveries[index].valor = valor;
+                deliveries[index].distancia = distancia;
                 deliveries[index].observacoes = observacoes;
                 deliveries[index].status = status;
-                if(status === "entregue" && oldStatus !== "entregue") deliveries[index].entregue_em = new Date().toISOString();
-                else if(status !== "entregue") deliveries[index].entregue_em = null;
+                if(status === "entregue" && oldStatus !== "entregue") {
+                    deliveries[index].entregue_em = new Date().toISOString();
+                } else if(status !== "entregue") {
+                    deliveries[index].entregue_em = null;
+                }
             }
         } else {
-            const nova = {
+            const newDelivery = {
                 id: generateId(),
-                cliente, endereco, valor, status, observacoes,
+                cliente,
+                endereco,
+                valor,
+                distancia,
+                status,
+                observacoes,
                 criado_em: new Date().toISOString(),
-                entregue_em: status === "entregue" ? new Date().toISOString() : null
+                entregue_em: status === "entregue" ? new Date().toISOString() : null,
             };
-            deliveries.unshift(nova);
+            deliveries.unshift(newDelivery);
         }
         saveToLocal();
         closeModal();
-        refreshUI();
+        renderStatsAndList();
     }
 
-    // sincronizar abas inferiores e filtros superiores
-    function syncNavAndChips() {
-        // chips
-        document.querySelectorAll(".chip").forEach(chip => {
-            const filterVal = chip.getAttribute("data-filter");
-            if(filterVal === currentFilter) chip.classList.add("active");
-            else chip.classList.remove("active");
+    function deleteDelivery(id) {
+        if(confirm("Excluir esta corrida permanentemente?")) {
+            deliveries = deliveries.filter(d => d.id !== id);
+            saveToLocal();
+            renderStatsAndList();
+        }
+    }
+
+    function changeStatus(id, newStatus) {
+        const index = deliveries.findIndex(d => d.id === id);
+        if(index !== -1) {
+            const oldStatus = deliveries[index].status;
+            deliveries[index].status = newStatus;
+            if(newStatus === "entregue" && oldStatus !== "entregue") {
+                deliveries[index].entregue_em = new Date().toISOString();
+            } else if(newStatus !== "entregue") {
+                deliveries[index].entregue_em = null;
+            }
+            saveToLocal();
+            renderStatsAndList();
+        }
+    }
+
+    // ========== CÁLCULO DE DISTÂNCIA USANDO OSRM ==========
+    async function calculateDistance(address) {
+        const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`;
+        try {
+            const geoRes = await fetch(geocodeUrl, {
+                headers: { 'User-Agent': 'MotoFlashApp/1.0' }
+            });
+            const geoData = await geoRes.json();
+            if(!geoData.length) throw new Error("Endereço não encontrado");
+            const { lat, lon } = geoData[0];
+            
+            const position = await new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(resolve, reject);
+            });
+            const userLat = position.coords.latitude;
+            const userLon = position.coords.longitude;
+            
+            const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${userLon},${userLat};${lon},${lat}?overview=false`;
+            const routeRes = await fetch(osrmUrl);
+            const routeData = await routeRes.json();
+            if(routeData.code !== "Ok") throw new Error("Rota não encontrada");
+            
+            const distanceMeters = routeData.routes[0].distance;
+            const distanceKm = distanceMeters / 1000;
+            return distanceKm;
+        } catch(error) {
+            console.error(error);
+            alert("Não foi possível calcular a distância. Verifique sua localização e o endereço.");
+            return null;
+        }
+    }
+
+    async function onCalculateDistance() {
+        const address = document.getElementById("address").value.trim();
+        if(!address) {
+            alert("Digite o endereço do cliente primeiro.");
+            return;
+        }
+        if(!navigator.geolocation) {
+            alert("Seu navegador não suporta geolocalização.");
+            return;
+        }
+        const calcBtn = document.getElementById("calcDistanceBtn");
+        const originalText = calcBtn.innerHTML;
+        calcBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Calculando...';
+        calcBtn.disabled = true;
+        try {
+            const distance = await calculateDistance(address);
+            if(distance !== null) {
+                document.getElementById("distance").value = distance.toFixed(1);
+                alert(`Distância calculada: ${distance.toFixed(1)} km`);
+            }
+        } catch(err) {
+            alert("Erro ao calcular distância.");
+        } finally {
+            calcBtn.innerHTML = originalText;
+            calcBtn.disabled = false;
+        }
+    }
+
+    function openEditModal(id) {
+        const delivery = deliveries.find(d => d.id === id);
+        if(delivery) {
+            document.getElementById("modalTitle").innerText = "✏️ Editar entrega";
+            document.getElementById("editId").value = delivery.id;
+            document.getElementById("clientName").value = delivery.cliente;
+            document.getElementById("address").value = delivery.endereco;
+            document.getElementById("price").value = delivery.valor;
+            document.getElementById("distance").value = delivery.distancia || 0;
+            document.getElementById("statusSelect").value = delivery.status;
+            document.getElementById("notes").value = delivery.observacoes || "";
+            document.getElementById("globalModal").style.display = "flex";
+        }
+    }
+
+    function openCreateModal() {
+        document.getElementById("modalTitle").innerText = "➕ Nova corrida";
+        document.getElementById("editId").value = "";
+        document.getElementById("clientName").value = "";
+        document.getElementById("address").value = "";
+        document.getElementById("price").value = "0";
+        document.getElementById("distance").value = "0";
+        document.getElementById("statusSelect").value = "pendente";
+        document.getElementById("notes").value = "";
+        document.getElementById("globalModal").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("globalModal").style.display = "none";
+    }
+
+    function initFilters() {
+        const btns = document.querySelectorAll(".filter-chip");
+        btns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                btns.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                currentFilter = btn.getAttribute("data-filter");
+                renderList();
+            });
         });
-        // bottom nav
-        document.querySelectorAll(".nav-item").forEach(nav => {
-            const navVal = nav.getAttribute("data-nav");
-            if(navVal === currentFilter) nav.classList.add("active");
-            else nav.classList.remove("active");
-        });
     }
 
-    function setFilter(filter) {
-        currentFilter = filter;
-        renderDeliveries();
-        syncNavAndChips();
-    }
-
-    // eventos gerais
-    document.getElementById("deliveryForm").addEventListener("submit", saveForm);
-    document.getElementById("openModalBtn").addEventListener("click", openCreateModal);
+    document.getElementById("deliveryForm").addEventListener("submit", saveDeliveryHandler);
+    document.getElementById("openModalFab").addEventListener("click", openCreateModal);
     document.getElementById("closeModalBtn").addEventListener("click", closeModal);
-    window.addEventListener("click", (e) => { if(e.target === document.getElementById("modal")) closeModal(); });
-
-    // filtros chips
-    document.querySelectorAll(".chip").forEach(chip => {
-        chip.addEventListener("click", () => {
-            setFilter(chip.getAttribute("data-filter"));
-        });
-    });
-    // bottom nav
-    document.querySelectorAll(".nav-item").forEach(nav => {
-        nav.addEventListener("click", () => {
-            setFilter(nav.getAttribute("data-nav"));
-        });
+    document.getElementById("calcDistanceBtn").addEventListener("click", onCalculateDistance);
+    window.addEventListener("click", (e) => {
+        if(e.target === document.getElementById("globalModal")) closeModal();
     });
 
     loadData();
+    initFilters();
 </script>
 </body>
 </html>
