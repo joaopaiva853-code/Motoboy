@@ -2,9 +2,14 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0f0f1a">
     <title>MotoDash Pro</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -423,7 +428,7 @@
             <div id="savedAddressesContainer"><div class="empty-state"><div class="icon">🏪</div><p>Nenhum destino salvo</p></div></div>
             <div class="settings-item" onclick="showAddCorridaModal()"><span>📝</span> <span style="flex:1;margin-left:12px;">Adicionar Corrida Manual</span> <span>→</span></div>
             <div class="settings-item" onclick="resetAllData()"><span>🗑️</span> <span style="flex:1;margin-left:12px;">Limpar Todos os Dados</span> <span>→</span></div>
-            <div class="settings-item" id="installButtonContainer" style="display:none;" onclick="installApp()"><span>📲</span> <span style="flex:1;margin-left:12px;">Instalar App (Tela Inicial)</span> <span>→</span></div>
+            <div class="settings-item" id="installButtonContainer" style="display:none;" onclick="installApp()"><span>📲</span> <span style="flex:1;margin-left:12px;">Instalar App</span> <span>→</span></div>
             <p style="text-align:center;color:var(--text3);font-size:11px;margin-top:20px;">MotoDash Pro • Versão 2.0</p>
         </div>
     </div>
@@ -543,7 +548,7 @@
     window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installButtonContainer').style.display='flex'; });
     function installApp(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(r=>{ if(r.outcome==='accepted')showToast('✅ Instalado!'); deferredPrompt=null; document.getElementById('installButtonContainer').style.display='none'; }); } else showToast('Instalação indisponível.'); }
 
-    function init(){ setupPWA(); updateOnlineUI(); updateHeaderAndProfile(); renderAll(); document.getElementById('modalOverlay').addEventListener('click',closeModal); document.getElementById('addCorridaModalOverlay').addEventListener('click',closeAddCorridaModal); document.getElementById('editProfileModalOverlay').addEventListener('click',closeEditProfileModal); console.log('🏍️ MotoDash Pro com design degradê!'); }
+    function init(){ setupPWA(); updateOnlineUI(); updateHeaderAndProfile(); renderAll(); document.getElementById('modalOverlay').addEventListener('click',closeModal); document.getElementById('addCorridaModalOverlay').addEventListener('click',closeAddCorridaModal); document.getElementById('editProfileModalOverlay').addEventListener('click',closeEditProfileModal); console.log('🏍️ MotoDash Pro pronto para download!'); }
     init();
     window.addEventListener('beforeunload',()=>saveData(appData));
     setInterval(()=>saveData(appData),5000);
