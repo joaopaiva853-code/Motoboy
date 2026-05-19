@@ -2,11 +2,11 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes, maximum-scale=1.0">
-    <title>MotoFlash · Painel de Entregas</title>
-    <!-- Font Awesome 6 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1.0">
+    <title>MotoDash · Entregas Profissional</title>
+    <!-- Font Awesome 6 (ícones) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts: Inter para legibilidade -->
+    <!-- Google Fonts: Inter + Poppins para um toque moderno -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -18,179 +18,204 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: radial-gradient(circle at 10% 20%, #0a0f1c, #05070f);
+            background: radial-gradient(circle at 10% 20%, #0b1120, #0a0f1c);
             min-height: 100vh;
-            padding: 20px 16px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
         }
 
-        /* Container principal com efeito vidro */
-        .glass-app {
-            max-width: 580px;
+        /* Container principal estilo "app screen" */
+        .app-wrapper {
+            max-width: 480px;
+            width: 100%;
             margin: 0 auto;
             background: rgba(18, 25, 45, 0.65);
-            backdrop-filter: blur(12px);
-            border-radius: 56px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            backdrop-filter: blur(18px);
+            border-radius: 48px;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
             overflow: hidden;
-            padding: 24px 20px 32px;
+            position: relative;
         }
 
-        /* Cabeçalho com gradiente neon */
-        .header-glow {
-            background: linear-gradient(115deg, #ff1b6b 0%, #ff7e3a 100%);
-            margin: -24px -20px 28px -20px;
-            padding: 28px 20px 32px;
-            border-radius: 0 0 48px 48px;
+        /* conteúdo rolável principal */
+        .main-content {
+            padding: 24px 20px 90px 20px;
+            max-height: 85vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+
+        .main-content::-webkit-scrollbar {
+            width: 4px;
+        }
+        .main-content::-webkit-scrollbar-track {
+            background: #1e2a3e;
+            border-radius: 10px;
+        }
+        .main-content::-webkit-scrollbar-thumb {
+            background: #e11d48;
+            border-radius: 10px;
+        }
+
+        /* cabeçalho minimalista com gradiente */
+        .header-mini {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
             flex-wrap: wrap;
-            gap: 12px;
-            box-shadow: 0 12px 22px rgba(0,0,0,0.3);
         }
         .brand {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
         .brand-icon {
-            background: rgba(255,255,255,0.2);
-            width: 52px;
-            height: 52px;
-            border-radius: 30px;
+            background: linear-gradient(145deg, #e11d48, #f97316);
+            width: 48px;
+            height: 48px;
+            border-radius: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
-            backdrop-filter: blur(5px);
-        }
-        .brand-text h1 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
             color: white;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            font-size: 24px;
+            box-shadow: 0 6px 12px rgba(225,29,72,0.3);
+        }
+        .brand-text h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #facc15);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
         }
         .brand-text p {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
+            color: #94a3b8;
             font-weight: 500;
-            opacity: 0.9;
         }
 
-        /* Cards estatísticos com vidro escuro */
+        /* cards de estatísticas - glassmorph */
         .stats-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
             gap: 12px;
             margin-bottom: 28px;
         }
         .stat-glass {
-            background: rgba(10, 15, 27, 0.6);
+            background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(4px);
             border-radius: 32px;
             padding: 14px 6px;
+            flex: 1;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: 0.2s;
         }
         .stat-number {
             font-size: 2rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #f8fafc, #cbd5e6);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
+            color: white;
+            line-height: 1;
         }
-        .stat-label {
+        .stat-label-sm {
             font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #a0b3d9;
+            font-weight: 500;
+            color: #cbd5e1;
+            margin-top: 6px;
+            letter-spacing: 0.3px;
         }
 
-        /* Filtros com estilo moderno */
-        .filters {
+        /* filtros estilo chips */
+        .filter-chips {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
-            margin-bottom: 26px;
+            margin-bottom: 24px;
             justify-content: center;
         }
-        .filter-chip {
-            background: rgba(255,255,255,0.08);
+        .chip {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(4px);
             border: none;
-            padding: 8px 20px;
-            border-radius: 60px;
-            font-weight: 700;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
             font-size: 0.8rem;
             color: #e2e8f0;
-            cursor: pointer;
             transition: all 0.2s;
-            font-family: 'Inter', sans-serif;
-            backdrop-filter: blur(4px);
+            cursor: pointer;
         }
-        .filter-chip.active {
-            background: linear-gradient(105deg, #ff1b6b, #ff7e3a);
+        .chip.active {
+            background: linear-gradient(95deg, #e11d48, #f97316);
             color: white;
-            box-shadow: 0 4px 12px rgba(255, 30, 86, 0.4);
+            box-shadow: 0 4px 12px rgba(225,29,72,0.4);
         }
 
-        /* Lista de entregas com cards modernos */
+        /* cards de entrega (novo formato elegante) */
         .delivery-list {
             display: flex;
             flex-direction: column;
-            gap: 18px;
-            margin-bottom: 28px;
-            max-height: 520px;
-            overflow-y: auto;
-            padding-right: 4px;
+            gap: 16px;
+            margin-bottom: 10px;
         }
-        .task-card {
-            background: rgba(12, 18, 32, 0.8);
+        .delivery-item {
+            background: rgba(20, 30, 50, 0.7);
             backdrop-filter: blur(8px);
             border-radius: 32px;
             padding: 18px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.1s, background 0.2s;
         }
-        .task-header {
+        .delivery-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
-        .customer {
-            font-weight: 800;
-            font-size: 1.25rem;
+        .client {
             display: flex;
             align-items: center;
             gap: 10px;
+            font-weight: 800;
+            font-size: 1.2rem;
             color: #f1f5f9;
         }
-        .badge-status {
-            font-size: 0.7rem;
+        .client i {
+            color: #f97316;
+            font-size: 1.2rem;
+        }
+        .status-badge {
+            font-size: 0.65rem;
             font-weight: 800;
-            padding: 5px 14px;
-            border-radius: 40px;
+            padding: 5px 12px;
+            border-radius: 50px;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .badge-pendente { background: #ffedd5; color: #b45309; }
-        .badge-andamento { background: #dbeafe; color: #1e4b8f; }
+        .badge-andamento { background: #dbeafe; color: #1e40af; }
         .badge-entregue { background: #dcfce7; color: #15803d; }
 
         .address-line {
             display: flex;
             gap: 10px;
-            font-size: 0.9rem;
-            color: #cbd5e1;
-            margin: 12px 0 10px;
+            align-items: flex-start;
+            font-size: 0.85rem;
+            color: #cbd5e6;
+            margin: 10px 0;
             word-break: break-word;
         }
-        .value {
+        .address-line i {
+            margin-top: 2px;
+            color: #facc15;
+        }
+        .price {
             font-weight: 800;
             font-size: 1.2rem;
             color: #facc15;
@@ -199,129 +224,153 @@
             align-items: center;
             gap: 8px;
         }
-        .meta {
-            font-size: 0.7rem;
-            color: #8ba0bc;
-            display: flex;
-            gap: 14px;
-            margin-top: 10px;
-        }
-        .actions {
+        .meta-row {
             display: flex;
             gap: 12px;
-            margin-top: 18px;
+            font-size: 0.7rem;
+            color: #94a3b8;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .card-buttons {
+            display: flex;
             justify-content: flex-end;
+            gap: 10px;
+            margin-top: 16px;
             flex-wrap: wrap;
         }
         .action-btn {
+            background: rgba(255, 255, 255, 0.1);
             border: none;
-            font-size: 0.8rem;
-            font-weight: 600;
             padding: 8px 16px;
             border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.75rem;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             cursor: pointer;
             transition: 0.1s;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(2px);
             color: #e2e8f0;
         }
-        .btn-edit { background: #2d3a5e; color: #90caf9; }
-        .btn-delete { background: #4a2532; color: #fda4af; }
-        .btn-start { background: #1f3b4c; color: #7dd3fc; }
-        .btn-finish { background: #1e3a2f; color: #86efac; }
+        .action-btn i { font-size: 0.8rem; }
+        .edit-btn { background: rgba(37, 99, 235, 0.2); color: #60a5fa; }
+        .delete-btn { background: rgba(225, 29, 72, 0.2); color: #fb7185; }
+        .start-btn { background: rgba(2, 132, 199, 0.2); color: #7dd3fc; }
+        .finish-btn { background: rgba(34, 197, 94, 0.2); color: #86efac; }
         .map-link {
-            background: rgba(0,0,0,0.3);
+            background: rgba(255,255,255,0.05);
             padding: 5px 12px;
             border-radius: 40px;
             text-decoration: none;
             font-size: 0.7rem;
             font-weight: 600;
-            color: #60a5fa;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            color: #a78bfa;
         }
 
-        .empty {
-            text-align: center;
-            padding: 48px 16px;
-            color: #a0b3d9;
-        }
-
-        /* Botão flutuante */
-        .fab {
-            background: linear-gradient(145deg, #ff1b6b, #ff7e3a);
-            width: 68px;
-            height: 68px;
-            border-radius: 40px;
+        /* Botão flutuante (FAB) estiloso */
+        .fab-new {
+            position: fixed;
+            bottom: 85px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(145deg, #e11d48, #f97316);
+            width: 60px;
+            height: 60px;
+            border-radius: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 8px auto 0;
             border: none;
             color: white;
-            font-size: 32px;
-            box-shadow: 0 8px 20px rgba(255, 30, 86, 0.5);
+            font-size: 28px;
+            box-shadow: 0 8px 20px rgba(225,29,72,0.5);
             cursor: pointer;
+            z-index: 20;
             transition: 0.15s;
         }
-        .fab:active { transform: scale(0.94); }
+        .fab-new:active { transform: translateX(-50%) scale(0.94); }
 
-        /* Modal */
-        .modal-overlay {
+        /* Bottom navigation (novo formato) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: rgba(10, 15, 27, 0.85);
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 20px 22px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-radius: 32px 32px 0 0;
+            z-index: 15;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 0.7rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .nav-item i { font-size: 1.4rem; }
+        .nav-item.active { color: #f97316; text-shadow: 0 0 6px #f97316; }
+
+        /* MODAL redesign */
+        .modal {
             display: none;
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
             align-items: center;
             justify-content: center;
             z-index: 1000;
             padding: 20px;
         }
-        .modal-content {
-            background: #0f172ad9;
-            backdrop-filter: blur(16px);
-            max-width: 500px;
-            width: 100%;
+        .modal-card-grad {
+            background: #111827;
             border-radius: 48px;
+            width: 100%;
+            max-width: 500px;
             padding: 28px 24px;
-            border: 1px solid rgba(255,255,255,0.2);
-            animation: fadeUp 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 40px rgba(0,0,0,0.5);
         }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px);}
-            to { opacity: 1; transform: translateY(0);}
-        }
-        .modal-content h2 {
-            font-size: 1.8rem;
+        .modal-card-grad h3 {
+            font-size: 1.6rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #ffb3c6, #ff9a5e);
+            background: linear-gradient(135deg, #fff, #facc15);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
             margin-bottom: 20px;
         }
-        .form-group {
-            margin-bottom: 18px;
+        .input-group {
+            margin-bottom: 20px;
         }
-        .form-group label {
-            font-weight: 600;
-            font-size: 0.8rem;
+        .input-group label {
             display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
             margin-bottom: 8px;
-            color: #cbd5e6;
+            color: #cbd5e1;
         }
-        .form-group input, .form-group select, .form-group textarea {
+        .input-group input, .input-group select, .input-group textarea {
             width: 100%;
             padding: 14px 16px;
             border-radius: 32px;
-            border: none;
             background: #1e293b;
+            border: 1px solid #334155;
             color: white;
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
@@ -330,267 +379,408 @@
             display: flex;
             gap: 12px;
             justify-content: flex-end;
-            margin-top: 26px;
+            margin-top: 24px;
         }
-        .btn-save-modal {
-            background: linear-gradient(105deg, #ff1b6b, #ff7e3a);
+        .modal-btn-save {
+            background: linear-gradient(95deg, #e11d48, #f97316);
             border: none;
             padding: 12px 24px;
-            border-radius: 60px;
+            border-radius: 40px;
             font-weight: 700;
             color: white;
         }
-        .btn-cancel-modal {
+        .modal-btn-cancel {
             background: #334155;
             border: none;
             padding: 12px 24px;
-            border-radius: 60px;
+            border-radius: 40px;
             font-weight: 600;
-            color: #f1f5f9;
+            color: white;
+        }
+        .empty-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94a3b8;
         }
         footer {
-            font-size: 0.7rem;
             text-align: center;
-            margin-top: 20px;
-            color: #7e8aa8;
+            font-size: 0.6rem;
+            color: #5b6e8c;
+            margin-top: 24px;
         }
-
-        /* scroll */
-        .delivery-list::-webkit-scrollbar { width: 4px; }
-        .delivery-list::-webkit-scrollbar-track { background: #1e293b; border-radius: 10px; }
-        .delivery-list::-webkit-scrollbar-thumb { background: #ff4d6d; border-radius: 10px; }
     </style>
 </head>
 <body>
-<div class="glass-app">
-    <div class="header-glow">
-        <div class="brand">
-            <div class="brand-icon"><i class="fas fa-rocket"></i></div>
-            <div class="brand-text">
-                <h1>MotoFlash</h1>
-                <p>Entregas inteligentes</p>
+<div class="app-wrapper">
+    <div class="main-content" id="mainContent">
+        <!-- cabeçalho -->
+        <div class="header-mini">
+            <div class="brand">
+                <div class="brand-icon"><i class="fas fa-bolt"></i></div>
+                <div class="brand-text">
+                    <h2>MotoDash</h2>
+                    <p>entregas inteligentes</p>
+                </div>
             </div>
         </div>
-        <!-- sem botão demo, conforme solicitado -->
+
+        <!-- estatísticas em vidro -->
+        <div class="stats-row">
+            <div class="stat-glass"><div class="stat-number" id="totalCount">0</div><div class="stat-label-sm">Total</div></div>
+            <div class="stat-glass"><div class="stat-number" id="pendingCount">0</div><div class="stat-label-sm">Pendentes</div></div>
+            <div class="stat-glass"><div class="stat-number" id="earningsAmount">R$0</div><div class="stat-label-sm">Receita</div></div>
+        </div>
+
+        <!-- filtros tipo chips -->
+        <div class="filter-chips" id="filterChips">
+            <button class="chip active" data-filter="all">📋 Todas</button>
+            <button class="chip" data-filter="pendente">⏳ Pendentes</button>
+            <button class="chip" data-filter="em_andamento">🏍️ Andamento</button>
+            <button class="chip" data-filter="entregue">✅ Entregues</button>
+        </div>
+
+        <!-- lista dinâmica -->
+        <div id="deliveriesContainer" class="delivery-list">
+            <div class="empty-message"><i class="fas fa-motorcycle" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>Nenhuma corrida.<br>Toque no botão + para criar</div>
+        </div>
+        <footer>Edição completa • dados salvos localmente</footer>
     </div>
 
-    <div class="stats-row">
-        <div class="stat-glass"><div class="stat-number" id="totalCount">0</div><div class="stat-label">Corridas</div></div>
-        <div class="stat-glass"><div class="stat-number" id="pendingCount">0</div><div class="stat-label">Pendentes</div></div>
-        <div class="stat-glass"><div class="stat-number" id="totalEarn">R$0</div><div class="stat-label">Ganhos</div></div>
-    </div>
+    <!-- Botão + flutuante -->
+    <button class="fab-new" id="openModalBtn"><i class="fas fa-plus"></i></button>
 
-    <div class="filters">
-        <button class="filter-chip active" data-filter="all">📋 Todas</button>
-        <button class="filter-chip" data-filter="pendente">⏳ Pendentes</button>
-        <button class="filter-chip" data-filter="em_andamento">🏍️ Andamento</button>
-        <button class="filter-chip" data-filter="entregue">✅ Entregues</button>
+    <!-- Bottom navigation (novo formato) -->
+    <div class="bottom-nav">
+        <button class="nav-item active" data-nav="all"><i class="fas fa-list-ul"></i><span>Corridas</span></button>
+        <button class="nav-item" data-nav="pendente"><i class="fas fa-hourglass-half"></i><span>Pendentes</span></button>
+        <button class="nav-item" data-nav="em_andamento"><i class="fas fa-motorcycle"></i><span>Ativas</span></button>
+        <button class="nav-item" data-nav="entregue"><i class="fas fa-check-circle"></i><span>Histórico</span></button>
     </div>
-
-    <div id="deliveryList" class="delivery-list">
-        <div class="empty"><i class="fas fa-motorcycle" style="font-size: 2rem; display: block; margin-bottom: 10px;"></i> Nenhuma entrega<br>Toque no botão + para criar</div>
-    </div>
-
-    <button class="fab" id="openModalBtn"><i class="fas fa-plus"></i></button>
-    <footer><i class="fas fa-edit"></i> Edite corridas • dados salvos no seu dispositivo</footer>
 </div>
 
-<div id="modalOverlay" class="modal-overlay">
-    <div class="modal-content">
-        <h2 id="modalTitle">➕ Nova corrida</h2>
+<!-- MODAL -->
+<div id="modal" class="modal">
+    <div class="modal-card-grad">
+        <h3 id="modalTitle">➕ Nova entrega</h3>
         <form id="deliveryForm">
-            <input type="hidden" id="editId">
-            <div class="form-group"><label><i class="fas fa-user"></i> Cliente</label><input type="text" id="cliente" placeholder="Ex: Mariana Costa" required></div>
-            <div class="form-group"><label><i class="fas fa-location-dot"></i> Endereço completo</label><input type="text" id="endereco" placeholder="Rua, número, bairro, cidade" required></div>
-            <div class="form-group"><label><i class="fas fa-tag"></i> Valor (R$)</label><input type="number" id="valor" step="0.01" value="0"></div>
-            <div class="form-group"><label><i class="fas fa-tasks"></i> Status</label><select id="status"><option value="pendente">Pendente</option><option value="em_andamento">Em andamento</option><option value="entregue">Entregue</option></select></div>
-            <div class="form-group"><label><i class="fas fa-comment"></i> Observações</label><textarea id="obs" rows="2" placeholder="Informações adicionais..."></textarea></div>
-            <div class="modal-buttons"><button type="button" class="btn-cancel-modal" id="closeModalBtn">Cancelar</button><button type="submit" class="btn-save-modal">Salvar corrida</button></div>
+            <input type="hidden" id="editId" value="">
+            <div class="input-group">
+                <label><i class="fas fa-user"></i> Cliente</label>
+                <input type="text" id="cliente" placeholder="Nome completo" required>
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-location-dot"></i> Endereço completo</label>
+                <input type="text" id="endereco" placeholder="Rua, número, bairro, cidade" required>
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-dollar-sign"></i> Valor (R$)</label>
+                <input type="number" id="valor" step="0.01" placeholder="0,00" value="0">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-tasks"></i> Status</label>
+                <select id="statusSelect">
+                    <option value="pendente">Pendente</option>
+                    <option value="em_andamento">Em andamento</option>
+                    <option value="entregue">Entregue</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-pen"></i> Observações</label>
+                <textarea id="obs" rows="2" placeholder="Portão, ponto de referência..."></textarea>
+            </div>
+            <div class="modal-buttons">
+                <button type="button" class="modal-btn-cancel" id="closeModalBtn">Cancelar</button>
+                <button type="submit" class="modal-btn-save">Salvar</button>
+            </div>
         </form>
     </div>
 </div>
 
 <script>
-    // ---------- GESTÃO DE DADOS ----------
+    // ---------- DADOS E LÓGICA COMPLETA ----------
     let deliveries = [];
-    let currentFilter = "all";
+    let currentFilter = "all"; // usado pelos chips e nav
 
-    function loadFromStorage() {
-        const stored = localStorage.getItem("motoflash_deliveries_v2");
+    // Carregar do localStorage
+    function loadData() {
+        const stored = localStorage.getItem("motodash_deliveries");
         if(stored) {
             deliveries = JSON.parse(stored);
         } else {
+            // dados iniciais (cidade local)
             deliveries = [
-                { id: "d1", cliente: "Larissa Mendes", endereco: "Rua Augusta, 1240 - Consolação, SP", valor: 14.90, status: "pendente", observacoes: "Apto 33B", criado_em: new Date(Date.now() - 3600000).toISOString(), entregue_em: null },
-                { id: "d2", cliente: "Ricardo Nunes", endereco: "Av. Paulista, 2000 - Bela Vista, SP", valor: 22.30, status: "em_andamento", observacoes: "Portaria 24h", criado_em: new Date(Date.now() - 7200000).toISOString(), entregue_em: null },
-                { id: "d3", cliente: "Camila Rocha", endereco: "Rua dos Pinheiros, 678 - Pinheiros, SP", valor: 18.50, status: "entregue", observacoes: "Deixar na recepção", criado_em: new Date(Date.now() - 86400000).toISOString(), entregue_em: new Date(Date.now() - 43200000).toISOString() }
+                {
+                    id: "d1",
+                    cliente: "Mariana Costa",
+                    endereco: "Rua da Consolação, 2323 - Consolação, São Paulo",
+                    valor: 18.50,
+                    status: "pendente",
+                    observacoes: "Apto 808, tocar interfone 8",
+                    criado_em: new Date(Date.now() - 7200000).toISOString(),
+                    entregue_em: null
+                },
+                {
+                    id: "d2",
+                    cliente: "Rafael Souza",
+                    endereco: "Alameda Santos, 1450 - Jardins, São Paulo",
+                    valor: 25.00,
+                    status: "em_andamento",
+                    observacoes: "Próximo ao shopping",
+                    criado_em: new Date(Date.now() - 3600000).toISOString(),
+                    entregue_em: null
+                },
+                {
+                    id: "d3",
+                    cliente: "Fernanda Lopes",
+                    endereco: "Rua Oscar Freire, 850 - Cerqueira César",
+                    valor: 32.90,
+                    status: "entregue",
+                    observacoes: "Entregue na mão do porteiro",
+                    criado_em: new Date(Date.now() - 172800000).toISOString(),
+                    entregue_em: new Date(Date.now() - 86400000).toISOString()
+                }
             ];
-            saveToStorage();
+            saveToLocal();
         }
-        updateStatsAndList();
+        refreshUI();
     }
 
-    function saveToStorage() {
-        localStorage.setItem("motoflash_deliveries_v2", JSON.stringify(deliveries));
+    function saveToLocal() {
+        localStorage.setItem("motodash_deliveries", JSON.stringify(deliveries));
     }
 
-    function generateId() { return Date.now().toString(36) + Math.random().toString(36).substring(2,6); }
+    function generateId() {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+    }
 
-    function updateStatsAndList() {
+    function refreshUI() {
+        renderStats();
+        renderDeliveries();
+        syncNavAndChips();
+    }
+
+    function renderStats() {
         const total = deliveries.length;
-        const pending = deliveries.filter(d => d.status === "pendente").length;
-        const earnings = deliveries.filter(d => d.status === "entregue").reduce((acc, d) => acc + (d.valor || 0), 0);
+        const pendentes = deliveries.filter(d => d.status === "pendente").length;
+        const earnings = deliveries.filter(d => d.status === "entregue").reduce((sum, d) => sum + (d.valor || 0), 0);
         document.getElementById("totalCount").innerText = total;
-        document.getElementById("pendingCount").innerText = pending;
-        document.getElementById("totalEarn").innerHTML = `R$${earnings.toFixed(2)}`;
-        renderList();
+        document.getElementById("pendingCount").innerText = pendentes;
+        document.getElementById("earningsAmount").innerHTML = `R$${earnings.toFixed(2)}`;
     }
 
-    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, (m) => m==='&'?'&amp;':(m==='<'?'&lt;':'&gt;')); }
-
-    function renderList() {
+    function renderDeliveries() {
         let filtered = [...deliveries];
-        if(currentFilter !== "all") filtered = filtered.filter(d => d.status === currentFilter);
+        if(currentFilter !== "all") {
+            filtered = filtered.filter(d => d.status === currentFilter);
+        }
+        // ordenação: pendentes e em andamento primeiro
         filtered.sort((a,b) => {
-            const order = { pendente:1, em_andamento:2, entregue:3 };
-            if(order[a.status] !== order[b.status]) return order[a.status] - order[b.status];
+            const order = { pendente: 1, em_andamento: 2, entregue: 3 };
+            const oa = order[a.status] || 4;
+            const ob = order[b.status] || 4;
+            if(oa !== ob) return oa - ob;
             return new Date(b.criado_em) - new Date(a.criado_em);
         });
-        const container = document.getElementById("deliveryList");
+
+        const container = document.getElementById("deliveriesContainer");
         if(filtered.length === 0) {
-            container.innerHTML = `<div class="empty"><i class="fas fa-road" style="font-size: 2rem;"></i><br>Nenhuma corrida encontrada</div>`;
+            container.innerHTML = `<div class="empty-message"><i class="fas fa-road" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>Nenhuma corrida aqui.<br>Toque no botão + para adicionar</div>`;
             return;
         }
-        container.innerHTML = filtered.map(d => {
-            const statusLabel = { pendente:"Pendente", em_andamento:"Em andamento", entregue:"Entregue" }[d.status];
-            const statusClass = `badge-${d.status === "em_andamento" ? "andamento" : d.status}`;
-            const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.endereco)}`;
+
+        container.innerHTML = filtered.map(del => {
+            const statusText = { pendente: "Pendente", em_andamento: "Em andamento", entregue: "Entregue" }[del.status];
+            let statusClass = "";
+            if(del.status === "pendente") statusClass = "badge-pendente";
+            else if(del.status === "em_andamento") statusClass = "badge-andamento";
+            else statusClass = "badge-entregue";
+            const valorFormat = (del.valor || 0).toFixed(2);
+            const criadoData = new Date(del.criado_em).toLocaleDateString("pt-BR", { day:"2-digit", month:"short", hour:"2-digit", minute:"2-digit" });
             let actionButtons = "";
-            if(d.status === "pendente") actionButtons = `<button class="action-btn btn-start" data-action="start" data-id="${d.id}"><i class="fas fa-play"></i> Iniciar</button>`;
-            else if(d.status === "em_andamento") actionButtons = `<button class="action-btn btn-finish" data-action="finish" data-id="${d.id}"><i class="fas fa-check-double"></i> Concluir</button>`;
+            if(del.status === "pendente") {
+                actionButtons = `<button class="action-btn start-btn" data-action="start" data-id="${del.id}"><i class="fas fa-play"></i> Iniciar</button>`;
+            } else if(del.status === "em_andamento") {
+                actionButtons = `<button class="action-btn finish-btn" data-action="finish" data-id="${del.id}"><i class="fas fa-flag-checkered"></i> Concluir</button>`;
+            }
+            const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(del.endereco)}`;
             return `
-                <div class="task-card">
-                    <div class="task-header">
-                        <div class="customer"><i class="fas fa-user-astronaut"></i> ${escapeHtml(d.cliente)}</div>
-                        <div class="badge-status ${statusClass}">${statusLabel}</div>
+                <div class="delivery-item" data-id="${del.id}">
+                    <div class="delivery-header">
+                        <div class="client"><i class="fas fa-user-circle"></i> ${escapeHtml(del.cliente)}</div>
+                        <div class="status-badge ${statusClass}">${statusText}</div>
                     </div>
-                    <div class="address-line"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(d.endereco)} <a href="${mapsLink}" target="_blank" class="map-link"><i class="fas fa-external-link-alt"></i> mapa</a></div>
-                    <div class="value"><i class="fas fa-coins"></i> R$ ${(d.valor || 0).toFixed(2)}</div>
-                    <div class="meta"><span><i class="far fa-calendar"></i> ${new Date(d.criado_em).toLocaleDateString("pt-BR", { hour:"2-digit", minute:"2-digit" })}</span>${d.observacoes ? `<span><i class="fas fa-pen"></i> ${escapeHtml(d.observacoes.substring(0, 40))}</span>` : ''}</div>
-                    <div class="actions">
-                        <button class="action-btn btn-edit" data-action="edit" data-id="${d.id}"><i class="fas fa-edit"></i> Editar</button>
+                    <div class="address-line">
+                        <i class="fas fa-map-marker-alt"></i> <span>${escapeHtml(del.endereco)}</span>
+                        <a href="${mapsLink}" target="_blank" class="map-link" rel="noopener"><i class="fas fa-external-link-alt"></i> mapa</a>
+                    </div>
+                    <div class="price"><i class="fas fa-tag"></i> R$ ${valorFormat}</div>
+                    <div class="meta-row">
+                        <span><i class="far fa-clock"></i> ${criadoData}</span>
+                        ${del.observacoes ? `<span><i class="fas fa-comment"></i> ${escapeHtml(del.observacoes.substring(0, 40))}</span>` : ''}
+                    </div>
+                    <div class="card-buttons">
+                        <button class="action-btn edit-btn" data-action="edit" data-id="${del.id}"><i class="fas fa-pencil-alt"></i> Editar</button>
                         ${actionButtons}
-                        <button class="action-btn btn-delete" data-action="delete" data-id="${d.id}"><i class="fas fa-trash-alt"></i> Excluir</button>
+                        <button class="action-btn delete-btn" data-action="delete" data-id="${del.id}"><i class="fas fa-trash-alt"></i> Excluir</button>
                     </div>
                 </div>
             `;
         }).join("");
 
-        // eventos dos botões dinâmicos
-        document.querySelectorAll("[data-action='edit']").forEach(btn => btn.addEventListener("click", (e) => { e.stopPropagation(); openEditModal(btn.dataset.id); }));
-        document.querySelectorAll("[data-action='delete']").forEach(btn => btn.addEventListener("click", (e) => { e.stopPropagation(); deleteDelivery(btn.dataset.id); }));
-        document.querySelectorAll("[data-action='start']").forEach(btn => btn.addEventListener("click", (e) => { e.stopPropagation(); changeStatus(btn.dataset.id, "em_andamento"); }));
-        document.querySelectorAll("[data-action='finish']").forEach(btn => btn.addEventListener("click", (e) => { e.stopPropagation(); changeStatus(btn.dataset.id, "entregue"); }));
+        // Anexar eventos
+        document.querySelectorAll("[data-action='edit']").forEach(btn => {
+            btn.addEventListener("click", (e) => { e.stopPropagation(); openEditModal(btn.getAttribute("data-id")); });
+        });
+        document.querySelectorAll("[data-action='delete']").forEach(btn => {
+            btn.addEventListener("click", (e) => { e.stopPropagation(); deleteDelivery(btn.getAttribute("data-id")); });
+        });
+        document.querySelectorAll("[data-action='start']").forEach(btn => {
+            btn.addEventListener("click", (e) => { e.stopPropagation(); quickUpdate(btn.getAttribute("data-id"), "em_andamento"); });
+        });
+        document.querySelectorAll("[data-action='finish']").forEach(btn => {
+            btn.addEventListener("click", (e) => { e.stopPropagation(); quickUpdate(btn.getAttribute("data-id"), "entregue"); });
+        });
     }
 
-    function changeStatus(id, newStatus) {
-        const idx = deliveries.findIndex(d => d.id === id);
-        if(idx !== -1) {
-            const old = deliveries[idx].status;
-            deliveries[idx].status = newStatus;
-            if(newStatus === "entregue" && old !== "entregue") deliveries[idx].entregue_em = new Date().toISOString();
-            else if(newStatus !== "entregue") deliveries[idx].entregue_em = null;
-            saveToStorage();
-            updateStatsAndList();
+    function escapeHtml(str) {
+        if(!str) return '';
+        return str.replace(/[&<>]/g, (m) => m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;'));
+    }
+
+    function quickUpdate(id, newStatus) {
+        const index = deliveries.findIndex(d => d.id === id);
+        if(index !== -1) {
+            const oldStatus = deliveries[index].status;
+            deliveries[index].status = newStatus;
+            if(newStatus === "entregue" && oldStatus !== "entregue") {
+                deliveries[index].entregue_em = new Date().toISOString();
+            } else if(newStatus !== "entregue") {
+                deliveries[index].entregue_em = null;
+            }
+            saveToLocal();
+            refreshUI();
         }
     }
 
     function deleteDelivery(id) {
-        if(confirm("Remover esta corrida?")) {
+        if(confirm("Remover esta corrida permanentemente?")) {
             deliveries = deliveries.filter(d => d.id !== id);
-            saveToStorage();
-            updateStatsAndList();
+            saveToLocal();
+            refreshUI();
         }
     }
 
     function openEditModal(id) {
-        const delivery = deliveries.find(d => d.id === id);
-        if(delivery) {
-            document.getElementById("modalTitle").innerHTML = "✏️ Editar entrega";
-            document.getElementById("editId").value = delivery.id;
-            document.getElementById("cliente").value = delivery.cliente;
-            document.getElementById("endereco").value = delivery.endereco;
-            document.getElementById("valor").value = delivery.valor;
-            document.getElementById("status").value = delivery.status;
-            document.getElementById("obs").value = delivery.observacoes || "";
-            document.getElementById("modalOverlay").style.display = "flex";
+        const d = deliveries.find(d => d.id === id);
+        if(d) {
+            document.getElementById("modalTitle").innerText = "✏️ Editar entrega";
+            document.getElementById("editId").value = d.id;
+            document.getElementById("cliente").value = d.cliente;
+            document.getElementById("endereco").value = d.endereco;
+            document.getElementById("valor").value = d.valor;
+            document.getElementById("statusSelect").value = d.status;
+            document.getElementById("obs").value = d.observacoes || "";
+            document.getElementById("modal").style.display = "flex";
         }
     }
 
     function openCreateModal() {
-        document.getElementById("modalTitle").innerHTML = "➕ Nova corrida";
+        document.getElementById("modalTitle").innerText = "➕ Nova entrega";
         document.getElementById("editId").value = "";
         document.getElementById("cliente").value = "";
         document.getElementById("endereco").value = "";
         document.getElementById("valor").value = "0";
-        document.getElementById("status").value = "pendente";
+        document.getElementById("statusSelect").value = "pendente";
         document.getElementById("obs").value = "";
-        document.getElementById("modalOverlay").style.display = "flex";
+        document.getElementById("modal").style.display = "flex";
     }
 
     function closeModal() {
-        document.getElementById("modalOverlay").style.display = "none";
+        document.getElementById("modal").style.display = "none";
     }
 
-    function saveDeliveryHandler(e) {
-        e.preventDefault();
+    function saveForm(event) {
+        event.preventDefault();
         const id = document.getElementById("editId").value;
         const cliente = document.getElementById("cliente").value.trim();
         const endereco = document.getElementById("endereco").value.trim();
         const valor = parseFloat(document.getElementById("valor").value) || 0;
-        const status = document.getElementById("status").value;
-        const obs = document.getElementById("obs").value.trim();
-        if(!cliente || !endereco) { alert("Preencha cliente e endereço"); return; }
+        const status = document.getElementById("statusSelect").value;
+        const observacoes = document.getElementById("obs").value.trim();
+
+        if(!cliente || !endereco) {
+            alert("Preencha cliente e endereço");
+            return;
+        }
+
         if(id) {
-            const idx = deliveries.findIndex(d => d.id === id);
-            if(idx !== -1) {
-                deliveries[idx].cliente = cliente;
-                deliveries[idx].endereco = endereco;
-                deliveries[idx].valor = valor;
-                deliveries[idx].observacoes = obs;
-                const oldStatus = deliveries[idx].status;
-                deliveries[idx].status = status;
-                if(status === "entregue" && oldStatus !== "entregue") deliveries[idx].entregue_em = new Date().toISOString();
-                else if(status !== "entregue") deliveries[idx].entregue_em = null;
+            const index = deliveries.findIndex(d => d.id === id);
+            if(index !== -1) {
+                const oldStatus = deliveries[index].status;
+                deliveries[index].cliente = cliente;
+                deliveries[index].endereco = endereco;
+                deliveries[index].valor = valor;
+                deliveries[index].observacoes = observacoes;
+                deliveries[index].status = status;
+                if(status === "entregue" && oldStatus !== "entregue") deliveries[index].entregue_em = new Date().toISOString();
+                else if(status !== "entregue") deliveries[index].entregue_em = null;
             }
         } else {
-            deliveries.unshift({ id: generateId(), cliente, endereco, valor, status, observacoes: obs, criado_em: new Date().toISOString(), entregue_em: status === "entregue" ? new Date().toISOString() : null });
+            const nova = {
+                id: generateId(),
+                cliente, endereco, valor, status, observacoes,
+                criado_em: new Date().toISOString(),
+                entregue_em: status === "entregue" ? new Date().toISOString() : null
+            };
+            deliveries.unshift(nova);
         }
-        saveToStorage();
+        saveToLocal();
         closeModal();
-        updateStatsAndList();
+        refreshUI();
     }
 
-    function initFilters() {
-        const btns = document.querySelectorAll(".filter-chip");
-        btns.forEach(btn => {
-            btn.addEventListener("click", () => {
-                btns.forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-                currentFilter = btn.dataset.filter;
-                renderList();
-            });
+    // sincronizar abas inferiores e filtros superiores
+    function syncNavAndChips() {
+        // chips
+        document.querySelectorAll(".chip").forEach(chip => {
+            const filterVal = chip.getAttribute("data-filter");
+            if(filterVal === currentFilter) chip.classList.add("active");
+            else chip.classList.remove("active");
+        });
+        // bottom nav
+        document.querySelectorAll(".nav-item").forEach(nav => {
+            const navVal = nav.getAttribute("data-nav");
+            if(navVal === currentFilter) nav.classList.add("active");
+            else nav.classList.remove("active");
         });
     }
 
-    // Event listeners
-    document.getElementById("deliveryForm").addEventListener("submit", saveDeliveryHandler);
+    function setFilter(filter) {
+        currentFilter = filter;
+        renderDeliveries();
+        syncNavAndChips();
+    }
+
+    // eventos gerais
+    document.getElementById("deliveryForm").addEventListener("submit", saveForm);
     document.getElementById("openModalBtn").addEventListener("click", openCreateModal);
     document.getElementById("closeModalBtn").addEventListener("click", closeModal);
-    window.addEventListener("click", (e) => { if(e.target === document.getElementById("modalOverlay")) closeModal(); });
+    window.addEventListener("click", (e) => { if(e.target === document.getElementById("modal")) closeModal(); });
 
-    loadFromStorage();
-    initFilters();
+    // filtros chips
+    document.querySelectorAll(".chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+            setFilter(chip.getAttribute("data-filter"));
+        });
+    });
+    // bottom nav
+    document.querySelectorAll(".nav-item").forEach(nav => {
+        nav.addEventListener("click", () => {
+            setFilter(nav.getAttribute("data-nav"));
+        });
+    });
+
+    loadData();
 </script>
 </body>
 </html>
