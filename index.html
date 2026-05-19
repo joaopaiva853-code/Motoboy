@@ -2,584 +2,1431 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#0f0f1a">
-    <title>MotoDash Pro</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#FF6B35">
+    <title>MotoDelivery Pro - App do Motoboy</title>
+    <!-- Leaflet CSS + JS (para mapas) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIk1vdG9EZWxpdmVyeSBQcm8iLAogICJzaG9ydF9uYW1lIjogIk1vdG9Cb3kiLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI0ZGNkIzNSIsCiAgInRoZW1lX2NvbG9yIjogIiNGRjZCMzUiLAogICJpY29ucyI6IFtdCn0=">
     <style>
         :root {
-            --gradient-start: #1a1a2e;
-            --gradient-end: #16213e;
-            --surface: rgba(255, 255, 255, 0.05);
-            --surface2: rgba(255, 255, 255, 0.08);
-            --primary: #ff6b35;
-            --primary-light: #ff8c5a;
-            --accent: #e94560;
-            --green: #00e676;
-            --green-dark: #00c853;
-            --red: #ff3d3d;
-            --text: #f0f0f5;
-            --text2: #a0a0b8;
-            --text3: #6b6b80;
-            --border: rgba(255, 255, 255, 0.08);
-            --radius: 20px;
-            --radius-sm: 14px;
-            --radius-xs: 10px;
-            --nav-height: 70px;
-            --header-height: 60px;
-            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
-            --glass-bg: rgba(255, 255, 255, 0.04);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --primary: #FF6B35;
+            --primary-dark: #E55A2B;
+            --primary-light: #FFF0E8;
+            --success: #2ECC71;
+            --warning: #F39C12;
+            --danger: #E74C3C;
+            --info: #3498DB;
+            --bg: #f5f6f8;
+            --card: #ffffff;
+            --text: #1a1a2e;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --border: #e5e7eb;
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-xs: 8px;
+            --bottom-nav-height: 68px;
+            --header-height: 56px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .dark-mode {
+            --bg: #0f0f1a;
+            --card: #1a1a2e;
+            --text: #e8e8f0;
+            --text-secondary: #a0a0b8;
+            --text-muted: #6b6b80;
+            --border: #2a2a40;
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --primary-light: #2a1a10;
+        }
 
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
-            color: var(--text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            font-size: 16px;
             -webkit-tap-highlight-color: transparent;
+            height: 100%;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            min-height: 100dvh;
+            max-width: 480px;
+            margin: 0 auto;
+            position: relative;
+            overflow-x: hidden;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            transition: background var(--transition), color var(--transition);
+            padding-bottom: var(--bottom-nav-height);
             user-select: none;
             -webkit-user-select: none;
         }
 
-        .phone-frame {
-            width: 100%;
-            max-width: 420px;
-            height: 100vh;
-            max-height: 900px;
-            background: transparent;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: var(--shadow-md), 0 0 0 2px rgba(255, 255, 255, 0.05);
-            border-radius: 0;
-            backdrop-filter: blur(10px);
-        }
-
-        @media (min-width: 440px) {
-            .phone-frame {
-                border-radius: 32px;
-                height: 92vh;
-                max-height: 850px;
-            }
-        }
-
-        .header {
-            background: rgba(20, 20, 35, 0.7);
-            backdrop-filter: blur(16px);
-            padding: 12px 18px;
+        /* HEADER */
+        .app-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--primary);
+            color: #fff;
+            padding: 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            z-index: 100;
-            border-bottom: 1px solid var(--border);
-            min-height: var(--header-height);
-            flex-shrink: 0;
-            border-radius: 0;
+            height: var(--header-height);
+            box-shadow: 0 2px 16px rgba(255, 107, 53, 0.3);
+            transition: background var(--transition);
         }
-        .header-left { display: flex; align-items: center; gap: 12px; }
-        .avatar {
-            width: 42px; height: 42px; border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 18px; color: #fff;
-            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
-            overflow: hidden;
+        .app-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: -0.3px;
         }
-        .avatar img {
-            width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+        .app-header .logo svg {
+            width: 28px;
+            height: 28px;
         }
-        .header-info .greeting { font-size: 11px; color: var(--text2); line-height: 1; letter-spacing: 0.5px; }
-        .header-info .name { font-weight: 700; font-size: 16px; line-height: 1.3; color: #fff; }
-        .online-toggle {
-            display: flex; align-items: center; gap: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px 16px; border-radius: 28px; cursor: pointer; font-size: 13px;
-            font-weight: 600; transition: var(--transition);
-            border: 2px solid transparent;
+        .header-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition);
             backdrop-filter: blur(4px);
         }
-        .online-toggle.online { border-color: var(--green); color: var(--green); background: rgba(0, 230, 118, 0.1); }
-        .online-toggle.offline { border-color: var(--text3); color: var(--text2); }
-        .online-dot {
-            width: 10px; height: 10px; border-radius: 50%; background: var(--text3); transition: var(--transition);
+        .icon-btn:active {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0.92);
         }
-        .online-toggle.online .online-dot {
-            background: var(--green);
-            box-shadow: 0 0 12px var(--green), 0 0 24px var(--green);
-            animation: pulse-dot 1.5s infinite;
-        }
-        @keyframes pulse-dot { 0%,100%{ box-shadow: 0 0 6px var(--green); } 50%{ box-shadow: 0 0 18px var(--green), 0 0 30px var(--green); } }
 
+        /* MAIN CONTENT */
         .main-content {
-            flex: 1; overflow-y: auto; padding: 14px 16px;
-            display: flex; flex-direction: column; gap: 16px;
-            scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
-            padding-bottom: 85px;
-        }
-        .main-content::-webkit-scrollbar { width: 0; }
-
-        .screen { display: none; flex-direction: column; gap: 16px; animation: fadeSlideIn 0.3s ease; }
-        .screen.active { display: flex; }
-        @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .stat-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(8px);
-            border-radius: var(--radius-sm);
             padding: 16px;
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
+            padding-bottom: 80px;
+            min-height: calc(100vh - var(--header-height) - var(--bottom-nav-height));
+            min-height: calc(100dvh - var(--header-height) - var(--bottom-nav-height));
         }
-        .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-        .stat-card .stat-label {
-            font-size: 11px; color: var(--text2); text-transform: uppercase;
-            letter-spacing: 0.8px; margin-bottom: 6px; font-weight: 600;
+        .screen {
+            display: none;
+            animation: fadeSlideIn 0.35s ease;
         }
-        .stat-card .stat-value { font-size: 24px; font-weight: 700; }
-        .stat-card .stat-value.green { color: var(--green); }
-        .stat-card .stat-value.primary { color: var(--primary); }
-        .stat-card .stat-sub { font-size: 11px; color: var(--text3); margin-top: 4px; }
+        .screen.active {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.95);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
 
-        .section-title {
-            font-size: 13px; font-weight: 700; color: var(--text2);
-            text-transform: uppercase; letter-spacing: 1px;
-            display: flex; align-items: center; gap: 8px;
-        }
-        .section-title::after {
-            content: ''; flex: 1; height: 1px;
-            background: linear-gradient(90deg, var(--primary), transparent);
-        }
-        .badge-count {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: #fff; font-size: 11px; padding: 2px 10px;
-            border-radius: 14px; font-weight: 700; letter-spacing: 0.5px;
-        }
-
-        .order-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
+        /* CARDS */
+        .card {
+            background: var(--card);
             border-radius: var(--radius);
             padding: 16px;
-            border: 1px solid var(--glass-border);
-            transition: var(--transition);
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all var(--transition);
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            box-shadow: var(--shadow-sm);
         }
-        .order-card:active { transform: scale(0.98); }
-        .order-card.new-order {
-            border-color: var(--primary);
-            background: rgba(255, 107, 53, 0.08);
-            animation: glowBorder 2.5s infinite;
+        .card:active {
+            transform: scale(0.98);
+            box-shadow: var(--shadow-lg);
         }
-        @keyframes glowBorder {
-            0%,100%{ box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.15); }
-            50%{ box-shadow: 0 0 0 12px rgba(255, 107, 53, 0); }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
         }
-        .order-card .order-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-        .order-card .store-name { font-weight: 700; font-size: 16px; display: flex; align-items: center; gap: 8px; }
-        .store-icon {
-            width: 36px; height: 36px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 18px; flex-shrink: 0;
-            background: rgba(255,255,255,0.05);
+        .card-title {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
         }
-        .store-icon.pizza { background: linear-gradient(135deg, #e74c3c, #c0392b); }
-        .store-icon.burger { background: linear-gradient(135deg, #f39c12, #e67e22); }
-        .store-icon.sushi { background: linear-gradient(135deg, #2ecc71, #27ae60); }
-        .store-icon.acai { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
-        .store-icon.market { background: linear-gradient(135deg, #3498db, #2980b9); }
-        .order-badge {
-            font-size: 10px; padding: 4px 12px; border-radius: 14px;
-            font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-            white-space: nowrap;
-            backdrop-filter: blur(4px);
+        .card-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
         }
-        .order-badge.new { background: rgba(255, 107, 53, 0.15); color: #ff8c5a; }
-        .order-badge.progress { background: rgba(0, 230, 118, 0.15); color: var(--green); }
-        .order-badge.done { background: rgba(0, 200, 83, 0.15); color: #00c853; }
-        .order-badge.cancelled { background: rgba(255, 61, 61, 0.15); color: #ff6b6b; }
-        .address-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text2); margin-bottom: 6px; }
-        .address-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-        .address-dot.dropoff { background: var(--red); }
-        .order-footer {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-top: 12px; padding-top: 12px;
-            border-top: 1px solid var(--border);
+
+        /* STATUS BADGES */
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
         }
-        .order-price { font-weight: 800; font-size: 20px; color: var(--green); }
-        .order-distance { font-size: 12px; color: var(--text3); display: flex; align-items: center; gap: 4px; }
-        .btn-row { display: flex; gap: 8px; margin-top: 12px; }
+        .badge-pending {
+            background: #FFF3CD;
+            color: #856404;
+        }
+        .badge-pickup {
+            background: #D1ECF1;
+            color: #0c5460;
+        }
+        .badge-delivering {
+            background: #CCE5FF;
+            color: #004085;
+        }
+        .badge-done {
+            background: #D4EDDA;
+            color: #155724;
+        }
+        .badge-canceled {
+            background: #F8D7DA;
+            color: #721c24;
+        }
+        .dark-mode .badge-pending {
+            background: #3d3200;
+            color: #ffc107;
+        }
+        .dark-mode .badge-pickup {
+            background: #002b36;
+            color: #17a2b8;
+        }
+        .dark-mode .badge-delivering {
+            background: #001f3f;
+            color: #5ba0f5;
+        }
+        .dark-mode .badge-done {
+            background: #0a2e1a;
+            color: #28a745;
+        }
+        .dark-mode .badge-canceled {
+            background: #3d0a0f;
+            color: #dc3545;
+        }
+
+        /* STATS ROW */
+        .stats-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .stat-card {
+            background: var(--card);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all var(--transition);
+        }
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -1px;
+        }
+        .stat-label {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+        .stat-icon {
+            font-size: 1.6rem;
+            margin-bottom: 4px;
+        }
+
+        /* BUTTONS */
         .btn {
-            padding: 12px 18px; border-radius: 28px; font-weight: 700; font-size: 13px;
-            cursor: pointer; border: none; transition: var(--transition); text-align: center;
-            flex: 1; letter-spacing: 0.3px; position: relative; overflow: hidden;
-        }
-        .btn::after {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255,255,255,0.1); opacity: 0; transition: opacity 0.2s;
-        }
-        .btn:active::after { opacity: 1; }
-        .btn-accept {
-            background: linear-gradient(135deg, #00e676, #00c853);
-            color: #000; box-shadow: 0 4px 12px rgba(0, 230, 118, 0.3);
-        }
-        .btn-reject {
-            background: transparent; color: var(--red); border: 2px solid var(--red);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 18px;
+            border-radius: 25px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all var(--transition);
+            letter-spacing: 0.2px;
+            white-space: nowrap;
         }
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: #fff; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25);
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.35);
         }
-        .btn-secondary {
-            background: rgba(255,255,255,0.08); color: var(--text);
-            border: 1px solid var(--border);
+        .btn-primary:active {
+            background: var(--primary-dark);
+            transform: scale(0.95);
+            box-shadow: 0 2px 6px rgba(255, 107, 53, 0.3);
         }
-        .btn-sm { padding: 8px 14px; font-size: 11px; flex: unset; border-radius: 22px; }
         .btn-outline {
-            background: transparent; border: 2px solid var(--green); color: var(--green);
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
         }
-        .btn-map {
-            background: rgba(255, 107, 53, 0.1); border: 1px solid var(--primary);
-            color: var(--primary); display: inline-flex; align-items: center; gap: 4px;
-            font-size: 12px; padding: 8px 14px; border-radius: 22px; cursor: pointer;
-            transition: var(--transition);
+        .btn-outline:active {
+            background: var(--primary-light);
+            transform: scale(0.95);
         }
-        .btn-whatsapp {
-            background: linear-gradient(135deg, #25D366, #1ebc5a);
-            color: #fff; border: none; display: inline-flex; align-items: center; gap: 6px;
-            padding: 10px 16px; border-radius: 24px; font-size: 13px; font-weight: 600;
-            cursor: pointer; transition: var(--transition); box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        .btn-success {
+            background: var(--success);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
         }
-        .btn-whatsapp-sm {
-            background: linear-gradient(135deg, #25D366, #1ebc5a);
-            color: #fff; border: none; display: inline-flex; align-items: center; gap: 4px;
-            padding: 6px 12px; border-radius: 16px; font-size: 11px; font-weight: 600;
-            cursor: pointer; transition: var(--transition); margin-left: 8px;
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
         }
-        .btn-delete {
-            background: transparent; color: var(--red); border: 1px solid var(--red);
-            padding: 6px 12px; border-radius: 16px; font-size: 11px; cursor: pointer;
-            display: inline-flex; align-items: center; gap: 4px;
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 0.78rem;
+            border-radius: 20px;
+        }
+        .btn-block {
+            width: 100%;
+        }
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            padding: 0;
+            font-size: 1.2rem;
         }
 
-        .empty-state { text-align: center; padding: 40px 20px; color: var(--text3); }
-        .empty-state .icon { font-size: 56px; margin-bottom: 12px; opacity: 0.5; }
-        .empty-state p { font-size: 14px; margin-bottom: 4px; }
-
+        /* BOTTOM NAV */
         .bottom-nav {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            background: rgba(20, 20, 35, 0.8);
-            backdrop-filter: blur(20px);
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: var(--card);
             border-top: 1px solid var(--border);
-            display: flex; z-index: 200; height: var(--nav-height); flex-shrink: 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: var(--bottom-nav-height);
+            padding: 0 8px;
             padding-bottom: env(safe-area-inset-bottom, 0);
+            z-index: 100;
+            box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.06);
+            transition: background var(--transition), border var(--transition);
         }
         .nav-item {
-            flex: 1; display: flex; flex-direction: column; align-items: center;
-            justify-content: center; cursor: pointer; transition: var(--transition);
-            gap: 4px; color: var(--text3); font-size: 10px; font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 12px;
+            transition: all var(--transition);
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            font-weight: 500;
             position: relative;
+            border: none;
+            background: none;
+            -webkit-tap-highlight-color: transparent;
         }
-        .nav-item.active { color: var(--primary); }
-        .nav-item .nav-icon { font-size: 20px; transition: var(--transition); }
-        .nav-item.active .nav-icon { transform: translateY(-2px); }
-        .nav-item .nav-badge {
-            position: absolute; top: 6px; right: 50%; transform: translateX(18px);
-            background: linear-gradient(135deg, var(--red), var(--accent));
-            color: #fff; font-size: 10px; font-weight: 700;
-            width: 18px; height: 18px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            display: none; box-shadow: 0 2px 6px rgba(233, 69, 96, 0.4);
+        .nav-item.active {
+            color: var(--primary);
+            font-weight: 700;
         }
-        .nav-item .nav-badge.show { display: flex; }
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            width: 24px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 0 0 4px 4px;
+        }
+        .nav-icon {
+            font-size: 1.4rem;
+            transition: all var(--transition);
+        }
+        .nav-item:active {
+            transform: scale(0.9);
+        }
+        .nav-badge {
+            position: absolute;
+            top: -4px;
+            right: 2px;
+            background: var(--danger);
+            color: #fff;
+            font-size: 0.6rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            animation: bounceIn 0.5s ease;
+        }
 
-        .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-            z-index: 500; display: flex; align-items: flex-end; justify-content: center;
-            animation: fadeIn 0.2s ease;
+        /* FORM */
+        .form-group {
+            margin-bottom: 12px;
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .modal-sheet {
-            background: linear-gradient(145deg, #1e1e32, #16162a);
-            border-radius: 24px 24px 0 0; width: 100%; max-width: 420px;
-            padding: 20px 18px 30px; animation: slideUp 0.3s ease;
-            max-height: 85vh; overflow-y: auto; box-shadow: 0 -4px 30px rgba(0,0,0,0.5);
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            letter-spacing: 0.2px;
         }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        .modal-handle { width: 36px; height: 4px; background: var(--text3); border-radius: 2px; margin: 0 auto 16px; }
-        .modal-title { font-weight: 700; font-size: 20px; margin-bottom: 18px; text-align: center; }
-        .form-group { margin-bottom: 14px; }
-        .form-group label { display: block; font-size: 12px; color: var(--text2); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .form-group input, .form-group select {
-            width: 100%; padding: 14px; border-radius: var(--radius-xs);
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-            color: #fff; font-size: 14px; outline: none; transition: var(--transition);
+        .form-input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: var(--radius-xs);
+            border: 2px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            font-size: 0.95rem;
+            transition: all var(--transition);
+            font-family: inherit;
         }
-        .form-group input:focus, .form-group select:focus {
-            border-color: var(--primary); box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
         }
-        .form-group select {
+        select.form-input {
             appearance: none;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M7 10l5 5 5-5z"/></svg>');
-            background-repeat: no-repeat; background-position: right 14px center; background-size: 16px;
+            cursor: pointer;
         }
-        .location-btn {
-            background: rgba(255,107,53,0.1); color: var(--primary);
-            border: 1px solid var(--primary); padding: 8px 14px;
-            border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer;
-            margin-top: 6px; display: inline-flex; align-items: center; gap: 4px;
-        }
-        .distance-auto { font-size: 11px; color: var(--green); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
-        .saved-item {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 12px; background: rgba(255,255,255,0.03); border-radius: var(--radius-xs);
-            margin-top: 8px; cursor: pointer; border: 1px solid var(--border);
-        }
-        .saved-item .remove-saved { background: none; border: none; color: var(--red); font-size: 18px; cursor: pointer; }
 
-        .toast {
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            background: linear-gradient(135deg, #00e676, #00c853);
-            color: #000; padding: 12px 24px; border-radius: 28px;
-            font-weight: 700; font-size: 14px; z-index: 999;
-            animation: toastIn 0.3s ease, toastOut 0.3s ease 2s forwards;
-            pointer-events: none; white-space: nowrap; box-shadow: 0 4px 20px rgba(0,230,118,0.3);
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 200;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            animation: fadeIn 0.25s ease;
         }
-        @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(-30px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-        @keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateX(-50%) translateY(-20px); } }
+        .modal-sheet {
+            background: var(--card);
+            width: 100%;
+            max-width: 480px;
+            border-radius: 20px 20px 0 0;
+            padding: 20px 16px 30px;
+            animation: slideUp 0.35s ease;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        /* Mapa modal ocupando tela quase inteira */
+        .map-modal {
+            background: #1a1a2e;
+            width: 100%;
+            height: 85vh;
+            border-radius: 20px 20px 0 0;
+            animation: slideUp 0.35s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .map-container {
+            flex: 1;
+            width: 100%;
+            min-height: 300px;
+            background: #e0e0e0;
+        }
+        .map-header {
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 20px 20px 0 0;
+            font-weight: 700;
+        }
+        .map-header button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
 
-        .filter-chips { display: flex; gap: 8px; flex-wrap: wrap; }
-        .chip {
-            padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 600;
-            cursor: pointer; border: 1px solid var(--border);
-            background: var(--glass-bg); color: var(--text2);
-            transition: var(--transition);
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
         }
-        .chip.active { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; border-color: transparent; }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .modal-handle {
+            width: 40px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 4px;
+            margin: 0 auto 16px;
+        }
 
-        .profile-card {
-            background: var(--glass-bg); backdrop-filter: blur(10px);
-            border-radius: var(--radius); padding: 24px; text-align: center;
-            border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+        /* EMPTY STATE */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
         }
-        .profile-avatar {
-            width: 80px; height: 80px; border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;
-            font-size: 32px; font-weight: 700; color: #fff;
-            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
+        .empty-state .emoji {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .empty-state p {
+            font-size: 0.9rem;
+        }
+
+        /* DETAIL ROW */
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .detail-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .detail-value {
+            font-weight: 600;
+            text-align: right;
+        }
+
+        /* PROGRESS BAR */
+        .progress-bar {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
             overflow: hidden;
+            margin: 8px 0;
         }
-        .profile-avatar img {
-            width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+            transition: width 0.5s ease;
         }
-        .settings-item {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 16px; background: var(--glass-bg);
-            border-radius: var(--radius-xs); cursor: pointer;
-            border: 1px solid var(--border); transition: var(--transition); margin-top: 8px;
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a2e;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 999;
+            pointer-events: none;
+            animation: toastIn 0.4s ease, toastOut 0.4s ease 2s forwards;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;
         }
-        .settings-item:active { background: rgba(255,255,255,0.08); }
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+        @keyframes toastOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 0;
+        }
+
+        /* Responsivo para telas maiores */
+        @media (min-width: 481px) {
+            body {
+                border-left: 1px solid var(--border);
+                border-right: 1px solid var(--border);
+                box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+            }
+        }
     </style>
 </head>
 <body>
-<div class="phone-frame" id="app">
-    <div class="header">
-        <div class="header-left">
-            <div class="avatar">
-                <img src="https://i.im.ge/QMIQKIq/WhatsApp_Image_2026-05-19_at_03.31.27.jpg" alt="Logo MotoDash" onerror="this.style.display='none'; this.parentElement.innerHTML='🏍️';">
-            </div>
-            <div class="header-info">
-                <div class="greeting">Olá,</div>
-                <div class="name" id="headerMotoboyName">Carlos Motoboy</div>
-            </div>
+    <!-- HEADER -->
+    <header class="app-header">
+        <div class="logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="2" fill="white"/>
+            </svg>
+            <span>MotoDelivery</span>
         </div>
-        <div class="online-toggle online" id="onlineToggle" onclick="toggleOnline()">
-            <div class="online-dot"></div>
-            <span id="onlineLabel">Online</span>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="toggleDarkMode()" title="Modo escuro">🌓</button>
+            <button class="icon-btn" onclick="showScreen('profile')" title="Perfil">👤</button>
         </div>
-    </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
     <div class="main-content" id="mainContent">
-        <div class="screen active" id="screenDashboard">
-            <div class="stats-row"><div class="stat-card"><div class="stat-label">💰 Ganhos Hoje</div><div class="stat-value green" id="statEarnings">R$ 0,00</div><div class="stat-sub" id="statDeliveries">0 entregas</div></div><div class="stat-card"><div class="stat-label">⭐ Avaliação</div><div class="stat-value primary" id="statRating">5.0</div><div class="stat-sub">+0 avaliações</div></div></div>
-            <div class="stats-row"><div class="stat-card"><div class="stat-label">📦 Em Andamento</div><div class="stat-value" id="statActive" style="color:#fff;">0</div></div><div class="stat-card"><div class="stat-label">🏁 Concluídas Hoje</div><div class="stat-value" id="statCompleted" style="color:#fff;">0</div></div></div>
-            <div class="section-title">🆕 Novas Corridas <span class="badge-count" id="badgeNewOrders">0</span></div>
-            <div id="newOrdersContainer"><div class="empty-state"><div class="icon">📭</div><p>Nenhuma nova corrida</p><p style="font-size:11px;">Adicione uma corrida manualmente</p></div></div>
-            <button class="btn btn-primary" style="margin-top:4px;" onclick="showAddCorridaModal()">📝 Adicionar Corrida Manual</button>
-            <div class="section-title">🚀 Em Andamento</div>
-            <div id="activeOrdersContainer"><div class="empty-state"><div class="icon">🛵</div><p>Nenhuma entrega em andamento</p></div></div>
-        </div>
-        <div class="screen" id="screenOrders">
-            <div class="section-title">🆕 Disponíveis <span class="badge-count" id="badgeNewOrders2">0</span></div>
-            <div id="newOrdersContainer2"></div>
-            <button class="btn btn-primary" style="margin-top:4px;" onclick="showAddCorridaModal()">📝 Adicionar Corrida Manual</button>
-            <div class="section-title">🚀 Em Andamento</div>
-            <div id="activeOrdersContainer2"></div>
-        </div>
-        <div class="screen" id="screenHistory">
-            <div class="filter-chips"><div class="chip active" onclick="filterHistory('all', this)">Todas</div><div class="chip" onclick="filterHistory('delivered', this)">✅ Entregues</div><div class="chip" onclick="filterHistory('cancelled', this)">❌ Canceladas</div></div>
-            <div id="historyContainer"><div class="empty-state"><div class="icon">📋</div><p>Nenhum histórico</p></div></div>
-        </div>
-        <div class="screen" id="screenProfile">
-            <div class="profile-card">
-                <div class="profile-avatar">
-                    <img src="https://i.im.ge/QMIQKIq/WhatsApp_Image_2026-05-19_at_03.31.27.jpg" alt="Logo MotoDash" onerror="this.style.display='none'; this.parentElement.innerHTML='🏍️';">
+        <!-- Dashboard Screen -->
+        <div class="screen active" id="screen-dashboard">
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-icon">🤑</div>
+                    <div class="stat-value" id="todayEarnings">R$ 0,00</div>
+                    <div class="stat-label">Ganhos de Hoje</div>
                 </div>
-                <h3 id="profileMotoboyName">Carlos Motoboy</h3>
-                <p id="profileMotoboyDetails">Moto: Honda CG 160 • Placa: ABC-1234</p>
-                <button class="btn btn-secondary btn-sm" style="margin-top:14px;" onclick="showEditProfileModal()">✏️ Editar Cadastro</button>
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div class="stat-value" id="todayDeliveries">0</div>
+                    <div class="stat-label">Entregas Hoje</div>
+                </div>
             </div>
-            <div class="stats-row"><div class="stat-card"><div class="stat-label">Total de Entregas</div><div class="stat-value" id="profileTotalDeliveries" style="color:#fff;">0</div></div><div class="stat-card"><div class="stat-label">Ganhos Totais</div><div class="stat-value green" id="profileTotalEarnings">R$ 0,00</div></div></div>
-            <div class="section-title">🏪 Destinos Salvos</div>
-            <div id="savedAddressesContainer"><div class="empty-state"><div class="icon">🏪</div><p>Nenhum destino salvo</p></div></div>
-            <div class="settings-item" onclick="showAddCorridaModal()"><span>📝</span> <span style="flex:1;margin-left:12px;">Adicionar Corrida Manual</span> <span>→</span></div>
-            <div class="settings-item" onclick="resetAllData()"><span>🗑️</span> <span style="flex:1;margin-left:12px;">Limpar Todos os Dados</span> <span>→</span></div>
-            <div class="settings-item" id="installButtonContainer" style="display:none;" onclick="installApp()"><span>📲</span> <span style="flex:1;margin-left:12px;">Instalar App</span> <span>→</span></div>
-            <p style="text-align:center;color:var(--text3);font-size:11px;margin-top:20px;">MotoDash Pro • Versão 2.0</p>
+            <div class="card" style="background: linear-gradient(135deg, var(--primary), #ff8c5a); color:#fff; border:none;">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <div>
+                        <div style="font-size:0.8rem;opacity:0.9;">Meta Diária</div>
+                        <div style="font-size:1.4rem;font-weight:800;">R$ 200,00</div>
+                    </div>
+                    <div style="font-size:2.5rem;">🎯</div>
+                </div>
+                <div class="progress-bar" style="background:rgba(255,255,255,0.35);margin-top:10px;">
+                    <div class="progress-fill" id="goalProgress" style="width:0%;background:#fff;"></div>
+                </div>
+                <div style="font-size:0.75rem;margin-top:4px;opacity:0.85;" id="goalText">0% concluído</div>
+            </div>
+            <div style="display:flex;gap:10px;margin-bottom:16px;">
+                <button class="btn btn-primary btn-block" onclick="showScreen('newDelivery')">➕ Nova Entrega</button>
+                <button class="btn btn-outline btn-block" onclick="showScreen('history')">📋 Histórico</button>
+            </div>
+            <h3 style="font-size:0.95rem;color:var(--text-secondary);margin-bottom:8px;">🔄 Entregas Ativas</h3>
+            <div id="activeDeliveriesList">
+                <div class="empty-state">
+                    <span class="emoji">🛵</span>
+                    <p>Nenhuma entrega ativa.<br>Adicione uma nova corrida!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Delivery Screen -->
+        <div class="screen" id="screen-newDelivery">
+            <h3 style="margin-bottom:12px;">📝 Registrar Nova Entrega</h3>
+            <div class="card">
+                <div class="form-group"><label>🏪 Restaurante / Loja</label>
+                    <input class="form-input" id="inputRestaurant" placeholder="Ex: Pizzaria Bella Napoli">
+                </div>
+                <div class="form-group"><label>👤 Nome do Cliente</label>
+                    <input class="form-input" id="inputClient" placeholder="Ex: Maria Silva">
+                </div>
+                <div class="form-group"><label>📍 Endereço de Entrega</label>
+                    <input class="form-input" id="inputAddress" placeholder="Rua Exemplo, 123 - Bairro">
+                </div>
+                <div class="form-group"><label>💰 Valor da Corrida (R$)</label>
+                    <input class="form-input" type="number" id="inputValue" placeholder="Ex: 12.50" step="0.01" min="1">
+                </div>
+                <div class="form-group"><label>📱 Telefone do Cliente</label>
+                    <input class="form-input" id="inputPhone" placeholder="(11) 99999-9999">
+                </div>
+                <div class="form-group"><label>📝 Observações</label>
+                    <input class="form-input" id="inputNotes" placeholder="Ex: Portão azul, apto 42">
+                </div>
+                <button class="btn btn-primary btn-block" onclick="addDelivery()" style="margin-top:8px;">
+                    ✅ Registrar Corrida
+                </button>
+                <button class="btn btn-outline btn-block" onclick="showScreen('dashboard')" style="margin-top:6px;">
+                    ⬅ Voltar
+                </button>
+            </div>
+        </div>
+
+        <!-- Detail Screen -->
+        <div class="screen" id="screen-detail">
+            <div id="detailContent"></div>
+            <button class="btn btn-outline btn-block" onclick="showScreen('dashboard')" style="margin-top:8px;">⬅ Voltar</button>
+        </div>
+
+        <!-- History Screen -->
+        <div class="screen" id="screen-history">
+            <h3 style="margin-bottom:12px;">📋 Histórico de Entregas</h3>
+            <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+                <button class="btn btn-sm btn-outline filter-btn active" data-filter="all">Todas</button>
+                <button class="btn btn-sm btn-outline filter-btn" data-filter="done">✅ Concluídas</button>
+                <button class="btn btn-sm btn-outline filter-btn" data-filter="canceled">❌ Canceladas</button>
+            </div>
+            <div id="historyList">
+                <div class="empty-state">
+                    <span class="emoji">📭</span>
+                    <p>Nenhuma entrega no histórico.</p>
+                </div>
+            </div>
+            <button class="btn btn-outline btn-block" onclick="showScreen('dashboard')" style="margin-top:8px;">⬅ Voltar</button>
+        </div>
+
+        <!-- Profile Screen -->
+        <div class="screen" id="screen-profile">
+            <h3 style="margin-bottom:12px;">👤 Perfil do Motoboy</h3>
+            <div class="card" style="text-align:center;">
+                <div style="font-size:4rem;">🛵</div>
+                <h3 id="profileName" style="margin:4px 0;">Motoboy</h3>
+                <p style="color:var(--text-secondary);font-size:0.85rem;" id="profileStats"></p>
+                <button class="btn btn-sm btn-outline" onclick="editProfile()" style="margin-top:8px;">✏️ Editar Nome</button>
+            </div>
+            <div class="card">
+                <div class="detail-row"><span class="detail-label">Total de Entregas</span><span class="detail-value" id="totalAllDeliveries">0</span></div>
+                <div class="detail-row"><span class="detail-label">Ganhos Totais</span><span class="detail-value" id="totalAllEarnings">R$ 0,00</span></div>
+                <div class="detail-row"><span class="detail-label">Média por Corrida</span><span class="detail-value" id="avgEarning">R$ 0,00</span></div>
+            </div>
+            <div class="card">
+                <p style="font-size:0.8rem;color:var(--text-muted);text-align:center;">
+                    🛵 MotoDelivery Pro v2.0<br>Com localização de entrega no mapa!
+                </p>
+                <button class="btn btn-danger btn-sm btn-block" onclick="resetAll()" style="margin-top:8px;">🗑️ Resetar Todos os Dados</button>
+            </div>
+            <button class="btn btn-outline btn-block" onclick="showScreen('dashboard')" style="margin-top:8px;">⬅ Voltar</button>
         </div>
     </div>
-    <div class="bottom-nav">
-        <div class="nav-item active" data-screen="screenDashboard" onclick="switchScreen('screenDashboard', this)"><span class="nav-icon">📊</span> Dashboard<span class="nav-badge" id="navBadge">0</span></div>
-        <div class="nav-item" data-screen="screenOrders" onclick="switchScreen('screenOrders', this)"><span class="nav-icon">📦</span> Corridas<span class="nav-badge" id="navBadgeOrders">0</span></div>
-        <div class="nav-item" data-screen="screenHistory" onclick="switchScreen('screenHistory', this)"><span class="nav-icon">📋</span> Histórico</div>
-        <div class="nav-item" data-screen="screenProfile" onclick="switchScreen('screenProfile', this)"><span class="nav-icon">👤</span> Perfil</div>
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav" id="bottomNav">
+        <button class="nav-item active" data-screen="dashboard">
+            <span class="nav-icon">🏠</span>Início
+        </button>
+        <button class="nav-item" data-screen="newDelivery">
+            <span class="nav-icon">➕</span>Nova
+            <span class="nav-badge" id="activeCountBadge" style="display:none;">0</span>
+        </button>
+        <button class="nav-item" data-screen="history">
+            <span class="nav-icon">📋</span>Histórico
+        </button>
+        <button class="nav-item" data-screen="profile">
+            <span class="nav-icon">👤</span>Perfil
+        </button>
+    </nav>
+
+    <!-- MODAL para mapa -->
+    <div class="modal-overlay" id="mapModalOverlay" style="display:none;" onclick="closeMapModal(event)">
+        <div class="map-modal" id="mapModalSheet" onclick="event.stopPropagation()">
+            <div class="map-header">
+                <span>🗺️ Rota de Entrega</span>
+                <button onclick="closeMapModalDirect()">✕</button>
+            </div>
+            <div class="map-container" id="mapContainer"></div>
+            <div style="padding:8px 16px; background:var(--card); font-size:0.8rem; color:var(--text-secondary); text-align:center;">
+                📍 Arraste o marcador azul para ajustar o local do cliente
+            </div>
+        </div>
     </div>
-</div>
 
-<div class="modal-overlay" id="modalOverlay" style="display:none;" onclick="closeModal(event)"><div class="modal-sheet" onclick="event.stopPropagation()"><div class="modal-handle"></div><div class="modal-title" id="modalTitle">Nova Corrida</div><div id="modalContent"></div></div></div>
+    <script>
+        // ==================== APP STATE ====================
+        const APP_KEY = 'motodelivery_pro_data_v2';
+        let appData = {
+            profileName: 'Motoboy',
+            deliveries: [],
+            darkMode: false,
+        };
 
-<div class="modal-overlay" id="addCorridaModalOverlay" style="display:none;" onclick="closeAddCorridaModal(event)">
-    <div class="modal-sheet" onclick="event.stopPropagation()">
-        <div class="modal-handle"></div>
-        <div class="modal-title">📝 Adicionar Corrida Manual</div>
-        <form id="addCorridaForm" onsubmit="submitManualCorrida(event)">
-            <div class="form-group"><label>Nome da Loja / Restaurante</label><input type="text" id="manualStoreName" placeholder="Ex: Pizzaria do Zé" required></div>
-            <div class="form-group"><label>Tipo de Estabelecimento</label><select id="manualStoreType"><option value="pizza">🍕 Pizzaria</option><option value="burger">🍔 Hamburgueria</option><option value="sushi">🍣 Sushi</option><option value="acai">🥤 Açaí</option><option value="market">🛒 Mercado</option></select></div>
-            <div class="form-group"><label>Nome do Cliente</label><input type="text" id="manualClientName" placeholder="Nome do cliente" required></div>
-            <div class="form-group"><label>WhatsApp do Cliente (com DDD)</label><input type="tel" id="manualClientPhone" placeholder="11999999999" required></div>
-            <div class="form-group"><label>Endereço de Entrega</label><input type="text" id="manualDropoff" placeholder="Rua, número - Cidade" required oninput="scheduleDistanceUpdate()"><button type="button" class="location-btn" onclick="getLocation('dropoff')">📍 Usar localização do destino</button></div>
-            <div class="form-row" style="display:flex; gap:10px;"><div class="form-group" style="flex:1;"><label>Distância (km)</label><input type="text" id="manualDistance" readonly value="3.0" style="background:rgba(255,255,255,0.08);"><span class="distance-auto" id="distanceStatus">🔍 Calcule a partir da sua localização</span></div><div class="form-group" style="flex:1;"><label>Valor (R$)</label><input type="number" id="manualPrice" step="0.01" min="1" max="200" value="12.00" required></div></div>
-            <div style="margin: 8px 0;"><label style="font-size:12px;color:var(--text2);">Destino salvo:</label><select id="savedStoreSelect" onchange="fillFromSavedStore()" style="width:100%; padding:12px; border-radius:10px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:#fff;"><option value="">-- Selecionar destino salvo --</option></select></div>
-            <button type="submit" class="btn btn-accept btn-block" style="margin-top: 12px;">✅ Criar Corrida</button>
-        </form>
-    </div>
-</div>
+        function loadData() {
+            try {
+                const saved = localStorage.getItem(APP_KEY);
+                if (saved) appData = JSON.parse(saved);
+                if (!appData.deliveries) appData.deliveries = [];
+                if (!appData.profileName) appData.profileName = 'Motoboy';
+                // Garantir que todas as entregas tenham campos de localização
+                appData.deliveries.forEach(d => {
+                    if (!d.clientLat) d.clientLat = null;
+                    if (!d.clientLng) d.clientLng = null;
+                });
+            } catch (e) {
+                appData = { profileName: 'Motoboy', deliveries: [], darkMode: false };
+            }
+        }
 
-<div class="modal-overlay" id="editProfileModalOverlay" style="display:none;" onclick="closeEditProfileModal(event)"><div class="modal-sheet" onclick="event.stopPropagation()"><div class="modal-handle"></div><div class="modal-title">✏️ Cadastro do Motoboy</div><form id="editProfileForm" onsubmit="submitEditProfile(event)"><div class="form-group"><label>Nome</label><input type="text" id="editMotoboyName" required></div><div class="form-group"><label>Modelo Moto</label><input type="text" id="editMotoboyMotorcycle" required></div><div class="form-group"><label>Placa</label><input type="text" id="editMotoboyPlate" required></div><button type="submit" class="btn btn-accept btn-block">💾 Salvar</button></form></div></div>
+        function saveData() {
+            localStorage.setItem(APP_KEY, JSON.stringify(appData));
+        }
 
-<script>
-    const STORAGE_KEY = 'motodash_data';
-    const LOGO_URL = 'https://i.im.ge/QMIQKIq/WhatsApp_Image_2026-05-19_at_03.31.27.jpg';
+        loadData();
 
-    function loadData() {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        let data = { orders: [], isOnline: true, totalEarnings: 0, totalDeliveries: 0, totalRatings: 0, ratingSum: 0, motoboy: null, savedAddresses: [] };
-        if (raw) { try { const p = JSON.parse(raw); data = { ...data, ...p }; } catch(e) {} }
-        if (!data.motoboy) data.motoboy = { name: 'Carlos Motoboy', motorcycle: 'Honda CG 160', plate: 'ABC-1234' };
-        if (!data.savedAddresses) data.savedAddresses = [];
-        return data;
-    }
-    function saveData(d) { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
-    let appData = loadData();
-    function persist() { saveData(appData); renderAll(); updateHeaderAndProfile(); }
+        // Apply dark mode
+        if (appData.darkMode) document.body.classList.add('dark-mode');
 
-    function generateId() { return 'ord_' + Date.now() + '_' + Math.random().toString(36).substr(2,6); }
-    function formatCurrency(v) { return 'R$ ' + Number(v).toFixed(2).replace('.',','); }
-    function formatDate(iso) { const d = new Date(iso); return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
-    function timeAgo(iso) { const diff = Date.now() - new Date(iso).getTime(); const mins = Math.floor(diff/60000); if(mins<1) return 'agora'; if(mins<60) return mins+'min atrás'; const h = Math.floor(mins/60); if(h<24) return h+'h atrás'; return Math.floor(h/24)+'d atrás'; }
-    function getTodayKey() { return new Date().toISOString().split('T')[0]; }
-    function getOrdersToday() { const t = getTodayKey(); return appData.orders.filter(o => o.createdAt?.startsWith(t)); }
-    function getActiveOrders() { return appData.orders.filter(o => o.status==='accepted'||o.status==='picked_up'); }
-    function getNewOrders() { return appData.orders.filter(o => o.status==='new'); }
-    function getTodayEarnings() { return getOrdersToday().filter(o=>o.status==='delivered').reduce((s,o)=>s+(o.price||0),0); }
-    function getTodayDeliveries() { return getOrdersToday().filter(o=>o.status==='delivered').length; }
+        // ==================== HELPERS ====================
+        function formatMoney(value) {
+            return 'R$ ' + parseFloat(value || 0).toFixed(2).replace('.', ',');
+        }
 
-    function playBeep(f=800,d=150){ try{ const c=new(window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain(); o.type='square'; o.frequency.value=f; g.gain.value=0.15; o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime+d/1000); }catch(e){} }
-    function playNotificationSound(){ playBeep(880,100); setTimeout(()=>playBeep(1100,150),120); }
-    function showToast(msg){ const e=document.querySelector('.toast'); if(e)e.remove(); const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2500); }
+        function formatDate(isoString) {
+            const d = new Date(isoString);
+            return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' }) +
+                ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        }
 
-    function toggleOnline(){ appData.isOnline=!appData.isOnline; persist(); const t=document.getElementById('onlineToggle'),l=document.getElementById('onlineLabel'); if(appData.isOnline){ t.classList.add('online'); t.classList.remove('offline'); l.textContent='Online'; showToast('🟢 ONLINE'); } else { t.classList.remove('online'); t.classList.add('offline'); l.textContent='Offline'; showToast('🔴 OFFLINE'); } }
-    function updateOnlineUI(){ const t=document.getElementById('onlineToggle'),l=document.getElementById('onlineLabel'); if(appData.isOnline){ t.classList.add('online'); t.classList.remove('offline'); l.textContent='Online'; } else { t.classList.remove('online'); t.classList.add('offline'); l.textContent='Offline'; } }
-    function updateHeaderAndProfile(){ const m=appData.motoboy; document.getElementById('headerMotoboyName').textContent=m.name; document.getElementById('profileMotoboyName').textContent=m.name; document.getElementById('profileMotoboyDetails').textContent=`Moto: ${m.motorcycle} • Placa: ${m.plate}`; }
+        function getTodayStr() {
+            return new Date().toISOString().split('T')[0];
+        }
 
-    function showEditProfileModal(){ const m=appData.motoboy; document.getElementById('editMotoboyName').value=m.name; document.getElementById('editMotoboyMotorcycle').value=m.motorcycle; document.getElementById('editMotoboyPlate').value=m.plate; document.getElementById('editProfileModalOverlay').style.display='flex'; }
-    function closeEditProfileModal(e){ if(e&&e.target!==document.getElementById('editProfileModalOverlay'))return; document.getElementById('editProfileModalOverlay').style.display='none'; }
-    function submitEditProfile(e){ e.preventDefault(); const n=document.getElementById('editMotoboyName').value.trim(), m=document.getElementById('editMotoboyMotorcycle').value.trim(), p=document.getElementById('editMotoboyPlate').value.trim(); if(!n||!m||!p){ showToast('⚠️ Preencha todos'); return; } appData.motoboy={name:n,motorcycle:m,plate:p}; persist(); showToast('✅ Cadastro atualizado!'); document.getElementById('editProfileModalOverlay').style.display='none'; }
+        function getStatusBadge(status) {
+            const map = {
+                pending: '<span class="badge badge-pending">⏳ Pendente</span>',
+                pickup: '<span class="badge badge-pickup">🏪 Coletando</span>',
+                delivering: '<span class="badge badge-delivering">🛵 Entregando</span>',
+                done: '<span class="badge badge-done">✅ Concluída</span>',
+                canceled: '<span class="badge badge-canceled">❌ Cancelada</span>',
+            };
+            return map[status] || map.pending;
+        }
 
-    function openWhatsApp(phone) { const cleaned = phone.replace(/\D/g, ''); if (!cleaned) { showToast('⚠️ Número inválido'); return; } window.open(`https://wa.me/55${cleaned}`, '_blank'); }
+        function getStatusLabel(status) {
+            const map = { pending: 'Pendente', pickup: 'Coletando', delivering: 'Entregando', done: 'Concluída',
+                canceled: 'Cancelada' };
+            return map[status] || 'Pendente';
+        }
 
-    function getLocation(target){ if(!navigator.geolocation){ showToast('Geolocalização não suportada'); return; } navigator.geolocation.getCurrentPosition(pos=>{ const lat=pos.coords.latitude.toFixed(6), lng=pos.coords.longitude.toFixed(6); const t=`Lat: ${lat}, Lng: ${lng}`; if(target==='dropoff') document.getElementById('manualDropoff').value=t; scheduleDistanceUpdate(); showToast(`📍 Localização (${lat}, ${lng})`); }, err=>{ showToast('⚠️ Erro ao obter localização.'); }); }
+        function getNextStatus(current) {
+            const flow = { pending: 'pickup', pickup: 'delivering', delivering: 'done' };
+            return flow[current] || null;
+        }
 
-    let distanceTimeout;
-    function scheduleDistanceUpdate(){ clearTimeout(distanceTimeout); distanceTimeout=setTimeout(updateDistance,800); }
-    function haversineDistance(lat1,lon1,lat2,lon2){ const R=6371; const dLat=(lat2-lat1)*Math.PI/180, dLon=(lon2-lon1)*Math.PI/180; const a=Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2; return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)); }
-    function parseCoordString(s){ const m=s.match(/Lat:\s*(-?\d+\.?\d*),\s*Lng:\s*(-?\d+\.?\d*)/i); return m?{lat:parseFloat(m[1]),lng:parseFloat(m[2])}:null; }
-    async function geocodeAddress(addr){ const c=parseCoordString(addr); if(c) return c; const url=`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(addr)}&format=json&limit=1`; try{ const r=await fetch(url,{headers:{'User-Agent':'MotoDashApp/1.0'}}); if(!r.ok) return null; const d=await r.json(); if(d.length) return {lat:parseFloat(d[0].lat),lng:parseFloat(d[0].lon)}; return null; }catch(e){ return null; } }
-    async function updateDistance(){ const dropoff = document.getElementById('manualDropoff').value.trim(); const inp = document.getElementById('manualDistance'); const st = document.getElementById('distanceStatus'); if(!dropoff){ st.innerHTML='🔍 Insira o endereço de entrega'; return; } st.innerHTML='⏳ Obtendo sua localização...'; if(!navigator.geolocation){ st.innerHTML='⚠️ Geolocalização indisponível.'; inp.removeAttribute('readonly'); return; } navigator.geolocation.getCurrentPosition(async pos => { const myLat = pos.coords.latitude, myLng = pos.coords.longitude; const destCoords = await geocodeAddress(dropoff); if(destCoords){ const dist = haversineDistance(myLat, myLng, destCoords.lat, destCoords.lng); const rd = Math.round(dist*10)/10; inp.value = rd.toFixed(1); st.innerHTML = `✅ Distância: ${rd.toFixed(1)} km`; } else { st.innerHTML = '⚠️ Endereço não encontrado.'; inp.removeAttribute('readonly'); } }, err => { st.innerHTML = '⚠️ Permita localização.'; inp.removeAttribute('readonly'); }); }
+        // ==================== TOAST ====================
+        function showToast(msg) {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2500);
+        }
 
-    function updateSavedStoreSelect(){ const sel = document.getElementById('savedStoreSelect'); sel.innerHTML = '<option value="">-- Selecionar destino salvo --</option>'; appData.savedAddresses.forEach((addr, idx) => { const opt = document.createElement('option'); opt.value = idx; opt.textContent = `${addr.storeName} - ${addr.dropoffAddr}`; sel.appendChild(opt); }); }
-    function fillFromSavedStore(){ const sel = document.getElementById('savedStoreSelect'); const idx = sel.value; if (idx === '') return; const addr = appData.savedAddresses[idx]; document.getElementById('manualStoreName').value = addr.storeName.replace(/^[🍕🍔🍣🥤🛒]\s*/, ''); document.getElementById('manualStoreType').value = addr.storeType; document.getElementById('manualDropoff').value = addr.dropoffAddr; scheduleDistanceUpdate(); }
-    function removeSavedAddress(index){ appData.savedAddresses.splice(index,1); persist(); updateSavedStoreSelect(); showToast('🗑️ Destino removido.'); }
+        // ==================== SCREEN NAVIGATION ====================
+        function showScreen(screenName) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById('screen-' + screenName);
+            if (target) target.classList.add('active');
+            // Update bottom nav
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            const navItem = document.querySelector(`.nav-item[data-screen="${screenName}"]`);
+            if (navItem) navItem.classList.add('active');
+            // Refresh screens
+            if (screenName === 'dashboard') refreshDashboard();
+            if (screenName === 'history') refreshHistory();
+            if (screenName === 'profile') refreshProfile();
+            if (screenName === 'detail') { /* detail is set separately */ }
+            // Scroll to top
+            document.getElementById('mainContent').scrollTop = 0;
+            window.scrollTo(0, 0);
+        }
 
-    function deleteOrder(id) { if (!confirm('Excluir esta corrida?')) return; appData.orders = appData.orders.filter(o => o.id !== id); persist(); showToast('🗑️ Corrida excluída.'); }
+        // Bottom nav clicks
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const screen = item.dataset.screen;
+                showScreen(screen);
+            });
+        });
 
-    function showAddCorridaModal(){ if(!appData.isOnline){ showToast('⚠️ Fique online'); return; } document.getElementById('addCorridaModalOverlay').style.display='flex'; document.getElementById('addCorridaForm').reset(); document.getElementById('manualDistance').value='3.0'; document.getElementById('manualDistance').setAttribute('readonly',true); document.getElementById('manualPrice').value='12.00'; document.getElementById('distanceStatus').innerHTML='🔍 Calcule a distância'; updateSavedStoreSelect(); }
-    function closeAddCorridaModal(e){ if(e&&e.target!==document.getElementById('addCorridaModalOverlay'))return; document.getElementById('addCorridaModalOverlay').style.display='none'; }
+        // ==================== DASHBOARD ====================
+        function refreshDashboard() {
+            const today = getTodayStr();
+            const todayDeliveries = appData.deliveries.filter(d => d.date === today && d.status === 'done');
+            const todayEarnings = todayDeliveries.reduce((sum, d) => sum + (parseFloat(d.value) || 0), 0);
+            const activeDeliveries = appData.deliveries.filter(d => !['done', 'canceled'].includes(d.status));
+            const goal = 200;
+            const progressPercent = Math.min(100, Math.round((todayEarnings / goal) * 100));
 
-    function submitManualCorrida(e){ e.preventDefault(); const storeName = document.getElementById('manualStoreName').value.trim(); const storeType = document.getElementById('manualStoreType').value; const clientName = document.getElementById('manualClientName').value.trim(); const clientPhone = document.getElementById('manualClientPhone').value.trim(); const dropoff = document.getElementById('manualDropoff').value.trim(); const distance = parseFloat(document.getElementById('manualDistance').value); const price = parseFloat(document.getElementById('manualPrice').value); if(!storeName||!clientName||!clientPhone||!dropoff||isNaN(distance)||isNaN(price)){ showToast('⚠️ Preencha todos'); return; } const iconMap = { pizza:'🍕', burger:'🍔', sushi:'🍣', acai:'🥤', market:'🛒' }; const displayName = iconMap[storeType]+' '+storeName; const newOrder = { id:generateId(), storeName:displayName, storeIcon:storeType, storeType, clientName, clientPhone, dropoffAddr:dropoff, distance:Math.round(distance*10)/10, price:Math.round(price*100)/100, status:'new', createdAt:new Date().toISOString(), updatedAt:new Date().toISOString() }; appData.orders.unshift(newOrder); const alreadySaved = appData.savedAddresses.some(a => a.dropoffAddr === dropoff && a.storeName === displayName); if (!alreadySaved) appData.savedAddresses.push({ storeName: displayName, storeType, dropoffAddr: dropoff }); persist(); playNotificationSound(); showToast('📝 Corrida adicionada!'); document.getElementById('addCorridaModalOverlay').style.display='none'; updateSavedStoreSelect(); }
+            document.getElementById('todayEarnings').textContent = formatMoney(todayEarnings);
+            document.getElementById('todayDeliveries').textContent = todayDeliveries.length;
+            document.getElementById('goalProgress').style.width = progressPercent + '%';
+            document.getElementById('goalText').textContent = progressPercent + '% concluído';
 
-    function acceptOrder(id){ const o=appData.orders.find(o=>o.id===id); if(!o||o.status!=='new')return; o.status='accepted'; o.updatedAt=new Date().toISOString(); persist(); playBeep(600,200); showToast('✅ Aceita!'); }
-    function rejectOrder(id){ const o=appData.orders.find(o=>o.id===id); if(!o||o.status!=='new')return; o.status='cancelled'; o.updatedAt=new Date().toISOString(); persist(); showToast('❌ Recusada'); }
-    function markPickedUp(id){ const o=appData.orders.find(o=>o.id===id); if(!o||o.status!=='accepted')return; o.status='picked_up'; o.updatedAt=new Date().toISOString(); persist(); playBeep(700,150); showToast('📦 Coletado!'); }
-    function markDelivered(id){ const o=appData.orders.find(o=>o.id===id); if(!o||o.status!=='picked_up')return; o.status='delivered'; o.updatedAt=new Date().toISOString(); appData.totalDeliveries++; appData.totalEarnings+=o.price; appData.totalRatings++; appData.ratingSum+=Math.random()>0.1?5:4; persist(); playBeep(1000,200); showToast('🏁 Entregue! +'+formatCurrency(o.price)); }
-    function cancelOrder(id){ const o=appData.orders.find(o=>o.id===id); if(!o||(o.status!=='accepted'&&o.status!=='picked_up'))return; if(!confirm('Cancelar entrega?'))return; o.status='cancelled'; o.updatedAt=new Date().toISOString(); persist(); showToast('❌ Cancelada'); }
-    function openMap(addr){ window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}`,'_blank'); }
+            // Active deliveries list
+            const container = document.getElementById('activeDeliveriesList');
+            if (activeDeliveries.length === 0) {
+                container.innerHTML =
+                    '<div class="empty-state"><span class="emoji">🛵</span><p>Nenhuma entrega ativa.<br>Adicione uma nova corrida!</p></div>';
+            } else {
+                container.innerHTML = activeDeliveries.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                    .map(d => `
+                <div class="card" onclick="openDeliveryDetail('${d.id}')">
+                  <div class="card-header">
+                    <div>
+                      <div class="card-title">🏪 ${escapeHtml(d.restaurant)}</div>
+                      <div class="card-subtitle">👤 ${escapeHtml(d.client)} • 📍 ${escapeHtml(d.address)}</div>
+                    </div>
+                    <div>${getStatusBadge(d.status)}</div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
+                    <span style="font-weight:700;color:var(--primary);font-size:1.1rem;">${formatMoney(d.value)}</span>
+                    <span style="font-size:0.75rem;color:var(--text-muted);">${formatDate(d.createdAt)}</span>
+                  </div>
+                  ${getNextStatus(d.status) ? `
+                  <button class="btn btn-sm btn-primary" style="margin-top:8px;" onclick="event.stopPropagation();advanceStatus('${d.id}')">
+                    ▶ Avançar para "${getStatusLabel(getNextStatus(d.status))}"
+                  </button>` : ''}
+                  ${d.status !== 'canceled' && d.status !== 'done' ? `
+                  <button class="btn btn-sm btn-danger" style="margin-top:4px;margin-left:6px;" onclick="event.stopPropagation();cancelDelivery('${d.id}')">
+                    ❌ Cancelar
+                  </button>` : ''}
+                </div>
+              `).join('');
+            }
 
-    function showOrderModal(id){ const o=appData.orders.find(o=>o.id===id); if(!o)return; const modal=document.getElementById('modalOverlay'), title=document.getElementById('modalTitle'), content=document.getElementById('modalContent'); const statusMap={new:'Nova',accepted:'Aceita',picked_up:'Em Rota',delivered:'Entregue',cancelled:'Cancelada'}; title.textContent='Detalhes da Corrida'; const mapBtn=(o.status==='accepted'||o.status==='picked_up')?`<button class="btn-map" onclick="openMap('${o.dropoffAddr.replace(/'/g,"\\'")}')">🗺️ Mapa</button>`:''; const whatsappBtn = o.clientPhone ? `<button class="btn-whatsapp" onclick="openWhatsApp('${o.clientPhone.replace(/'/g,"\\'")}')">💬 WhatsApp</button>` : ''; content.innerHTML=`<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;"><div class="store-icon ${o.storeIcon}" style="width:44px;height:44px;">${o.storeName.split(' ')[0]}</div><div><strong>${o.storeName}</strong><br><span style="font-size:11px;color:var(--text3);">${statusMap[o.status]}</span></div></div>${o.clientName ? `<div style="margin-bottom:10px;"><strong>👤 Cliente:</strong> ${o.clientName}</div>` : ''}<div class="address-row"><div class="address-dot dropoff"></div><strong>Entrega:</strong> ${o.dropoffAddr} ${mapBtn}</div><div style="display:flex;justify-content:space-between;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);"><span>📏 ${o.distance.toFixed(1)} km</span><span>💰 <strong style="color:var(--green);">${formatCurrency(o.price)}</strong></span></div>${whatsappBtn ? `<div style="margin-top:12px;">${whatsappBtn}</div>` : ''}<p style="font-size:10px;color:var(--text3);margin-top:10px;">Criado: ${formatDate(o.createdAt)}</p>${o.status==='new'?`<div class="btn-row" style="margin-top:14px;"><button class="btn btn-reject" onclick="rejectOrder('${o.id}');closeModalDirect();">❌ Recusar</button><button class="btn btn-accept" onclick="acceptOrder('${o.id}');closeModalDirect();">✅ Aceitar</button></div>`:''}${o.status==='accepted'?`<button class="btn btn-primary" style="margin-top:14px;width:100%;" onclick="markPickedUp('${o.id}');closeModalDirect();">📦 Coletado</button>`:''}${o.status==='picked_up'?`<button class="btn btn-accept" style="margin-top:14px;width:100%;" onclick="markDelivered('${o.id}');closeModalDirect();">🏁 Entregue</button>`:''}${o.status==='delivered'||o.status==='cancelled'?`<button class="btn btn-delete" style="margin-top:10px;" onclick="deleteOrder('${o.id}');closeModalDirect();">🗑️ Excluir</button>`:''}`; modal.style.display='flex'; }
-    function closeModal(e){ if(e&&e.target!==document.getElementById('modalOverlay'))return; document.getElementById('modalOverlay').style.display='none'; }
-    function closeModalDirect(){ document.getElementById('modalOverlay').style.display='none'; }
+            // Update badge
+            const badge = document.getElementById('activeCountBadge');
+            if (activeDeliveries.length > 0) {
+                badge.style.display = 'flex';
+                badge.textContent = activeDeliveries.length;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
 
-    function buildOrderCard(o, showDelete = false){ const s={new:{label:'Nova',cls:'new'},accepted:{label:'Aceita',cls:'progress'},picked_up:{label:'Em Rota',cls:'progress'},delivered:{label:'Entregue',cls:'done'},cancelled:{label:'Cancelada',cls:'cancelled'}}[o.status]||{label:o.status,cls:''}; const isNew=o.status==='new'; const whatsappBtn = o.clientPhone ? `<button class="btn-whatsapp-sm" onclick="event.stopPropagation();openWhatsApp('${o.clientPhone.replace(/'/g,"\\'")}')">💬</button>` : ''; let btns=''; if(!showDelete) { if(isNew) btns=`<div class="btn-row"><button class="btn btn-reject btn-sm" onclick="event.stopPropagation();rejectOrder('${o.id}')">❌ Recusar</button><button class="btn btn-accept btn-sm" onclick="event.stopPropagation();acceptOrder('${o.id}')">✅ Aceitar</button></div>`; else if(o.status==='accepted') btns=`<div class="btn-row"><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();cancelOrder('${o.id}')">❌ Cancelar</button><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();markPickedUp('${o.id}')">📦 Coletado</button></div>`; else if(o.status==='picked_up') btns=`<div class="btn-row"><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();cancelOrder('${o.id}')">❌ Cancelar</button><button class="btn btn-accept btn-sm" onclick="event.stopPropagation();markDelivered('${o.id}')">🏁 Entregue</button></div>`; } else { btns = `<div style="margin-top:10px;display:flex;justify-content:flex-end;"><button class="btn btn-delete" onclick="event.stopPropagation();deleteOrder('${o.id}')">🗑️ Excluir</button></div>`; } return `<div class="order-card${isNew?' new-order':''}" onclick="showOrderModal('${o.id}')"><div class="order-header"><div class="store-name"><div class="store-icon ${o.storeIcon}">${o.storeName.split(' ')[0].replace(/[🍕🍔🍣🥤🛒]/g,'')}</div>${o.storeName}</div><span class="order-badge ${s.cls}">${s.label}</span></div>${o.clientName ? `<div style="font-size:12px;color:var(--text2);margin-bottom:6px;">👤 ${o.clientName} ${whatsappBtn}</div>` : ''}<div class="address-row"><div class="address-dot dropoff"></div>${o.dropoffAddr}</div><div class="order-footer"><span class="order-price">${formatCurrency(o.price)}</span><span class="order-distance">📏 ${o.distance.toFixed(1)} km • ${timeAgo(o.createdAt)}</span></div>${btns}</div>`; }
+        function advanceStatus(id) {
+            const delivery = appData.deliveries.find(d => d.id === id);
+            if (!delivery) return;
+            const next = getNextStatus(delivery.status);
+            if (next) {
+                delivery.status = next;
+                if (next === 'done') {
+                    delivery.completedAt = new Date().toISOString();
+                }
+                saveData();
+                refreshDashboard();
+                if (document.getElementById('screen-detail').classList.contains('active')) {
+                    openDeliveryDetail(id); // atualiza tela de detalhes se aberta
+                }
+                showToast('✅ Status: ' + getStatusLabel(next));
+            }
+        }
 
-    function renderAll(){ updateOnlineUI(); updateHeaderAndProfile(); const newOrders=getNewOrders(), activeOrders=getActiveOrders(), todayEarnings=getTodayEarnings(), todayDeliveries=getTodayDeliveries(), avgRating=appData.totalRatings>0?(appData.ratingSum/appData.totalRatings).toFixed(1):'5.0', newCount=newOrders.length; document.getElementById('statEarnings').textContent=formatCurrency(todayEarnings); document.getElementById('statDeliveries').textContent=todayDeliveries+' entregas'; document.getElementById('statRating').textContent=avgRating; document.getElementById('statActive').textContent=activeOrders.length; document.getElementById('statCompleted').textContent=todayDeliveries; document.getElementById('badgeNewOrders').textContent=newCount; document.getElementById('badgeNewOrders2').textContent=newCount; const nb=document.getElementById('navBadge'), nbo=document.getElementById('navBadgeOrders'); nb.textContent=newCount; nbo.textContent=newCount; if(newCount>0){ nb.classList.add('show'); nbo.classList.add('show'); } else { nb.classList.remove('show'); nbo.classList.remove('show'); } const nc=document.getElementById('newOrdersContainer'), ac=document.getElementById('activeOrdersContainer'), nc2=document.getElementById('newOrdersContainer2'), ac2=document.getElementById('activeOrdersContainer2'); if(newOrders.length===0){ const e='<div class="empty-state"><div class="icon">📭</div><p>Nenhuma nova corrida</p></div>'; nc.innerHTML=e; nc2.innerHTML=e; } else { const c=newOrders.map(o=>buildOrderCard(o)).join(''); nc.innerHTML=c; nc2.innerHTML=c; } if(activeOrders.length===0){ const e='<div class="empty-state"><div class="icon">🛵</div><p>Nenhuma em andamento</p></div>'; ac.innerHTML=e; ac2.innerHTML=e; } else { const c=activeOrders.map(o=>buildOrderCard(o)).join(''); ac.innerHTML=c; ac2.innerHTML=c; } renderHistory(); document.getElementById('profileTotalDeliveries').textContent=appData.totalDeliveries; document.getElementById('profileTotalEarnings').textContent=formatCurrency(appData.totalEarnings); const savedContainer = document.getElementById('savedAddressesContainer'); if (appData.savedAddresses.length === 0) { savedContainer.innerHTML = '<div class="empty-state"><div class="icon">🏪</div><p>Nenhum destino salvo</p></div>'; } else { savedContainer.innerHTML = appData.savedAddresses.map((addr, i) => `<div class="saved-item"><span>${addr.storeName} - ${addr.dropoffAddr}</span><button class="remove-saved" onclick="removeSavedAddress(${i})">✕</button></div>`).join(''); } updateSavedStoreSelect(); }
+        function cancelDelivery(id) {
+            if (confirm('Deseja realmente cancelar esta entrega?')) {
+                const delivery = appData.deliveries.find(d => d.id === id);
+                if (delivery) {
+                    delivery.status = 'canceled';
+                    delivery.canceledAt = new Date().toISOString();
+                    saveData();
+                    refreshDashboard();
+                    if (document.getElementById('screen-detail').classList.contains('active')) {
+                        openDeliveryDetail(id);
+                    }
+                    showToast('❌ Entrega cancelada');
+                }
+            }
+        }
 
-    let historyFilter='all';
-    function filterHistory(f,el){ historyFilter=f; document.querySelectorAll('#screenHistory .chip').forEach(c=>c.classList.remove('active')); if(el)el.classList.add('active'); renderHistory(); }
-    function renderHistory(){ const container=document.getElementById('historyContainer'); let orders=[...appData.orders].sort((a,b)=>new Date(b.updatedAt)-new Date(a.updatedAt)); if(historyFilter==='delivered') orders=orders.filter(o=>o.status==='delivered'); if(historyFilter==='cancelled') orders=orders.filter(o=>o.status==='cancelled'); orders=orders.filter(o=>o.status==='delivered'||o.status==='cancelled'); if(orders.length===0){ container.innerHTML='<div class="empty-state"><div class="icon">📋</div><p>Nenhum histórico</p></div>'; return; } container.innerHTML=orders.map(o=>buildOrderCard(o, true)).join(''); }
+        function openDeliveryDetail(id) {
+            const delivery = appData.deliveries.find(d => d.id === id);
+            if (!delivery) return;
+            const detailContent = document.getElementById('detailContent');
+            const isActive = !['done', 'canceled'].includes(delivery.status);
+            detailContent.innerHTML = `
+            <div class="card">
+              <h3 style="margin-bottom:8px;">📦 Detalhes da Entrega</h3>
+              ${getStatusBadge(delivery.status)}
+              <div class="detail-row"><span class="detail-label">🏪 Restaurante</span><span class="detail-value">${escapeHtml(delivery.restaurant)}</span></div>
+              <div class="detail-row"><span class="detail-label">👤 Cliente</span><span class="detail-value">${escapeHtml(delivery.client)}</span></div>
+              <div class="detail-row"><span class="detail-label">📍 Endereço</span><span class="detail-value">${escapeHtml(delivery.address)}</span></div>
+              <div class="detail-row"><span class="detail-label">📱 Telefone</span><span class="detail-value">${escapeHtml(delivery.phone || '-')}</span></div>
+              <div class="detail-row"><span class="detail-label">💰 Valor</span><span class="detail-value" style="color:var(--primary);font-size:1.1rem;">${formatMoney(delivery.value)}</span></div>
+              <div class="detail-row"><span class="detail-label">📝 Obs</span><span class="detail-value">${escapeHtml(delivery.notes || '-')}</span></div>
+              <div class="detail-row"><span class="detail-label">🕐 Criado</span><span class="detail-value">${formatDate(delivery.createdAt)}</span></div>
+              ${delivery.completedAt ? `<div class="detail-row"><span class="detail-label">✅ Concluído</span><span class="detail-value">${formatDate(delivery.completedAt)}</span></div>` : ''}
+            </div>
+            ${isActive ? `
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+              <button class="btn btn-info btn-block" onclick="openRouteMap('${delivery.id}')">🗺️ Ver Rota de Entrega</button>
+              ${getNextStatus(delivery.status) ? `<button class="btn btn-primary btn-block" onclick="advanceStatus('${delivery.id}');openDeliveryDetail('${delivery.id}');">▶ ${getStatusLabel(getNextStatus(delivery.status))}</button>` : ''}
+              <button class="btn btn-danger btn-block" onclick="cancelDelivery('${delivery.id}');showScreen('dashboard');">❌ Cancelar</button>
+            </div>` : ''}
+          `;
+            showScreen('detail');
+        }
 
-    function switchScreen(id,el){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active')); document.getElementById(id).classList.add('active'); if(el)el.classList.add('active'); document.getElementById('mainContent').scrollTop=0; renderAll(); }
+        // ==================== MAPA ====================
+        let currentMap = null;
+        let currentDeliveryId = null;
+        let clientMarker = null;
+        let motoboyMarker = null;
+        let routeLine = null;
 
-    function resetAllData(){ if(!confirm('Apagar TODOS os dados?'))return; appData={orders:[],isOnline:true,totalEarnings:0,totalDeliveries:0,totalRatings:0,ratingSum:0,motoboy:{name:'Carlos Motoboy',motorcycle:'Honda CG 160',plate:'ABC-1234'},savedAddresses:[]}; persist(); historyFilter='all'; document.querySelectorAll('#screenHistory .chip').forEach((c,i)=>c.classList.toggle('active',i===0)); showToast('🗑️ Dados limpos!'); }
+        function openRouteMap(deliveryId) {
+            currentDeliveryId = deliveryId;
+            const delivery = appData.deliveries.find(d => d.id === deliveryId);
+            if (!delivery) return;
 
-    function setupPWA(){ const manifest={name:'MotoDash Pro',short_name:'MotoDash',start_url:'.',display:'standalone',background_color:'#0f0f1a',theme_color:'#ff6b35',icons:[{src:'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192"><rect width="192" height="192" rx="40" fill="#ff6b35"/><text x="96" y="125" font-size="100" text-anchor="middle" fill="white">🏍️</text></svg>'),sizes:'192x192',type:'image/svg+xml'}]}; const link=document.createElement('link'); link.rel='manifest'; link.href=URL.createObjectURL(new Blob([JSON.stringify(manifest)],{type:'application/json'})); document.head.appendChild(link); if('serviceWorker' in navigator){ const swBlob=new Blob(["self.addEventListener('fetch',e=>{})"],{type:'application/javascript'}); navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{}); } }
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installButtonContainer').style.display='flex'; });
-    function installApp(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(r=>{ if(r.outcome==='accepted')showToast('✅ Instalado!'); deferredPrompt=null; document.getElementById('installButtonContainer').style.display='none'; }); } else showToast('Instalação indisponível.'); }
+            document.getElementById('mapModalOverlay').style.display = 'flex';
+            // Inicializa o mapa após o modal estar visível (para dimensionamento correto)
+            setTimeout(() => initMap(delivery), 100);
+        }
 
-    function init(){ setupPWA(); updateOnlineUI(); updateHeaderAndProfile(); renderAll(); document.getElementById('modalOverlay').addEventListener('click',closeModal); document.getElementById('addCorridaModalOverlay').addEventListener('click',closeAddCorridaModal); document.getElementById('editProfileModalOverlay').addEventListener('click',closeEditProfileModal); console.log('🏍️ MotoDash Pro com imagem personalizada!'); }
-    init();
-    window.addEventListener('beforeunload',()=>saveData(appData));
-    setInterval(()=>saveData(appData),5000);
-</script>
+        function initMap(delivery) {
+            const mapContainer = document.getElementById('mapContainer');
+            // Se já existe um mapa, remove
+            if (currentMap) {
+                currentMap.remove();
+                currentMap = null;
+            }
+
+            // Cria o mapa com visualização padrão (Brasil)
+            currentMap = L.map('mapContainer', {
+                zoomControl: true,
+                attributionControl: false,
+            }).setView([-23.5505, -46.6333], 13); // São Paulo como padrão
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+            }).addTo(currentMap);
+
+            // Tenta obter localização do motoboy
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                        const motoLat = pos.coords.latitude;
+                        const motoLng = pos.coords.longitude;
+                        if (motoboyMarker) currentMap.removeLayer(motoboyMarker);
+                        motoboyMarker = L.marker([motoLat, motoLng], {
+                            icon: L.icon({
+                                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+                                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                                iconSize: [25, 41],
+                                iconAnchor: [12, 41],
+                                popupAnchor: [1, -34],
+                                shadowSize: [41, 41]
+                            })
+                        }).addTo(currentMap).bindPopup('🏍️ Você está aqui').openPopup();
+                        // Centraliza no motoboy
+                        currentMap.setView([motoLat, motoLng], 15);
+                        // Se já temos cliente, atualiza rota
+                        if (clientMarker) updateRoute();
+                    },
+                    (err) => {
+                        showToast('⚠️ Ative a localização para ver sua posição');
+                        console.warn('Geolocalização falhou:', err);
+                    }, { enableHighAccuracy: true, timeout: 10000 }
+                );
+            } else {
+                showToast('Geolocalização não suportada');
+            }
+
+            // Posiciona cliente
+            if (delivery.clientLat && delivery.clientLng) {
+                // Já tem coordenadas salvas
+                placeClientMarker(delivery.clientLat, delivery.clientLng, delivery.address);
+            } else {
+                // Tenta geocodificar o endereço
+                geocodeAddress(delivery.address, (lat, lng) => {
+                    if (lat && lng) {
+                        delivery.clientLat = lat;
+                        delivery.clientLng = lng;
+                        saveData();
+                        placeClientMarker(lat, lng, delivery.address);
+                    } else {
+                        // Fallback: posição padrão e arrastável
+                        const defaultLat = -23.5505;
+                        const defaultLng = -46.6333;
+                        placeClientMarker(defaultLat, defaultLng, delivery.address + ' (ajuste no mapa)');
+                        showToast('📍 Endereço não encontrado. Arraste o marcador azul para o local correto.');
+                    }
+                });
+            }
+        }
+
+        function placeClientMarker(lat, lng, title) {
+            if (clientMarker) currentMap.removeLayer(clientMarker);
+            clientMarker = L.marker([lat, lng], {
+                draggable: true,
+                icon: L.icon({
+                    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41]
+                })
+            }).addTo(currentMap).bindPopup(`📦 Cliente: ${escapeHtml(title)}`).openPopup();
+
+            // Quando arrastar, salva nova posição
+            clientMarker.on('dragend', function(e) {
+                const newPos = e.target.getLatLng();
+                if (currentDeliveryId) {
+                    const delivery = appData.deliveries.find(d => d.id === currentDeliveryId);
+                    if (delivery) {
+                        delivery.clientLat = newPos.lat;
+                        delivery.clientLng = newPos.lng;
+                        saveData();
+                        showToast('📍 Local do cliente atualizado!');
+                    }
+                }
+                updateRoute();
+            });
+
+            updateRoute();
+            // Ajusta visualização para mostrar ambos os marcadores
+            if (motoboyMarker) {
+                const group = new L.featureGroup([motoboyMarker, clientMarker]);
+                currentMap.fitBounds(group.getBounds().pad(0.2));
+            } else {
+                currentMap.setView([lat, lng], 15);
+            }
+        }
+
+        function updateRoute() {
+            if (routeLine) currentMap.removeLayer(routeLine);
+            if (motoboyMarker && clientMarker) {
+                const motoPos = motoboyMarker.getLatLng();
+                const clientPos = clientMarker.getLatLng();
+                routeLine = L.polyline([motoPos, clientPos], {
+                    color: '#FF6B35',
+                    weight: 4,
+                    dashArray: '10, 10',
+                }).addTo(currentMap);
+            }
+        }
+
+        function geocodeAddress(address, callback) {
+            const url =
+                `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(address)}`;
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+                        callback(parseFloat(data[0].lat), parseFloat(data[0].lon));
+                    } else {
+                        callback(null, null);
+                    }
+                })
+                .catch(() => callback(null, null));
+        }
+
+        function closeMapModalDirect() {
+            document.getElementById('mapModalOverlay').style.display = 'none';
+            if (currentMap) {
+                currentMap.remove();
+                currentMap = null;
+            }
+            clientMarker = null;
+            motoboyMarker = null;
+            routeLine = null;
+            currentDeliveryId = null;
+        }
+
+        function closeMapModal(e) {
+            if (e.target === document.getElementById('mapModalOverlay')) {
+                closeMapModalDirect();
+            }
+        }
+
+        // ==================== ADD DELIVERY ====================
+        function addDelivery() {
+            const restaurant = document.getElementById('inputRestaurant').value.trim();
+            const client = document.getElementById('inputClient').value.trim();
+            const address = document.getElementById('inputAddress').value.trim();
+            const value = parseFloat(document.getElementById('inputValue').value);
+            const phone = document.getElementById('inputPhone').value.trim();
+            const notes = document.getElementById('inputNotes').value.trim();
+
+            if (!restaurant || !client || !address || !value || value <= 0) {
+                showToast('⚠️ Preencha todos os campos obrigatórios!');
+                return;
+            }
+
+            const newDelivery = {
+                id: 'del_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                restaurant,
+                client,
+                address,
+                value,
+                phone,
+                notes,
+                status: 'pending',
+                date: getTodayStr(),
+                createdAt: new Date().toISOString(),
+                completedAt: null,
+                canceledAt: null,
+                clientLat: null,
+                clientLng: null,
+            };
+
+            appData.deliveries.unshift(newDelivery);
+            saveData();
+
+            // Clear form
+            document.getElementById('inputRestaurant').value = '';
+            document.getElementById('inputClient').value = '';
+            document.getElementById('inputAddress').value = '';
+            document.getElementById('inputValue').value = '';
+            document.getElementById('inputPhone').value = '';
+            document.getElementById('inputNotes').value = '';
+
+            showToast('🎉 Corrida registrada com sucesso!');
+            showScreen('dashboard');
+        }
+
+        // ==================== HISTORY ====================
+        let historyFilter = 'all';
+
+        function refreshHistory() {
+            const container = document.getElementById('historyList');
+            let deliveries = [...appData.deliveries].filter(d => d.status === 'done' || d.status === 'canceled');
+            if (historyFilter === 'done') deliveries = deliveries.filter(d => d.status === 'done');
+            if (historyFilter === 'canceled') deliveries = deliveries.filter(d => d.status === 'canceled');
+
+            if (deliveries.length === 0) {
+                container.innerHTML =
+                    '<div class="empty-state"><span class="emoji">📭</span><p>Nenhuma entrega encontrada.</p></div>';
+            } else {
+                container.innerHTML = deliveries.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map(
+                    d => `
+                <div class="card" onclick="openDeliveryDetail('${d.id}')">
+                  <div class="card-header">
+                    <div>
+                      <div class="card-title">🏪 ${escapeHtml(d.restaurant)}</div>
+                      <div class="card-subtitle">👤 ${escapeHtml(d.client)}</div>
+                    </div>
+                    <div>${getStatusBadge(d.status)}</div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-weight:700;color:var(--primary);">${formatMoney(d.value)}</span>
+                    <span style="font-size:0.75rem;color:var(--text-muted);">${formatDate(d.createdAt)}</span>
+                  </div>
+                </div>
+              `).join('');
+            }
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                historyFilter = btn.dataset.filter;
+                refreshHistory();
+            });
+        });
+
+        // ==================== PROFILE ====================
+        function refreshProfile() {
+            document.getElementById('profileName').textContent = appData.profileName;
+            const doneDeliveries = appData.deliveries.filter(d => d.status === 'done');
+            const totalEarnings = doneDeliveries.reduce((sum, d) => sum + (parseFloat(d.value) || 0), 0);
+            const avg = doneDeliveries.length > 0 ? totalEarnings / doneDeliveries.length : 0;
+            document.getElementById('profileStats').textContent =
+                `🛵 ${doneDeliveries.length} entregas concluídas • Média ${formatMoney(avg)}/corrida`;
+            document.getElementById('totalAllDeliveries').textContent = doneDeliveries.length;
+            document.getElementById('totalAllEarnings').textContent = formatMoney(totalEarnings);
+            document.getElementById('avgEarning').textContent = formatMoney(avg);
+        }
+
+        function editProfile() {
+            const newName = prompt('Digite seu nome:', appData.profileName);
+            if (newName && newName.trim()) {
+                appData.profileName = newName.trim();
+                saveData();
+                refreshProfile();
+                showToast('👤 Nome atualizado!');
+            }
+        }
+
+        function resetAll() {
+            if (confirm('⚠️ Tem certeza que deseja apagar TODOS os dados? Esta ação não pode ser desfeita!')) {
+                if (confirm('🗑️ Confirmação final: realmente resetar tudo?')) {
+                    appData.deliveries = [];
+                    appData.profileName = 'Motoboy';
+                    saveData();
+                    refreshDashboard();
+                    refreshHistory();
+                    refreshProfile();
+                    showToast('🗑️ Dados resetados com sucesso');
+                    showScreen('dashboard');
+                }
+            }
+        }
+
+        // ==================== DARK MODE ====================
+        function toggleDarkMode() {
+            appData.darkMode = !appData.darkMode;
+            document.body.classList.toggle('dark-mode', appData.darkMode);
+            saveData();
+            showToast(appData.darkMode ? '🌙 Modo escuro ativado' : '☀️ Modo claro ativado');
+        }
+
+        // ==================== MODAL GENÉRICO (não usado mais, mas mantido) ====================
+        function openModal(contentHTML) {
+            // não utilizado atualmente, mas mantido para compatibilidade
+        }
+
+        function closeModal(e) {
+            // não utilizado
+        }
+
+        // ==================== UTILS ====================
+        function escapeHtml(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // ==================== KEYBOARD SHORTCUT ====================
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (document.getElementById('mapModalOverlay').style.display === 'flex') {
+                    closeMapModalDirect();
+                } else if (document.getElementById('screen-detail').classList.contains('active')) {
+                    showScreen('dashboard');
+                }
+            }
+            if (e.ctrlKey && e.key === 'd') {
+                e.preventDefault();
+                toggleDarkMode();
+            }
+            if (e.ctrlKey && e.key === 'n') {
+                e.preventDefault();
+                showScreen('newDelivery');
+            }
+        });
+
+        // ==================== INIT ====================
+        function init() {
+            refreshDashboard();
+            refreshProfile();
+            refreshHistory();
+            const active = appData.deliveries.filter(d => !['done', 'canceled'].includes(d.status));
+            const badge = document.getElementById('activeCountBadge');
+            if (active.length > 0) {
+                badge.style.display = 'flex';
+                badge.textContent = active.length;
+            }
+            console.log('🛵 MotoDelivery Pro v2 inicializado com suporte a mapa!');
+        }
+
+        init();
+
+        // Auto-refresh dashboard
+        setInterval(() => {
+            if (document.getElementById('screen-dashboard').classList.contains('active')) {
+                refreshDashboard();
+            }
+        }, 30000);
+
+        // Service Worker para PWA
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+            self.addEventListener('install', e => self.skipWaiting());
+            self.addEventListener('activate', e => e.waitUntil(clients.claim()));
+            self.addEventListener('fetch', e => {
+              e.respondWith(
+                caches.match(e.request).then(r => r || fetch(e.request).then(res => {
+                  const clone = res.clone();
+                  caches.open('mdp-v2').then(c => c.put(e.request, clone));
+                  return res;
+                }).catch(() => caches.match(e.request)))
+              );
+            });
+          `;
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+            navigator.serviceWorker.register(swUrl).catch(() => {});
+        }
+    </script>
 </body>
 </html>
