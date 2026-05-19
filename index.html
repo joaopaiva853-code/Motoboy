@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>MotoDelivery Pro - Gestão de Corridas</title>
-    <!-- Font Awesome 6 (ícones para ações visuais) -->
+    <title>MotoExpress · Gestão de Entregas</title>
+    <!-- Font Awesome 6 (ícones) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Inter para tipografia moderna -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,21 +17,21 @@
         }
 
         body {
-            font-family: system-ui, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-            background: #f4f7fc;
-            padding: 16px 12px 40px;
-            color: #1e2a3e;
+            font-family: 'Inter', sans-serif;
+            background: #f1f5f9;
+            padding: 16px 12px 32px 12px;
+            color: #0f172a;
         }
 
-        /* container central com max-width para telas grandes, mas confortável em mobile */
+        /* Container estilo "app" centralizado e com bordas suaves */
         .app-container {
-            max-width: 650px;
+            max-width: 550px;
             margin: 0 auto;
-            background: white;
+            background: #ffffff;
             border-radius: 32px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
             overflow: hidden;
-            padding: 20px 18px 28px;
+            padding: 20px 18px 28px 18px;
         }
 
         /* cabeçalho */
@@ -38,652 +40,760 @@
             align-items: center;
             gap: 12px;
             margin-bottom: 24px;
-            border-bottom: 2px solid #ffe2c4;
-            padding-bottom: 12px;
+            flex-wrap: wrap;
+            justify-content: space-between;
         }
-        .header i {
-            font-size: 2.4rem;
-            color: #f97316;
-            background: #fff0e6;
-            padding: 10px;
-            border-radius: 24px;
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        .header h1 {
-            font-size: 1.7rem;
+        .logo-icon {
+            background: #e11d48;
+            width: 48px;
+            height: 48px;
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 26px;
+            box-shadow: 0 4px 8px rgba(225, 29, 72, 0.2);
+        }
+        .title h1 {
+            font-size: 1.55rem;
             font-weight: 700;
-            color: #ea580c;
             letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #e11d48, #f97316);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
         }
-        .header span {
-            font-size: 0.8rem;
-            background: #fef3c7;
-            padding: 4px 10px;
-            border-radius: 40px;
-            margin-left: auto;
+        .title p {
+            font-size: 0.75rem;
+            color: #475569;
             font-weight: 500;
-            color: #b45309;
+        }
+        .reset-data {
+            background: #f8fafc;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .reset-data:hover {
+            background: #e2e8f0;
         }
 
-        /* cards de resumo */
-        .stats {
-            display: flex;
-            justify-content: space-between;
+        /* cards estatísticas */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 12px;
             margin-bottom: 28px;
         }
         .stat-card {
-            background: #fef9f0;
-            flex: 1;
+            background: #f8fafc;
             border-radius: 24px;
-            padding: 12px 8px;
+            padding: 12px 6px;
             text-align: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-            border: 1px solid #ffedd5;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            transition: 0.1s;
         }
-        .stat-card i {
-            font-size: 1.6rem;
-            color: #f97316;
-            margin-bottom: 6px;
-            display: inline-block;
-        }
-        .stat-card .label {
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: #6b4e2e;
-            text-transform: uppercase;
-        }
-        .stat-card .value {
-            font-size: 1.8rem;
+        .stat-value {
+            font-size: 1.7rem;
             font-weight: 800;
-            color: #1e293b;
+            color: #0f172a;
             line-height: 1.2;
         }
-        .stat-card .small-value {
-            font-size: 1.1rem;
-        }
-
-        /* formulário de edição / nova corrida */
-        .form-card {
-            background: #ffffff;
-            border-radius: 28px;
-            padding: 18px 16px;
-            margin-bottom: 28px;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.04);
-            border: 1px solid #ffe0c0;
-        }
-        .form-title {
-            font-weight: 600;
-            margin-bottom: 14px;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #c2410c;
-        }
-        .input-group {
-            margin-bottom: 14px;
-        }
-        .input-group label {
-            display: block;
-            font-size: 0.8rem;
+        .stat-label {
+            font-size: 0.7rem;
             font-weight: 500;
-            margin-bottom: 6px;
             color: #475569;
+            letter-spacing: 0.3px;
         }
-        .input-group input, .input-group select {
-            width: 100%;
-            padding: 12px 14px;
-            font-size: 1rem;
-            border-radius: 20px;
-            border: 1.5px solid #e2e8f0;
-            background: #fefefe;
-            transition: 0.2s;
-            font-family: inherit;
-        }
-        .input-group input:focus, .input-group select:focus {
-            outline: none;
-            border-color: #f97316;
-            box-shadow: 0 0 0 3px rgba(249,115,22,0.2);
-        }
-        .form-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 16px;
-        }
-        button {
-            background: #f97316;
-            border: none;
-            padding: 12px 18px;
+        .badge-status {
+            font-size: 0.7rem;
+            padding: 4px 8px;
             border-radius: 40px;
             font-weight: 600;
-            font-size: 0.9rem;
-            color: white;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-            flex: 1;
-            font-family: inherit;
-        }
-        button i {
-            font-size: 0.9rem;
-        }
-        .btn-secondary {
-            background: #e2e8f0;
-            color: #1e293b;
-        }
-        .btn-danger {
-            background: #ef4444;
-        }
-        .btn-outline {
-            background: transparent;
-            border: 1.5px solid #f97316;
-            color: #f97316;
-        }
-        .btn-outline:hover {
-            background: #fff0e6;
-        }
-        button:active {
-            transform: scale(0.97);
+            width: fit-content;
         }
 
         /* filtros */
         .filter-bar {
             display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-            background: #f1f5f9;
-            padding: 6px;
-            border-radius: 48px;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+            border-bottom: 1.5px solid #eef2ff;
+            padding-bottom: 12px;
         }
         .filter-btn {
-            background: transparent;
-            color: #334155;
-            flex: 1;
-            padding: 8px 0;
+            background: #f1f5f9;
+            border: none;
+            padding: 8px 16px;
             border-radius: 40px;
+            font-weight: 600;
             font-size: 0.8rem;
+            color: #334155;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
         }
         .filter-btn.active {
-            background: #f97316;
+            background: #e11d48;
             color: white;
-            box-shadow: 0 2px 8px rgba(249,115,22,0.3);
+            box-shadow: 0 2px 8px rgba(225,29,72,0.3);
         }
 
-        /* lista de corridas */
-        .rides-list {
+        /* lista de entregas */
+        .deliveries-list {
             display: flex;
             flex-direction: column;
             gap: 16px;
-            margin-top: 8px;
-            max-height: 520px;
+            margin-bottom: 28px;
+            max-height: 460px;
             overflow-y: auto;
             padding-right: 4px;
         }
-        .ride-card {
-            background: white;
+        .delivery-card {
+            background: #ffffff;
             border-radius: 24px;
             padding: 16px;
-            border-left: 6px solid #f97316;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: all 0.1s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eef2ff;
+            transition: 0.1s;
         }
-        .ride-header {
+        .card-header {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
-            flex-wrap: wrap;
+            align-items: center;
             margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 6px;
         }
         .client-name {
             font-weight: 800;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
-        .status-badge {
+        .status-tag {
             font-size: 0.7rem;
-            font-weight: 600;
-            padding: 4px 12px;
-            border-radius: 40px;
-            background: #f1f5f9;
-            color: #334155;
-        }
-        .status-Pendente { background: #fed7aa; color: #9b4a0c; }
-        .status-Emrota { background: #bfdbfe; color: #1e40af; }
-        .status-Entregue { background: #bbf7d0; color: #166534; }
-
-        .ride-details {
-            font-size: 0.85rem;
-            color: #475569;
-            margin: 10px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .ride-details i {
-            width: 22px;
-            color: #f97316;
-        }
-        .ride-value {
             font-weight: 700;
-            font-size: 1.2rem;
-            color: #0f172a;
-            margin-top: 6px;
+            padding: 4px 10px;
+            border-radius: 30px;
+            text-transform: uppercase;
         }
-        .btn-group {
+        .status-pendente { background: #ffedd5; color: #9a3412; }
+        .status-em_andamento { background: #dbeafe; color: #1e40af; }
+        .status-entregue { background: #dcfce7; color: #166534; }
+
+        .address {
             display: flex;
-            gap: 10px;
-            margin-top: 14px;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #334155;
+            margin: 10px 0 8px 0;
+            word-break: break-word;
+        }
+        .price-row {
+            font-weight: 700;
+            color: #0f172a;
+            font-size: 1rem;
+            margin: 6px 0;
+        }
+        .meta-info {
+            font-size: 0.7rem;
+            color: #64748b;
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
             flex-wrap: wrap;
         }
-        .btn-group button {
-            flex: 1;
-            padding: 8px 0;
-            font-size: 0.75rem;
-            background: #f1f5f9;
-            color: #1e293b;
+        .card-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
-        .btn-group .btn-primary {
-            background: #f97316;
-            color: white;
+        .btn-icon {
+            background: transparent;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: 'Inter', sans-serif;
         }
-        .btn-group .btn-warning {
-            background: #facc15;
-            color: #422006;
-        }
-        .empty-message {
-            text-align: center;
-            padding: 40px 20px;
-            background: #f8fafc;
-            border-radius: 32px;
-            color: #64748b;
-            font-weight: 500;
+        .btn-edit { background: #f1f5f9; color: #2563eb; }
+        .btn-delete { background: #fff1f2; color: #e11d48; }
+        .btn-start { background: #eef2ff; color: #2563eb; }
+        .btn-finish { background: #dcfce7; color: #15803d; }
+        .map-link {
+            background: none;
+            color: #3b82f6;
+            font-size: 0.8rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        footer {
+        .empty-state {
             text-align: center;
-            font-size: 0.7rem;
-            margin-top: 28px;
+            padding: 40px 20px;
             color: #94a3b8;
         }
-        @media (max-width: 480px) {
-            .app-container {
-                padding: 16px;
-            }
-            .btn-group button {
-                font-size: 0.7rem;
-            }
-            .stat-card .value {
-                font-size: 1.4rem;
-            }
+
+        /* botão flutuante add */
+        .fab-add {
+            background: #e11d48;
+            border: none;
+            width: 56px;
+            height: 56px;
+            border-radius: 32px;
+            color: white;
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px auto;
+            box-shadow: 0 8px 16px rgba(225,29,72,0.3);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .fab-add:hover {
+            background: #be123c;
+            transform: scale(0.97);
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(3px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+        .modal-card {
+            background: white;
+            max-width: 500px;
+            width: 100%;
+            border-radius: 36px;
+            padding: 24px 20px;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.2);
+            animation: fadeUp 0.2s ease;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .modal-card h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            font-weight: 600;
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 5px;
+            color: #1e293b;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            background: #fefefe;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+        .btn-save {
+            background: #e11d48;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+        }
+        .btn-cancel {
+            background: #f1f5f9;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 500;
+        }
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 16px;
+            color: #94a3b8;
+        }
+        @media (max-width: 460px) {
+            .app-container { padding: 16px; }
+            .card-actions .btn-icon { font-size: 0.75rem; padding: 6px 10px; }
+            .client-name { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
 <div class="app-container">
     <div class="header">
-        <i class="fas fa-motorcycle"></i>
-        <h1>MotoDelivery</h1>
-        <span>v.2.0</span>
+        <div class="logo-area">
+            <div class="logo-icon"><i class="fas fa-motorcycle"></i></div>
+            <div class="title">
+                <h1>MotoExpress</h1>
+                <p>Gestão de entregas • corridas locais</p>
+            </div>
+        </div>
+        <button class="reset-data" id="resetDemoBtn"><i class="fas fa-arrow-rotate-left"></i> Demo</button>
     </div>
 
-    <!-- Resumo financeiro e entregas -->
-    <div class="stats">
-        <div class="stat-card">
-            <i class="fas fa-truck-fast"></i>
-            <div class="label">Ativas</div>
-            <div class="value" id="activeCount">0</div>
-        </div>
-        <div class="stat-card">
-            <i class="fas fa-check-circle"></i>
-            <div class="label">Entregues</div>
-            <div class="value" id="completedCount">0</div>
-        </div>
-        <div class="stat-card">
-            <i class="fas fa-money-bill-wave"></i>
-            <div class="label">Faturamento</div>
-            <div class="value small-value" id="totalEarned">R$0</div>
-        </div>
+    <!-- estatísticas -->
+    <div class="stats-grid">
+        <div class="stat-card"><div class="stat-value" id="totalDeliveries">0</div><div class="stat-label">Total corridas</div></div>
+        <div class="stat-card"><div class="stat-value" id="pendingCount">0</div><div class="stat-label">Pendentes</div></div>
+        <div class="stat-card"><div class="stat-value" id="earningsTotal">R$0</div><div class="stat-label">Ganho (entregues)</div></div>
     </div>
 
-    <!-- Formulário para adicionar ou editar corridas -->
-    <div class="form-card">
-        <div class="form-title"><i class="fas fa-edit"></i> <span id="formModeText">Nova Corrida</span></div>
-        <div class="input-group">
-            <label><i class="fas fa-user"></i> Cliente</label>
-            <input type="text" id="clienteInput" placeholder="Ex: Joana Martins" autocomplete="off">
-        </div>
-        <div class="input-group">
-            <label><i class="fas fa-map-marker-alt"></i> Endereço (bairro / rua)</label>
-            <input type="text" id="enderecoInput" placeholder="Rua das Laranjeiras, 245 - Centro">
-        </div>
-        <div class="input-group">
-            <label><i class="fas fa-tag"></i> Valor (R$)</label>
-            <input type="number" id="valorInput" step="0.01" placeholder="0,00" value="0">
-        </div>
-        <div class="input-group">
-            <label><i class="fas fa-chart-line"></i> Status</label>
-            <select id="statusSelect">
-                <option value="Pendente">Pendente</option>
-                <option value="Em rota">Em rota</option>
-                <option value="Entregue">Entregue</option>
-            </select>
-        </div>
-        <div class="form-actions">
-            <button id="saveRideBtn"><i class="fas fa-save"></i> Salvar</button>
-            <button id="cancelEditBtn" class="btn-secondary"><i class="fas fa-times"></i> Cancelar</button>
-        </div>
-    </div>
-
-    <!-- Filtros -->
+    <!-- filtros -->
     <div class="filter-bar">
-        <button data-filter="active" class="filter-btn active"><i class="fas fa-play-circle"></i> Ativas</button>
-        <button data-filter="all" class="filter-btn"><i class="fas fa-list"></i> Todas</button>
-        <button data-filter="completed" class="filter-btn"><i class="fas fa-check-double"></i> Concluídas</button>
+        <button class="filter-btn active" data-filter="all">Todas</button>
+        <button class="filter-btn" data-filter="pendente">Pendentes</button>
+        <button class="filter-btn" data-filter="em_andamento">Em andamento</button>
+        <button class="filter-btn" data-filter="entregue">Entregues</button>
     </div>
 
-    <!-- Listagem de corridas -->
-    <div class="rides-list" id="ridesListContainer">
-        <!-- cards serão inseridos via JS -->
-        <div class="empty-message">Carregando suas corridas...</div>
+    <!-- lista de corridas (entregas) -->
+    <div id="deliveriesList" class="deliveries-list">
+        <!-- JS preenche -->
+        <div class="empty-state"><i class="fas fa-scooter"></i> Nenhuma corrida ainda. Toque em + para criar</div>
     </div>
-    <footer>
-        <i class="fas fa-map-marked-alt"></i> Suas corridas ficam salvas no dispositivo. Edite, inicie rotas e finalize entregas!
-    </footer>
+
+    <!-- botão flutuante de adicionar -->
+    <button class="fab-add" id="openAddModal"><i class="fas fa-plus"></i></button>
+    <footer>Edite suas corridas, inicie entregas e marque como concluídas ✔️ Dados salvos localmente</footer>
+</div>
+
+<!-- MODAL universal para criar/editar -->
+<div id="modalOverlay" class="modal">
+    <div class="modal-card">
+        <h2 id="modalTitle">Nova corrida</h2>
+        <form id="deliveryForm">
+            <input type="hidden" id="editId" value="">
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Cliente *</label>
+                <input type="text" id="cliente" placeholder="Ex: Ana Souza" required>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-location-dot"></i> Endereço completo *</label>
+                <input type="text" id="endereco" placeholder="Rua, número, bairro, cidade" required>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-tag"></i> Valor (R$)</label>
+                <input type="number" id="valor" step="0.01" placeholder="0,00" value="0">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-chart-line"></i> Status</label>
+                <select id="statusSelect">
+                    <option value="pendente">Pendente</option>
+                    <option value="em_andamento">Em andamento</option>
+                    <option value="entregue">Entregue</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-note-sticky"></i> Observações (opcional)</label>
+                <textarea id="obs" rows="2" placeholder="Portão azul, campainha ..."></textarea>
+            </div>
+            <div class="modal-buttons">
+                <button type="button" class="btn-cancel" id="closeModalBtn">Cancelar</button>
+                <button type="submit" class="btn-save">Salvar corrida</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <script>
-    // ---------- DADOS E CONFIGURAÇÕES ----------
-    let corridas = [];            // array de objetos
-    let currentEditId = null;    // null = modo criação
-    let currentFilter = "active"; // 'active', 'all', 'completed'
+    // ----- DADOS ------
+    let deliveries = [];     // array de objetos
+    let currentFilter = "all";
 
-    // Elementos DOM
-    const clienteInput = document.getElementById('clienteInput');
-    const enderecoInput = document.getElementById('enderecoInput');
-    const valorInput = document.getElementById('valorInput');
-    const statusSelect = document.getElementById('statusSelect');
-    const saveBtn = document.getElementById('saveRideBtn');
-    const cancelBtn = document.getElementById('cancelEditBtn');
-    const ridesContainer = document.getElementById('ridesListContainer');
-    const activeCountSpan = document.getElementById('activeCount');
-    const completedCountSpan = document.getElementById('completedCount');
-    const totalEarnedSpan = document.getElementById('totalEarned');
-    const formModeText = document.getElementById('formModeText');
-
-    // Função de escape para evitar XSS
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-            return c;
-        });
-    }
-
-    // Carregar dados do localStorage ou iniciar com exemplo
+    // Carregar dados do localStorage ou usar dados iniciais
     function loadData() {
-        const stored = localStorage.getItem('motoboy_delivery_corridas');
-        if (stored) {
-            corridas = JSON.parse(stored);
+        const stored = localStorage.getItem("motoexpress_deliveries");
+        if(stored) {
+            deliveries = JSON.parse(stored);
         } else {
-            // dados de demonstração (cidade local)
-            corridas = [
-                { id: 101, cliente: "Ana Beatriz", endereco: "Rua da Prata, 88 - Jardim América", valor: 18.90, status: "Pendente", dataCriacao: "2025-02-18 11:30" },
-                { id: 102, cliente: "Carlos Eduardo", endereco: "Av. Central, 1200 - Centro", valor: 25.00, status: "Em rota", dataCriacao: "2025-02-18 10:15" },
-                { id: 103, cliente: "Fernanda Lima", endereco: "Rua das Margaridas, 55 - Vila Nova", valor: 32.50, status: "Entregue", dataCriacao: "2025-02-17 18:20" },
-                { id: 104, cliente: "Ricardo Alves", endereco: "Travessa São Bento, 9 - Centro Histórico", valor: 14.75, status: "Pendente", dataCriacao: "2025-02-18 09:45" }
+            // dados demo cidade local
+            deliveries = [
+                {
+                    id: "d1",
+                    cliente: "Carlos M.",
+                    endereco: "Rua das Laranjeiras, 234 - Centro, São Paulo",
+                    valor: 12.50,
+                    status: "pendente",
+                    observacoes: "Entregar no apto 12B",
+                    criado_em: new Date(Date.now() - 3600000).toISOString(),
+                    entregue_em: null
+                },
+                {
+                    id: "d2",
+                    cliente: "Juliana Lima",
+                    endereco: "Av. Paulista, 1578 - Bela Vista",
+                    valor: 18.90,
+                    status: "em_andamento",
+                    observacoes: "Pessoal da recepção",
+                    criado_em: new Date(Date.now() - 7200000).toISOString(),
+                    entregue_em: null
+                },
+                {
+                    id: "d3",
+                    cliente: "Ricardo Alves",
+                    endereco: "Rua Augusta, 1020 - Consolação",
+                    valor: 22.00,
+                    status: "entregue",
+                    observacoes: "Deixar na portaria",
+                    criado_em: new Date(Date.now() - 86400000).toISOString(),
+                    entregue_em: new Date(Date.now() - 3600000).toISOString()
+                }
             ];
             saveToLocal();
         }
-        renderizarLista();
-        atualizarResumo();
+        renderStats();
+        renderList();
     }
 
     function saveToLocal() {
-        localStorage.setItem('motoboy_delivery_corridas', JSON.stringify(corridas));
+        localStorage.setItem("motoexpress_deliveries", JSON.stringify(deliveries));
     }
 
-    // Atualizar cards de resumo
-    function atualizarResumo() {
-        const ativas = corridas.filter(c => c.status !== "Entregue").length;
-        const concluidas = corridas.filter(c => c.status === "Entregue").length;
-        const totalReceita = corridas.filter(c => c.status === "Entregue").reduce((sum, c) => sum + (c.valor || 0), 0);
-        activeCountSpan.innerText = ativas;
-        completedCountSpan.innerText = concluidas;
-        totalEarnedSpan.innerHTML = `R$ ${totalReceita.toFixed(2)}`;
+    // helper para gerar id simples
+    function generateId() {
+        return Date.now().toString(36) + Math.random().toString(36).substring(2);
     }
 
-    // Filtrar conforme currentFilter
-    function getFilteredRides() {
-        if (currentFilter === 'active') {
-            return corridas.filter(c => c.status !== "Entregue");
-        } else if (currentFilter === 'completed') {
-            return corridas.filter(c => c.status === "Entregue");
-        }
-        return [...corridas];
-    }
+    // Adicionar ou editar
+    function saveDelivery(event) {
+        event.preventDefault();
+        const id = document.getElementById("editId").value;
+        const cliente = document.getElementById("cliente").value.trim();
+        const endereco = document.getElementById("endereco").value.trim();
+        const valorRaw = document.getElementById("valor").value;
+        const valor = parseFloat(valorRaw) || 0;
+        const status = document.getElementById("statusSelect").value;
+        const observacoes = document.getElementById("obs").value.trim();
 
-    // Renderizar a lista de corridas (cards)
-    function renderizarLista() {
-        const filtradas = getFilteredRides();
-        if (filtradas.length === 0) {
-            ridesContainer.innerHTML = `<div class="empty-message"><i class="fas fa-motorcycle"></i> Nenhuma corrida ${currentFilter === 'active' ? 'ativa' : (currentFilter === 'completed' ? 'concluída' : 'cadastrada')}.<br> Adicione uma nova corrida!</div>`;
+        if(!cliente || !endereco) {
+            alert("Preencha cliente e endereço.");
             return;
         }
 
-        ridesContainer.innerHTML = '';
-        filtradas.forEach(ride => {
-            const card = document.createElement('div');
-            card.className = 'ride-card';
-            // status badge style dinâmico
-            let statusClass = '';
-            if (ride.status === 'Pendente') statusClass = 'status-Pendente';
-            else if (ride.status === 'Em rota') statusClass = 'status-Emrota';
-            else if (ride.status === 'Entregue') statusClass = 'status-Entregue';
-
-            // formata data (se existir)
-            const dataInfo = ride.dataCriacao ? `<small><i class="far fa-calendar-alt"></i> ${escapeHtml(ride.dataCriacao)}</small>` : '';
-
-            card.innerHTML = `
-                <div class="ride-header">
-                    <div class="client-name"><i class="fas fa-user-circle"></i> ${escapeHtml(ride.cliente)}</div>
-                    <div class="status-badge ${statusClass}">${escapeHtml(ride.status)}</div>
-                </div>
-                <div class="ride-details">
-                    <div><i class="fas fa-location-dot"></i> ${escapeHtml(ride.endereco)}</div>
-                    <div class="ride-value"><i class="fas fa-coins"></i> R$ ${ride.valor.toFixed(2)}</div>
-                    ${dataInfo ? `<div>${dataInfo}</div>` : ''}
-                </div>
-                <div class="btn-group">
-                    <button class="btn-editar" data-id="${ride.id}"><i class="fas fa-pen"></i> Editar</button>
-                    <button class="btn-excluir" data-id="${ride.id}"><i class="fas fa-trash-alt"></i> Excluir</button>
-                    ${ride.status !== 'Entregue' ? `<button class="btn-iniciar-rota" data-id="${ride.id}"><i class="fas fa-road"></i> Iniciar Rota</button>` : ''}
-                    ${ride.status !== 'Entregue' ? `<button class="btn-finalizar" data-id="${ride.id}"><i class="fas fa-flag-checkered"></i> Finalizar</button>` : ''}
-                </div>
-            `;
-            ridesContainer.appendChild(card);
-        });
-
-        // Adicionar eventos nos botões dinâmicos (delegação)
-        document.querySelectorAll('.btn-editar').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const id = parseInt(btn.dataset.id);
-                editarCorrida(id);
-            });
-        });
-        document.querySelectorAll('.btn-excluir').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const id = parseInt(btn.dataset.id);
-                if (confirm('Remover esta corrida permanentemente?')) {
-                    excluirCorrida(id);
+        if(id) {
+            // EDITAR
+            const index = deliveries.findIndex(d => d.id === id);
+            if(index !== -1) {
+                const oldStatus = deliveries[index].status;
+                deliveries[index].cliente = cliente;
+                deliveries[index].endereco = endereco;
+                deliveries[index].valor = valor;
+                deliveries[index].observacoes = observacoes;
+                // gerenciar data de entrega ao mudar status
+                const newStatus = status;
+                if(newStatus === "entregue" && oldStatus !== "entregue") {
+                    deliveries[index].entregue_em = new Date().toISOString();
+                } else if(newStatus !== "entregue") {
+                    deliveries[index].entregue_em = null;
+                } else if(newStatus === "entregue" && deliveries[index].entregue_em === null) {
+                    deliveries[index].entregue_em = new Date().toISOString();
                 }
-            });
-        });
-        document.querySelectorAll('.btn-iniciar-rota').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const id = parseInt(btn.dataset.id);
-                alterarStatus(id, 'Em rota');
-            });
-        });
-        document.querySelectorAll('.btn-finalizar').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const id = parseInt(btn.dataset.id);
-                alterarStatus(id, 'Entregue');
-            });
-        });
-    }
-
-    // função para alterar status (usado nos botões de ação)
-    function alterarStatus(id, novoStatus) {
-        const index = corridas.findIndex(c => c.id === id);
-        if (index !== -1) {
-            corridas[index].status = novoStatus;
-            saveToLocal();
-            renderizarLista();
-            atualizarResumo();
-            // se estiver editando a mesma corrida e ela mudou, resetar formulário para evitar inconsistência
-            if (currentEditId === id) {
-                limparFormulario();
-            }
-        }
-    }
-
-    // excluir corrida
-    function excluirCorrida(id) {
-        corridas = corridas.filter(c => c.id !== id);
-        if (currentEditId === id) limparFormulario();
-        saveToLocal();
-        renderizarLista();
-        atualizarResumo();
-    }
-
-    // preencher formulário para edição
-    function editarCorrida(id) {
-        const ride = corridas.find(c => c.id === id);
-        if (!ride) return;
-        currentEditId = ride.id;
-        clienteInput.value = ride.cliente;
-        enderecoInput.value = ride.endereco;
-        valorInput.value = ride.valor;
-        statusSelect.value = ride.status;
-        formModeText.innerText = "✏️ Editando Corrida";
-        saveBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Atualizar';
-        // rolar suavemente para o formulário
-        document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-
-    function limparFormulario() {
-        currentEditId = null;
-        clienteInput.value = '';
-        enderecoInput.value = '';
-        valorInput.value = '';
-        statusSelect.value = 'Pendente';
-        formModeText.innerText = "➕ Nova Corrida";
-        saveBtn.innerHTML = '<i class="fas fa-save"></i> Salvar';
-    }
-
-    // salvar (criar ou atualizar)
-    function salvarCorrida() {
-        const cliente = clienteInput.value.trim();
-        const endereco = enderecoInput.value.trim();
-        let valor = parseFloat(valorInput.value);
-        if (isNaN(valor)) valor = 0;
-        const status = statusSelect.value;
-
-        if (cliente === '' || endereco === '') {
-            alert('Por favor, preencha o nome do cliente e endereço.');
-            return;
-        }
-        if (valor < 0) {
-            alert('Valor não pode ser negativo.');
-            return;
-        }
-
-        if (currentEditId !== null) {
-            // atualizar corrida existente
-            const index = corridas.findIndex(c => c.id === currentEditId);
-            if (index !== -1) {
-                corridas[index] = {
-                    ...corridas[index],
-                    cliente: cliente,
-                    endereco: endereco,
-                    valor: valor,
-                    status: status
-                    // dataCriacao permanece original
-                };
-                saveToLocal();
-                limparFormulario();
-                renderizarLista();
-                atualizarResumo();
+                deliveries[index].status = newStatus;
             }
         } else {
-            // nova corrida com id único
-            const novoId = Date.now();
-            const nowStr = new Date().toLocaleString('pt-BR');
-            const novaCorrida = {
-                id: novoId,
+            // CRIAR nova corrida
+            const newDelivery = {
+                id: generateId(),
                 cliente: cliente,
                 endereco: endereco,
                 valor: valor,
                 status: status,
-                dataCriacao: nowStr
+                observacoes: observacoes,
+                criado_em: new Date().toISOString(),
+                entregue_em: (status === "entregue") ? new Date().toISOString() : null,
             };
-            corridas.push(novaCorrida);
+            deliveries.unshift(newDelivery);
+        }
+        saveToLocal();
+        closeModal();
+        renderStats();
+        renderList();
+    }
+
+    // Função para deletar
+    function deleteDelivery(id) {
+        if(confirm("Remover esta corrida permanentemente?")) {
+            deliveries = deliveries.filter(d => d.id !== id);
             saveToLocal();
-            limparFormulario();
-            renderizarLista();
-            atualizarResumo();
+            renderStats();
+            renderList();
         }
     }
 
-    // eventos dos filtros
-    function configurarFiltros() {
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const filterValue = btn.dataset.filter;
-                if (filterValue === 'active') currentFilter = 'active';
-                else if (filterValue === 'completed') currentFilter = 'completed';
-                else currentFilter = 'all';
-                renderizarLista();
-                atualizarResumo(); // apenas para manter sincronia
+    // atualizar status rápido (iniciar / concluir)
+    function quickUpdateStatus(id, newStatus) {
+        const index = deliveries.findIndex(d => d.id === id);
+        if(index !== -1) {
+            const oldStatus = deliveries[index].status;
+            deliveries[index].status = newStatus;
+            if(newStatus === "entregue" && oldStatus !== "entregue") {
+                deliveries[index].entregue_em = new Date().toISOString();
+            } else if(newStatus !== "entregue") {
+                deliveries[index].entregue_em = null;
+            }
+            saveToLocal();
+            renderStats();
+            renderList();
+        }
+    }
+
+    // abrir modal com dados (edição)
+    function openEditModal(id) {
+        const delivery = deliveries.find(d => d.id === id);
+        if(delivery) {
+            document.getElementById("modalTitle").innerText = "✏️ Editar corrida";
+            document.getElementById("editId").value = delivery.id;
+            document.getElementById("cliente").value = delivery.cliente;
+            document.getElementById("endereco").value = delivery.endereco;
+            document.getElementById("valor").value = delivery.valor;
+            document.getElementById("statusSelect").value = delivery.status;
+            document.getElementById("obs").value = delivery.observacoes || "";
+            document.getElementById("modalOverlay").style.display = "flex";
+        }
+    }
+
+    function openCreateModal() {
+        document.getElementById("modalTitle").innerText = "➕ Nova corrida";
+        document.getElementById("editId").value = "";
+        document.getElementById("cliente").value = "";
+        document.getElementById("endereco").value = "";
+        document.getElementById("valor").value = "0";
+        document.getElementById("statusSelect").value = "pendente";
+        document.getElementById("obs").value = "";
+        document.getElementById("modalOverlay").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("modalOverlay").style.display = "none";
+    }
+
+    // estatísticas
+    function renderStats() {
+        const total = deliveries.length;
+        const pending = deliveries.filter(d => d.status === "pendente").length;
+        const earnings = deliveries.filter(d => d.status === "entregue").reduce((sum, d) => sum + (d.valor || 0), 0);
+        document.getElementById("totalDeliveries").innerText = total;
+        document.getElementById("pendingCount").innerText = pending;
+        document.getElementById("earningsTotal").innerHTML = `R$${earnings.toFixed(2)}`;
+    }
+
+    // renderizar lista com filtro
+    function renderList() {
+        let filtered = [...deliveries];
+        if(currentFilter !== "all") {
+            filtered = filtered.filter(d => d.status === currentFilter);
+        }
+        // ordenação: pendentes e em andamento primeiro, depois entregues, e por data decrescente
+        filtered.sort((a,b) => {
+            const order = { "pendente": 1, "em_andamento": 2, "entregue": 3 };
+            const orderA = order[a.status] || 4;
+            const orderB = order[b.status] || 4;
+            if(orderA !== orderB) return orderA - orderB;
+            return new Date(b.criado_em) - new Date(a.criado_em);
+        });
+
+        const container = document.getElementById("deliveriesList");
+        if(filtered.length === 0) {
+            container.innerHTML = `<div class="empty-state"><i class="fas fa-road"></i> Nenhuma corrida com este filtro.<br>Toque em + para criar nova entrega</div>`;
+            return;
+        }
+
+        container.innerHTML = filtered.map(del => {
+            const statusText = { "pendente": "Pendente", "em_andamento": "Em andamento", "entregue": "Entregue" }[del.status];
+            const statusClass = `status-${del.status}`;
+            const valorFormat = (del.valor || 0).toFixed(2);
+            const criadoData = new Date(del.criado_em).toLocaleDateString("pt-BR", {day:"2-digit", month:"short", hour:"2-digit", minute:"2-digit"});
+            let actionButtons = "";
+            if(del.status === "pendente") {
+                actionButtons = `<button class="btn-icon btn-start" data-action="start" data-id="${del.id}"><i class="fas fa-play"></i> Iniciar</button>`;
+            } else if(del.status === "em_andamento") {
+                actionButtons = `<button class="btn-icon btn-finish" data-action="finish" data-id="${del.id}"><i class="fas fa-check-circle"></i> Concluir</button>`;
+            }
+            // link para abrir google maps
+            const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(del.endereco)}`;
+            return `
+                <div class="delivery-card" data-id="${del.id}">
+                    <div class="card-header">
+                        <div class="client-name"><i class="fas fa-user-circle"></i> ${escapeHtml(del.cliente)}</div>
+                        <div class="status-tag ${statusClass}">${statusText}</div>
+                    </div>
+                    <div class="address">
+                        <i class="fas fa-map-pin"></i> <span>${escapeHtml(del.endereco)}</span>
+                        <a href="${mapsLink}" target="_blank" class="map-link" rel="noopener"><i class="fas fa-external-link-alt"></i> mapa</a>
+                    </div>
+                    <div class="price-row"><i class="fas fa-money-bill-wave"></i> R$ ${valorFormat}</div>
+                    <div class="meta-info">
+                        <span><i class="far fa-calendar-alt"></i> ${criadoData}</span>
+                        ${del.observacoes ? `<span><i class="fas fa-comment"></i> ${escapeHtml(del.observacoes.substring(0, 35))}</span>` : ''}
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn-icon btn-edit" data-action="edit" data-id="${del.id}"><i class="fas fa-pen"></i> Editar</button>
+                        ${actionButtons}
+                        <button class="btn-icon btn-delete" data-action="delete" data-id="${del.id}"><i class="fas fa-trash-alt"></i> Excluir</button>
+                    </div>
+                </div>
+            `;
+        }).join("");
+
+        // adicionar event listeners nos botões dinâmicos
+        document.querySelectorAll("[data-action='edit']").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const id = btn.getAttribute("data-id");
+                openEditModal(id);
+            });
+        });
+        document.querySelectorAll("[data-action='delete']").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const id = btn.getAttribute("data-id");
+                deleteDelivery(id);
+            });
+        });
+        document.querySelectorAll("[data-action='start']").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const id = btn.getAttribute("data-id");
+                quickUpdateStatus(id, "em_andamento");
+            });
+        });
+        document.querySelectorAll("[data-action='finish']").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const id = btn.getAttribute("data-id");
+                quickUpdateStatus(id, "entregue");
             });
         });
     }
 
-    // resetar edição se clicar em cancelar
-    cancelBtn.addEventListener('click', () => {
-        limparFormulario();
-    });
+    function escapeHtml(str) {
+        if(!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if(m === '&') return '&amp;';
+            if(m === '<') return '&lt;';
+            if(m === '>') return '&gt;';
+            return m;
+        });
+    }
 
-    saveBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        salvarCorrida();
-    });
-
-    // Inicialização
-    function init() {
-        loadData();
-        configurarFiltros();
-        // se houver algum evento de tecla enter opcional
-        document.querySelectorAll('input').forEach(input => {
-            input.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') salvarCorrida();
+    // filtros
+    function initFilters() {
+        const btns = document.querySelectorAll(".filter-btn");
+        btns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                btns.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                currentFilter = btn.getAttribute("data-filter");
+                renderList();
             });
         });
     }
 
-    init();
+    // reset demo (limpar e restaurar dados exemplo)
+    function resetToDemo() {
+        if(confirm("Restaurar dados de exemplo? Todas as corridas atuais serão substituídas.")) {
+            deliveries = [
+                {
+                    id: "d1",
+                    cliente: "Carlos M.",
+                    endereco: "Rua das Laranjeiras, 234 - Centro, São Paulo",
+                    valor: 12.50,
+                    status: "pendente",
+                    observacoes: "Entregar no apto 12B",
+                    criado_em: new Date(Date.now() - 3600000).toISOString(),
+                    entregue_em: null
+                },
+                {
+                    id: "d2",
+                    cliente: "Juliana Lima",
+                    endereco: "Av. Paulista, 1578 - Bela Vista",
+                    valor: 18.90,
+                    status: "em_andamento",
+                    observacoes: "Pessoal da recepção",
+                    criado_em: new Date(Date.now() - 7200000).toISOString(),
+                    entregue_em: null
+                },
+                {
+                    id: "d3",
+                    cliente: "Ricardo Alves",
+                    endereco: "Rua Augusta, 1020 - Consolação",
+                    valor: 22.00,
+                    status: "entregue",
+                    observacoes: "Deixar na portaria",
+                    criado_em: new Date(Date.now() - 86400000).toISOString(),
+                    entregue_em: new Date(Date.now() - 3600000).toISOString()
+                }
+            ];
+            saveToLocal();
+            renderStats();
+            renderList();
+        }
+    }
+
+    // Eventos
+    document.getElementById("deliveryForm").addEventListener("submit", saveDelivery);
+    document.getElementById("openAddModal").addEventListener("click", openCreateModal);
+    document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+    document.getElementById("resetDemoBtn").addEventListener("click", resetToDemo);
+    // fechar modal clicando fora do card (no overlay)
+    window.addEventListener("click", (e) => {
+        const modal = document.getElementById("modalOverlay");
+        if(e.target === modal) closeModal();
+    });
+
+    // inicialização
+    loadData();
+    initFilters();
 </script>
 </body>
 </html>
