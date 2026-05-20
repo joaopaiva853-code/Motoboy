@@ -23,7 +23,6 @@
             overflow-x: hidden;
         }
 
-        /* Container principal 100% celular */
         .phone-frame {
             width: 100%;
             min-height: 100vh;
@@ -34,7 +33,6 @@
             margin: 0 auto;
         }
 
-        /* Header */
         .header {
             background: rgba(20, 20, 35, 0.8);
             backdrop-filter: blur(16px);
@@ -94,7 +92,6 @@
             box-shadow: 0 0 8px #00e676;
         }
 
-        /* Main content - scrollável */
         .main-content {
             flex: 1;
             overflow-y: auto;
@@ -104,7 +101,6 @@
             gap: 20px;
         }
 
-        /* Telas */
         .screen {
             display: none;
             flex-direction: column;
@@ -127,7 +123,6 @@
             }
         }
 
-        /* Cards de estatística */
         .stats-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -159,7 +154,6 @@
             color: #00e676;
         }
 
-        /* Títulos de seção */
         .section-title {
             font-size: 15px;
             font-weight: 800;
@@ -187,7 +181,6 @@
             border-radius: 30px;
         }
 
-        /* Botões - MAIORES e 100% largura quando necessário */
         .btn {
             padding: 14px 20px;
             border-radius: 60px;
@@ -196,7 +189,6 @@
             cursor: pointer;
             border: none;
             text-align: center;
-            transition: 0.2s;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -236,7 +228,6 @@
             width: auto;
         }
 
-        /* Botões dentro de cards (row) */
         .btn-row {
             display: flex;
             gap: 12px;
@@ -248,7 +239,6 @@
             width: auto;
         }
 
-        /* Cards de pedido */
         .order-card {
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(10px);
@@ -294,7 +284,6 @@
             min-height: 38px;
         }
 
-        /* Navegação inferior */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -352,7 +341,6 @@
             display: flex;
         }
 
-        /* Modais */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -394,7 +382,6 @@
             font-size: 16px;
         }
 
-        /* Filtros */
         .filter-chips {
             display: flex;
             gap: 12px;
@@ -418,14 +405,12 @@
             border: none;
         }
 
-        /* Empty state */
         .empty-state {
             text-align: center;
             padding: 48px 20px;
             color: #6b6b80;
         }
 
-        /* Toast */
         .toast {
             position: fixed;
             top: 20px;
@@ -448,7 +433,6 @@
             100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
         }
 
-        /* Distância automática */
         .distance-auto {
             font-size: 12px;
             color: #00e676;
@@ -458,7 +442,6 @@
             gap: 6px;
         }
 
-        /* Settings items */
         .settings-item {
             display: flex;
             align-items: center;
@@ -470,11 +453,6 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
-        }
-
-        /* Responsivo: garante que nada ultrapasse a tela */
-        img, iframe, video, .order-card, .stat-card, .btn {
-            max-width: 100%;
         }
     </style>
 </head>
@@ -548,7 +526,7 @@
             <div class="settings-item" onclick="showAddCorridaModal()"><span>📝</span><span style="flex:1;margin-left:12px;">Adicionar Corrida Manual</span><span>→</span></div>
             <div class="settings-item" onclick="resetAllData()"><span>🗑️</span><span style="flex:1;margin-left:12px;">Limpar Todos os Dados</span><span>→</span></div>
             <div class="settings-item" id="installButtonContainer" style="display:none;" onclick="installApp()"><span>📲</span><span style="flex:1;margin-left:12px;">Instalar App (APK)</span><span>→</span></div>
-            <p style="text-align:center;color:#6b6b80;margin-top:24px;">MotoDash Pro • Versão 2.0</p>
+            <p style="text-align:center;color:#6b6b80;margin-top:24px;">MotoDash Pro • Versão 2.1</p>
         </div>
     </div>
 
@@ -560,14 +538,23 @@
     </div>
 </div>
 
-<!-- Modal Add Corrida -->
+<!-- Modal Adicionar Corrida -->
 <div class="modal-overlay" id="addCorridaModalOverlay" style="display:none;" onclick="closeAddCorridaModal(event)">
     <div class="modal-sheet" onclick="event.stopPropagation()">
         <div style="width:50px;height:5px;background:#6b6b80;border-radius:4px;margin:0 auto 20px;"></div>
         <div style="font-size:24px;font-weight:800;text-align:center;margin-bottom:20px;">📝 Nova Corrida</div>
         <form id="addCorridaForm" onsubmit="submitManualCorrida(event)">
             <div class="form-group"><label>🏪 Loja / Restaurante</label><input type="text" id="manualStoreName" placeholder="Ex: Pizzaria do Zé" required></div>
-            <div class="form-group"><label>🍽️ Tipo</label><select id="manualStoreType"><option value="pizza">🍕 Pizzaria</option><option value="burger">🍔 Hamburgueria</option><option value="sushi">🍣 Sushi</option><option value="acai">🥤 Açaí</option><option value="market">🛒 Mercado</option></select></div>
+            <div class="form-group"><label>🍽️ Tipo</label>
+                <select id="manualStoreType">
+                    <option value="pizza">🍕 Pizzaria</option>
+                    <option value="burger">🍔 Hamburgueria</option>
+                    <option value="sushi">🍣 Sushi</option>
+                    <option value="acai">🥤 Açaí</option>
+                    <option value="market">🛒 Mercado</option>
+                    <option value="loja">🛍️ Loja</option> <!-- NOVA OPÇÃO LOJA -->
+                </select>
+            </div>
             <div class="form-group"><label>👤 Cliente</label><input type="text" id="manualClientName" placeholder="Nome do cliente" required></div>
             <div class="form-group"><label>📱 WhatsApp (com DDD)</label><input type="tel" id="manualClientPhone" placeholder="11999999999" required></div>
             <div class="form-group"><label>📍 Endereço de Entrega (cliente)</label><input type="text" id="manualDropoff" placeholder="Rua, número, bairro" required oninput="scheduleDistanceUpdate()"></div>
@@ -679,10 +666,13 @@
         const distance = parseFloat(document.getElementById('manualDistance').value) || 2.5;
         const price = parseFloat(document.getElementById('manualPrice').value);
         if(!storeName || !clientName || !clientPhone || !dropoff){ showToast('⚠️ Preencha todos os campos'); return; }
-        const iconMap = { pizza:'🍕', burger:'🍔', sushi:'🍣', acai:'🥤', market:'🛒' };
-        const newOrder = { id:generateId(), storeName:`${iconMap[storeType]} ${storeName}`, storeType, clientName, clientPhone, dropoffAddr:dropoff, distance, price, status:'new', createdAt:new Date().toISOString() };
+        // Mapeamento de ícones incluindo LOJA
+        const iconMap = { pizza:'🍕', burger:'🍔', sushi:'🍣', acai:'🥤', market:'🛒', loja:'🛍️' };
+        const displayName = `${iconMap[storeType]} ${storeName}`;
+        const newOrder = { id:generateId(), storeName:displayName, storeType, clientName, clientPhone, dropoffAddr:dropoff, distance, price, status:'new', createdAt:new Date().toISOString() };
         appData.orders.unshift(newOrder);
-        if(!appData.savedAddresses.some(a=>a.dropoffAddr===dropoff)) appData.savedAddresses.push({ storeName:`${iconMap[storeType]} ${storeName}`, storeType, dropoffAddr:dropoff });
+        // Salvar destino se não existir
+        if(!appData.savedAddresses.some(a=>a.dropoffAddr===dropoff)) appData.savedAddresses.push({ storeName:displayName, storeType, dropoffAddr:dropoff });
         persist();
         playBeep(880,200);
         showToast('📝 Corrida adicionada!');
@@ -693,7 +683,7 @@
     }
 
     function updateSavedStoreSelect(){ const sel=document.getElementById('savedStoreSelect'); sel.innerHTML='<option value="">-- Selecionar destino --</option>'; appData.savedAddresses.forEach((a,i)=>{ const opt=document.createElement('option'); opt.value=i; opt.textContent=`${a.storeName} - ${a.dropoffAddr.substring(0,35)}`; sel.appendChild(opt); }); }
-    function fillFromSavedStore(){ const idx=document.getElementById('savedStoreSelect').value; if(idx==='')return; const a=appData.savedAddresses[parseInt(idx)]; document.getElementById('manualStoreName').value=a.storeName.replace(/^[🍕🍔🍣🥤🛒]\s*/,''); document.getElementById('manualStoreType').value=a.storeType; document.getElementById('manualDropoff').value=a.dropoffAddr; scheduleDistanceUpdate(); }
+    function fillFromSavedStore(){ const idx=document.getElementById('savedStoreSelect').value; if(idx==='')return; const a=appData.savedAddresses[parseInt(idx)]; document.getElementById('manualStoreName').value=a.storeName.replace(/^[🍕🍔🍣🥤🛒🛍️]\s*/,''); document.getElementById('manualStoreType').value=a.storeType; document.getElementById('manualDropoff').value=a.dropoffAddr; scheduleDistanceUpdate(); }
 
     function getNewOrders(){ return appData.orders.filter(o=>o.status==='new'); }
     function getActiveOrders(){ return appData.orders.filter(o=>o.status==='accepted'||o.status==='picked_up'); }
