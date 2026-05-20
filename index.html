@@ -2,690 +2,1101 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#ff8c42">
-    <title>MotoFlash · Entregas</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotoExpress PRO - Acesso Total</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+        :root {
+            --primary: #e63946;
+            --primary-dark: #c1121f;
+            --secondary: #1d3557;
+            --accent: #457b9d;
+            --success: #2a9d8f;
+            --warning: #f4a261;
+            --danger: #e76f51;
+            --bg: #f1f3f5;
+            --card: #ffffff;
+            --text: #212529;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', sans-serif;
-            background: #f4f7fc;
-            padding: 16px 12px 32px;
-            color: #1a2c3e;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #1a1a2e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
         }
-
-        .app-container {
-            max-width: 560px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 36px;
-            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+        .phone-frame {
+            width: 420px;
+            height: 900px;
+            max-width: 100vw;
+            max-height: 95vh;
+            background: var(--bg);
+            border-radius: 32px;
             overflow: hidden;
-            padding: 20px 16px 28px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 3px #2a2a3a, 0 0 0 6px #1a1a2e;
+            position: relative;
+            display: flex;
+            flex-direction: column;
         }
-
-        /* cabeçalho */
-        .header {
+        .status-bar {
+            background: #fff;
+            padding: 12px 24px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: #000;
+            flex-shrink: 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .status-bar .time { font-size: 14px; font-weight: 700; }
+        .status-icons { display: flex; gap: 6px; align-items: center; font-size: 13px; }
+        .app-header {
+            background: #fff;
+            padding: 14px 20px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            border-bottom: 1px solid var(--border);
             gap: 12px;
-            margin-bottom: 24px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #ff8c42;
         }
-        .logo-icon {
-            background: #ff8c42;
-            width: 48px;
-            height: 48px;
-            border-radius: 28px;
+        .app-header h1 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .app-header h1 .logo-icon { font-size: 26px; }
+        .header-actions { display: flex; gap: 8px; position: relative; }
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg);
+            cursor: pointer;
+            font-size: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            color: white;
+            transition: var(--transition);
+            position: relative;
+            color: var(--text);
         }
-        .header-text h1 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #1e4668;
-        }
-        .header-text p {
-            font-size: 0.7rem;
-            color: #5f7f9e;
-        }
-
-        /* estatísticas com fonte um pouco menor */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 24px;
-        }
-        .stat-card {
-            background: #f0f6fa;
-            border-radius: 24px;
-            padding: 10px 4px;
-            text-align: center;
-        }
-        .stat-number {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #ff8c42;
-            line-height: 1.2;
-        }
-        .stat-label {
-            font-size: 0.65rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #3a6b92;
-        }
-
-        /* filtros */
-        .filter-bar {
+        .btn-icon:hover { background: #e9ecef; }
+        .badge-count {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
             display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
+            align-items: center;
             justify-content: center;
-        }
-        .filter-chip {
-            background: #eef3f9;
-            border: none;
-            padding: 6px 16px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.7rem;
-            color: #2c577c;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .filter-chip.active {
-            background: #ff8c42;
-            color: white;
+            border: 2px solid #fff;
         }
 
-        /* lista de entregas */
-        .delivery-list {
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
             display: flex;
             flex-direction: column;
             gap: 14px;
-            max-height: 480px;
-            overflow-y: auto;
-            padding-right: 4px;
-            margin-bottom: 24px;
+            scroll-behavior: smooth;
         }
-        .delivery-card {
-            background: white;
-            border-radius: 28px;
-            padding: 16px;
-            border: 1px solid #e6edf2;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-        }
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-        .customer {
-            font-weight: 800;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: #1e4668;
-        }
-        .status-badge {
-            font-size: 0.65rem;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 30px;
-        }
-        .status-pendente { background: #fff1e0; color: #cc6b2c; }
-        .status-em_andamento { background: #e3f2fd; color: #0b5e7e; }
-        .status-entregue { background: #e0f2e9; color: #2b6e47; }
+        .main-content::-webkit-scrollbar { width: 4px; }
+        .main-content::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
 
-        .address-line {
-            display: flex;
-            gap: 8px;
-            font-size: 0.75rem;
-            color: #3a6b92;
-            margin: 8px 0 6px;
-            word-break: break-word;
+        .page { display: none; flex-direction: column; gap: 14px; animation: fadeSlideIn 0.35s ease; }
+        .page.active { display: flex; }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .price-distance {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 6px 0;
-            flex-wrap: wrap;
-            gap: 6px;
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: var(--transition);
         }
-        .price {
-            font-weight: 800;
-            font-size: 1rem;
-            color: #1e4668;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .card-header h3 { font-size: 15px; font-weight: 700; color: var(--secondary); }
+        .card-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .earnings-big { font-size: 32px; font-weight: 800; color: var(--success); }
+        .earnings-label { font-size: 13px; color: var(--text-light); font-weight: 500; }
+
+        .badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            display: inline-block;
         }
-        .distance {
-            background: #eef3f9;
-            padding: 3px 10px;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: #ff8c42;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .meta {
-            font-size: 0.65rem;
-            color: #6f9bc0;
-            display: flex;
-            gap: 10px;
-            margin-top: 6px;
-            flex-wrap: wrap;
-        }
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-            justify-content: flex-end;
-            flex-wrap: wrap;
-        }
-        .action-btn {
-            border: none;
-            font-size: 0.7rem;
-            font-weight: 600;
-            padding: 6px 12px;
-            border-radius: 40px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+        .badge-success { background: #d4edda; color: #155724; }
+        .badge-warning { background: #fff3cd; color: #856404; }
+        .badge-danger { background: #f8d7da; color: #721c24; }
+        .badge-info { background: #d1ecf1; color: #0c5460; }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 14px;
             cursor: pointer;
-            background: #f0f6fa;
-            color: #2c577c;
+            border: none;
+            transition: var(--transition);
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            text-align: center;
         }
-        .btn-edit { background: #eef2ff; color: #3b82f6; }
-        .btn-delete { background: #fee9e6; color: #e11d48; }
-        .btn-start { background: #e3f2fd; color: #0284c7; }
-        .btn-finish { background: #e0f2e9; color: #2e7d32; }
-        .map-link {
-            background: #f0f6fa;
-            padding: 2px 8px;
-            border-radius: 30px;
-            font-size: 0.65rem;
-            text-decoration: none;
-            display: inline-flex;
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(230, 57, 70, 0.35); }
+        .btn-outline { background: #fff; color: var(--primary); border: 2px solid var(--primary); }
+        .btn-outline:hover { background: #fff5f5; }
+        .btn-success { background: var(--success); color: #fff; }
+        .btn-sm { padding: 8px 16px; font-size: 12px; width: auto; border-radius: 20px; }
+        .btn-xs { padding: 6px 12px; font-size: 11px; width: auto; border-radius: 15px; }
+
+        .order-card {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: var(--transition);
+        }
+        .order-card:hover { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12); transform: translateY(-2px); }
+        .order-card.picked { border-left-color: var(--warning); }
+        .order-card.delivering { border-left-color: var(--accent); }
+        .order-card .order-top { display: flex; justify-content: space-between; align-items: flex-start; }
+        .order-card .order-id { font-weight: 700; font-size: 14px; color: var(--secondary); }
+        .order-card .order-price { font-weight: 800; font-size: 18px; color: var(--success); }
+        .order-card .order-details { font-size: 13px; color: var(--text-light); display: flex; flex-direction: column; gap: 4px; }
+        .order-card .order-details span { display: flex; align-items: center; gap: 6px; }
+        .order-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .map-simulator {
+            width: 100%;
+            height: 200px;
+            background: #e8f4f8;
+            border-radius: var(--radius);
+            position: relative;
+            overflow: hidden;
+            border: 2px dashed var(--accent);
+        }
+        .map-simulator canvas { width: 100%; height: 100%; }
+        .map-label {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            pointer-events: none;
+        }
+
+        .chat-container { display: flex; flex-direction: column; gap: 8px; max-height: 300px; overflow-y: auto; padding: 8px 0; }
+        .chat-msg {
+            padding: 10px 14px;
+            border-radius: 18px;
+            max-width: 80%;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        .chat-msg.incoming { background: #e9ecef; align-self: flex-start; border-bottom-left-radius: 4px; }
+        .chat-msg.outgoing { background: var(--primary); color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
+        .chat-input-row { display: flex; gap: 8px; }
+        .chat-input-row input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 25px;
+            border: 2px solid var(--border);
+            font-size: 14px;
+            outline: none;
+            transition: var(--transition);
+        }
+        .chat-input-row input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1); }
+
+        .bottom-nav {
+            background: #fff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 8px 14px;
+            border-top: 1px solid var(--border);
+            flex-shrink: 0;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
             align-items: center;
             gap: 4px;
-            color: #ff8c42;
-        }
-        .empty-state {
-            text-align: center;
-            padding: 40px 16px;
-            color: #8bb3d0;
-            font-size: 0.85rem;
-        }
-
-        /* botão flutuante */
-        .fab {
-            background: #ff8c42;
-            width: 56px;
-            height: 56px;
-            border-radius: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 4px auto 0;
-            border: none;
-            color: white;
-            font-size: 26px;
-            box-shadow: 0 8px 18px rgba(255, 140, 66, 0.3);
             cursor: pointer;
-        }
-        footer {
-            text-align: center;
-            font-size: 0.6rem;
-            color: #8bb3d0;
-            margin-top: 16px;
-        }
-
-        /* modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(3px);
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 20px;
-        }
-        .modal-card {
-            background: white;
-            border-radius: 40px;
-            max-width: 520px;
-            width: 100%;
-            padding: 24px 20px;
-        }
-        .modal-card h2 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #ff8c42;
-            margin-bottom: 18px;
-        }
-        .field {
-            margin-bottom: 16px;
-        }
-        .field label {
-            font-weight: 600;
-            font-size: 0.7rem;
-            display: block;
-            margin-bottom: 5px;
-            color: #1e4668;
-        }
-        .field input, .field select, .field textarea {
-            width: 100%;
-            padding: 12px 14px;
-            border-radius: 28px;
-            border: 1px solid #e2edf2;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.85rem;
-        }
-        .distance-row {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        .distance-row input { flex: 2; }
-        .calc-btn {
-            background: #ff8c42;
+            padding: 6px 10px;
+            border-radius: 12px;
+            transition: var(--transition);
             border: none;
-            padding: 10px 14px;
+            background: transparent;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-light);
+            position: relative;
+        }
+        .nav-item.active { color: var(--primary); }
+        .nav-item .nav-icon { font-size: 22px; transition: var(--transition); }
+        .nav-item.active .nav-icon { transform: scale(1.15); }
+        .nav-item .nav-dot {
+            width: 6px; height: 6px; background: var(--primary); border-radius: 50%;
+            position: absolute; top: 2px; right: 8px; display: none;
+        }
+        .nav-item .nav-dot.show { display: block; }
+
+        .toast {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1d3557;
+            color: #fff;
+            padding: 14px 24px;
             border-radius: 30px;
-            color: white;
             font-weight: 600;
-            font-size: 0.7rem;
+            font-size: 13px;
+            z-index: 100;
+            animation: slideDown 0.4s ease, fadeOut 0.4s ease 2.5s forwards;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             white-space: nowrap;
-            cursor: pointer;
         }
-        .modal-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
-            margin-top: 20px;
+        @keyframes slideDown {
+            from { transform: translateX(-50%) translateY(-60px); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
         }
-        .btn-save { background: #ff8c42; border: none; padding: 10px 22px; border-radius: 40px; font-weight: 700; color: white; cursor: pointer; }
-        .btn-cancel { background: #eef3f9; border: none; padding: 10px 20px; border-radius: 40px; font-weight: 600; cursor: pointer; }
-        .small-note { font-size: 0.6rem; color: #6f9bc0; margin-top: 4px; }
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateX(-50%) translateY(-30px); }
+        }
 
-        .install-banner {
-            background: #ff8c42;
-            color: white;
-            text-align: center;
-            padding: 8px;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-            display: none;
-            cursor: pointer;
+        .modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal-box {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 24px;
+            width: 85%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .modal-box h3 { font-size: 18px; color: var(--secondary); text-align: center; }
+        .modal-box label { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: -8px; }
+        .modal-box input, .modal-box textarea {
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid var(--border);
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+        }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+        .pulse { animation: pulse 1.8s infinite; }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+        .timer-display { font-size: 22px; font-weight: 800; color: var(--warning); letter-spacing: 1px; }
+        .section-title {
+            font-size: 14px; font-weight: 700; color: var(--text-light);
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: -6px;
+        }
+
+        @media (max-width: 440px) {
+            .phone-frame { width: 100%; height: 100vh; border-radius: 0; box-shadow: none; }
+            body { padding: 0; }
         }
     </style>
 </head>
 <body>
-<div class="app-container">
-    <div id="installBanner" class="install-banner">📲 Instalar app na tela inicial</div>
-    <div class="header">
-        <div class="logo-icon"><i class="fas fa-motorcycle"></i></div>
-        <div class="header-text">
-            <h1>MotoFlash</h1>
-            <p>entregas com distância</p>
+    <div class="phone-frame" id="app">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="time" id="timeDisplay">09:41</span>
+            <div class="status-icons">📶 🔋 85%</div>
+        </div>
+
+        <!-- Header -->
+        <div class="app-header">
+            <h1><span class="logo-icon">🏍️</span> MotoExpress</h1>
+            <div class="header-actions">
+                <button class="btn-icon" onclick="showToast('🔔 3 novas notificações')" style="position:relative;">
+                    🔔<span class="badge-count" id="notifBadge">3</span>
+                </button>
+                <button class="btn-icon" onclick="navigateTo('perfil')">👤</button>
+            </div>
+        </div>
+
+        <!-- Modal de Edição de Entrega -->
+        <div class="modal-overlay" id="editModal" style="display: none;" onclick="if(event.target === this) closeEditModal()">
+            <div class="modal-box" onclick="event.stopPropagation()">
+                <h3>✏️ Editar Entrega</h3>
+                <label for="editPickup">📍 Local de Coleta</label>
+                <input type="text" id="editPickup" placeholder="Ex: Restaurante X">
+                <label for="editDelivery">🏠 Endereço de Entrega</label>
+                <input type="text" id="editDelivery" placeholder="Ex: Rua Y, 123">
+                <label for="editPrice">💰 Valor (R$)</label>
+                <input type="number" id="editPrice" step="0.01" min="0" placeholder="0.00">
+                <label for="editDistance">📏 Distância (km)</label>
+                <input type="text" id="editDistance" placeholder="Ex: 2.5 km">
+                <input type="hidden" id="editOrderId">
+                <div class="modal-actions">
+                    <button class="btn btn-outline btn-sm" onclick="closeEditModal()">Cancelar</button>
+                    <button class="btn btn-primary btn-sm" onclick="saveEdit()">💾 Salvar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Nova Corrida -->
+        <div class="modal-overlay" id="newOrderModal" style="display: none;" onclick="if(event.target === this) closeNewOrderModal()">
+            <div class="modal-box" onclick="event.stopPropagation()">
+                <h3>➕ Nova Corrida</h3>
+                <label for="newPickup">📍 Local de Coleta</label>
+                <input type="text" id="newPickup" placeholder="Ex: Restaurante X">
+                <label for="newDelivery">🏠 Endereço de Entrega</label>
+                <input type="text" id="newDelivery" placeholder="Ex: Rua Y, 123">
+                <label for="newPrice">💰 Valor (R$)</label>
+                <input type="number" id="newPrice" step="0.01" min="0" placeholder="0.00">
+                <label for="newDistance">📏 Distância (km)</label>
+                <input type="text" id="newDistance" placeholder="Ex: 2.5 km">
+                <div class="modal-actions">
+                    <button class="btn btn-outline btn-sm" onclick="closeNewOrderModal()">Cancelar</button>
+                    <button class="btn btn-primary btn-sm" onclick="createNewOrder()">🚀 Criar Corrida</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Configurações do Motoboy (Acesso Total) -->
+        <div class="modal-overlay" id="adminModal" style="display: none;" onclick="if(event.target === this) closeAdminModal()">
+            <div class="modal-box" onclick="event.stopPropagation()">
+                <h3>⚙️ Controle Total</h3>
+                <label for="adminName">👤 Nome do Motoboy</label>
+                <input type="text" id="adminName" placeholder="Seu nome">
+                <label for="adminRating">⭐ Avaliação (ex: 4.9)</label>
+                <input type="text" id="adminRating" placeholder="4.9">
+                <label for="adminEarnings">💰 Resetar Ganhos do Dia (R$)</label>
+                <input type="number" id="adminEarnings" step="0.01" placeholder="0.00">
+                <label for="adminDeliveries">📦 Resetar Entregas do Dia</label>
+                <input type="number" id="adminDeliveries" placeholder="0">
+                <div class="modal-actions" style="flex-wrap: wrap;">
+                    <button class="btn btn-sm" style="background:#dc3545;color:#fff;" onclick="resetAllData()">🗑️ Limpar Tudo</button>
+                    <button class="btn btn-sm" style="background:#6c757d;color:#fff;" onclick="closeAdminModal()">Cancelar</button>
+                    <button class="btn btn-primary btn-sm" onclick="saveAdminSettings()">💾 Aplicar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <!-- Dashboard Page -->
+            <div class="page active" id="page-dashboard">
+                <div class="card" style="background: linear-gradient(135deg, #1d3557, #2a4a6b); color:#fff;">
+                    <div class="card-row">
+                        <div>
+                            <div class="earnings-label" style="color:#a8dadc;">Ganhos de Hoje</div>
+                            <div class="earnings-big" style="color:#fff;" id="todayEarnings">R$ 187,50</div>
+                        </div>
+                        <div style="text-align:right;">
+                            <div class="earnings-label" style="color:#a8dadc;">Entregas</div>
+                            <div style="font-size:28px;font-weight:800;" id="todayDeliveries">7</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:12px;display:flex;gap:10px;">
+                        <span class="badge badge-success" id="onlineStatus">🟢 Online</span>
+                        <span style="font-size:12px;color:#a8dadc;">⭐ <span id="profileRating">4.9</span> avaliação</span>
+                    </div>
+                </div>
+
+                <div style="display:flex; justify-content: space-between; align-items: center;">
+                    <div class="section-title">📋 Em Andamento</div>
+                    <button class="btn btn-primary btn-xs" onclick="openNewOrderModal()">➕ Nova Corrida</button>
+                </div>
+                <div id="activeOrdersContainer" style="display:flex;flex-direction:column;gap:10px;">
+                    <div class="order-card delivering" id="activeOrder1">
+                        <div class="order-top">
+                            <span class="order-id">#DEL-1042</span>
+                            <span class="order-price">R$ 18,90</span>
+                        </div>
+                        <div class="order-details">
+                            <span>📍 Retirar: Restaurante Sabor & Arte</span>
+                            <span>🏠 Entregar: Rua das Flores, 342 - Ap 12</span>
+                            <span>🕐 <strong class="timer-display" id="timer1">18:42</strong> restantes</span>
+                        </div>
+                        <div class="order-actions">
+                            <button class="btn btn-success btn-sm" onclick="updateDeliveryStatus('activeOrder1','delivered')">✅ Entregue</button>
+                            <button class="btn btn-outline btn-sm" onclick="navigateTo('chat')">💬 Chat</button>
+                            <button class="btn btn-sm" style="background:#e76f51;color:#fff;" onclick="showToast('🚨 Suporte acionado')">🆘</button>
+                            <button class="btn btn-sm" style="background:#6c757d;color:#fff;" onclick="openEditModal('activeOrder1')">✏️ Editar</button>
+                            <button class="btn btn-sm" style="background:#0077b6;color:#fff;" onclick="navigateToAddress('activeOrder1')">🗺️ Navegar</button>
+                            <button class="btn btn-sm" style="background:#dc3545;color:#fff;" onclick="deleteOrder('activeOrder1')">🗑️ Excluir</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-title">📦 Disponíveis</div>
+                <div id="availableOrdersContainer" style="display:flex;flex-direction:column;gap:10px;">
+                    <div class="order-card" id="order1">
+                        <div class="order-top">
+                            <span class="order-id">#DEL-1058</span>
+                            <span class="order-price">R$ 22,50</span>
+                        </div>
+                        <div class="order-details">
+                            <span>📍 Coleta: Pizzaria Bella Napoli</span>
+                            <span>🏠 Entrega: Av. Central, 1200</span>
+                            <span>📏 Distância: 3.8 km</span>
+                        </div>
+                        <div class="order-actions">
+                            <button class="btn btn-primary btn-sm" onclick="acceptOrder('order1')">✋ Aceitar Entrega</button>
+                            <button class="btn btn-sm" style="background:#6c757d;color:#fff;" onclick="openEditModal('order1')">✏️ Editar</button>
+                            <button class="btn btn-sm" style="background:#0077b6;color:#fff;" onclick="navigateToAddress('order1')">🗺️ Navegar</button>
+                            <button class="btn btn-sm" style="background:#dc3545;color:#fff;" onclick="deleteOrder('order1')">🗑️ Excluir</button>
+                        </div>
+                    </div>
+                    <div class="order-card" id="order2">
+                        <div class="order-top">
+                            <span class="order-id">#DEL-1059</span>
+                            <span class="order-price">R$ 15,00</span>
+                        </div>
+                        <div class="order-details">
+                            <span>📍 Coleta: Farmácia Saúde Já</span>
+                            <span>🏠 Entrega: Rua dos Ipês, 78</span>
+                            <span>📏 Distância: 1.2 km</span>
+                        </div>
+                        <div class="order-actions">
+                            <button class="btn btn-primary btn-sm" onclick="acceptOrder('order2')">✋ Aceitar Entrega</button>
+                            <button class="btn btn-sm" style="background:#6c757d;color:#fff;" onclick="openEditModal('order2')">✏️ Editar</button>
+                            <button class="btn btn-sm" style="background:#0077b6;color:#fff;" onclick="navigateToAddress('order2')">🗺️ Navegar</button>
+                            <button class="btn btn-sm" style="background:#dc3545;color:#fff;" onclick="deleteOrder('order2')">🗑️ Excluir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mapa Page -->
+            <div class="page" id="page-mapa">
+                <div class="card">
+                    <h3>🗺️ Rota Atual</h3>
+                    <div class="map-simulator" id="mapContainer">
+                        <canvas id="mapCanvas"></canvas>
+                        <div class="map-label">📍 Trajeto simulado — 3.8 km</div>
+                    </div>
+                    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+                        <span class="badge badge-info">🛵 Em rota</span>
+                        <span class="badge badge-warning">⏱️ Chegada em 8 min</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>📍 Pontos de Referência</h3>
+                    <p style="font-size:13px;color:var(--text-light);">🏪 Restaurante → 🏠 Cliente (3.8 km via Av. Principal)</p>
+                    <button class="btn btn-outline btn-sm" onclick="showToast('🗺️ Navegação iniciada via Google Maps')">🧭 Iniciar Navegação</button>
+                </div>
+            </div>
+
+            <!-- Chat Page -->
+            <div class="page" id="page-chat">
+                <div class="card" style="flex:1;">
+                    <div class="card-header">
+                        <h3>💬 Chat - Pedido #DEL-1042</h3>
+                        <span class="badge badge-success">Cliente Online</span>
+                    </div>
+                    <div class="chat-container" id="chatMessages">
+                        <div class="chat-msg incoming">👋 Olá! Estou no 2º andar, apartamento 12.</div>
+                        <div class="chat-msg outgoing">Ok! Estou chegando em 5 minutos.</div>
+                        <div class="chat-msg incoming">Perfeito! O portão está aberto.</div>
+                    </div>
+                    <div class="chat-input-row">
+                        <input type="text" id="chatInput" placeholder="Digite sua mensagem..." onkeypress="if(event.key==='Enter')sendChat()">
+                        <button class="btn btn-primary btn-sm" onclick="sendChat()">➤</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Histórico Page -->
+            <div class="page" id="page-historico">
+                <div class="section-title">📜 Últimas Entregas</div>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                    <div class="order-card" style="border-left-color:#2a9d8f;" id="hist1">
+                        <div class="order-top"><span class="order-id">#DEL-1038</span><span class="order-price">R$ 19,90</span></div>
+                        <div class="order-details"><span>✅ Entregue • 14:32</span><span>🏠 Rua Amazonas, 500</span></div>
+                        <div class="order-actions">
+                            <button class="btn btn-sm" style="background:#6c757d;color:#fff;" onclick="openEditModal('hist1')">✏️ Editar</button>
+                            <button class="btn btn-sm" style="background:#0077b6;color:#fff;" onclick="navigateToAddress('hist1')">🗺️ Navegar</button>
+                            <button class="btn btn-sm" style="background:#dc3545;color:#fff;" onclick="deleteOrder('hist1')">🗑️ Excluir</button>
+                        </div>
+                    </div>
+                    <div class="order-card" style="border-left-color:#2a9d8f;" id="hist2">
+                        <div class="order-top"><span class="order-id">#DEL-1035</span><span class="order-price">R$ 25,00</span></div>
+                        <div class="order-details"><span>✅ Entregue • 12:15</span><span>🏠 Av. Brasil, 890</span></div>
+                        <div class="order-actions">
+                            <button class="btn btn-sm" style="background:#6c757d;color:#fff;" onclick="openEditModal('hist2')">✏️ Editar</button>
+                            <button class="btn btn-sm" style="background:#0077b6;color:#fff;" onclick="navigateToAddress('hist2')">🗺️ Navegar</button>
+                            <button class="btn btn-sm" style="background:#dc3545;color:#fff;" onclick="deleteOrder('hist2')">🗑️ Excluir</button>
+                        </div>
+                    </div>
+                    <div class="order-card" style="border-left-color:#e76f51;" id="hist3">
+                        <div class="order-top"><span class="order-id">#DEL-1030</span><span class="order-price">R$ 12,00</span></div>
+                        <div class="order-details"><span>❌ Cancelado • 10:00</span><span>🏠 Rua Minas, 45</span></div>
+                        <div class="order-actions">
+                            <button class="btn btn-sm" style="background:#6c757d;color:#fff;" onclick="openEditModal('hist3')">✏️ Editar</button>
+                            <button class="btn btn-sm" style="background:#0077b6;color:#fff;" onclick="navigateToAddress('hist3')">🗺️ Navegar</button>
+                            <button class="btn btn-sm" style="background:#dc3545;color:#fff;" onclick="deleteOrder('hist3')">🗑️ Excluir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Perfil Page -->
+            <div class="page" id="page-perfil">
+                <div class="card" style="text-align:center;">
+                    <div style="font-size:60px;">🏍️</div>
+                    <h3 id="profileName">Carlos Oliveira</h3>
+                    <p style="color:var(--text-light);">MotoBoy • Desde 2023</p>
+                    <span class="badge badge-success">⭐ <span id="profileRatingDisplay">4.9</span> (238 avaliações)</span>
+                    <div style="display:flex;gap:10px;margin-top:12px;justify-content:center;">
+                        <button class="btn btn-outline btn-sm" onclick="openAdminModal()">⚙️ Controle Total</button>
+                        <button class="btn btn-sm" style="background:#1d3557;color:#fff;" onclick="toggleOnline()">🔄 Alternar Online</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>📊 Resumo Semanal</h3>
+                    <div class="card-row" style="margin:8px 0;"><span>Entregas:</span><strong>42</strong></div>
+                    <div class="card-row" style="margin:8px 0;"><span>Ganhos:</span><strong>R$ 1.248,50</strong></div>
+                    <div class="card-row" style="margin:8px 0;"><span>Horas Online:</span><strong>38h</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <button class="nav-item active" data-page="dashboard" onclick="navigateTo('dashboard')">
+                <span class="nav-icon">🏠</span>Início
+                <span class="nav-dot show" id="dotDashboard"></span>
+            </button>
+            <button class="nav-item" data-page="mapa" onclick="navigateTo('mapa')">
+                <span class="nav-icon">🗺️</span>Mapa
+            </button>
+            <button class="nav-item" data-page="chat" onclick="navigateTo('chat')">
+                <span class="nav-icon">💬</span>Chat
+            </button>
+            <button class="nav-item" data-page="historico" onclick="navigateTo('historico')">
+                <span class="nav-icon">📋</span>Histórico
+            </button>
+            <button class="nav-item" data-page="perfil" onclick="navigateTo('perfil')">
+                <span class="nav-icon">👤</span>Perfil
+            </button>
         </div>
     </div>
 
-    <div class="stats-row">
-        <div class="stat-card"><div class="stat-number" id="totalCount">0</div><div class="stat-label">Total</div></div>
-        <div class="stat-card"><div class="stat-number" id="pendingCount">0</div><div class="stat-label">Pendentes</div></div>
-        <div class="stat-card"><div class="stat-number" id="totalEarn">R$0</div><div class="stat-label">Ganhos</div></div>
-    </div>
+    <script>
+        // ============ APP STATE ============
+        const state = {
+            currentPage: 'dashboard',
+            online: true,
+            todayEarnings: 187.50,
+            todayDeliveries: 7,
+            activeOrders: ['activeOrder1'],
+            notifications: 3,
+            timerSeconds: 1122,
+            timerInterval: null,
+            profileName: 'Carlos Oliveira',
+            profileRating: '4.9'
+        };
 
-    <div class="filter-bar">
-        <button class="filter-chip active" data-filter="all">Todas</button>
-        <button class="filter-chip" data-filter="pendente">Pendentes</button>
-        <button class="filter-chip" data-filter="em_andamento">Andamento</button>
-        <button class="filter-chip" data-filter="entregue">Entregues</button>
-    </div>
+        // ============ NAVIGATION ============
+        function navigateTo(pageName) {
+            state.currentPage = pageName;
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const targetPage = document.getElementById('page-' + pageName);
+            if (targetPage) targetPage.classList.add('active');
 
-    <div id="deliveryList" class="delivery-list">
-        <div class="empty-state"><i class="fas fa-shipping-fast"></i> Nenhuma entrega. Toque em +</div>
-    </div>
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            const navItem = document.querySelector(`.nav-item[data-page="${pageName}"]`);
+            if (navItem) navItem.classList.add('active');
 
-    <button class="fab" id="openModalBtn"><i class="fas fa-plus"></i></button>
-    <footer>✓ Edite, calcule distância, inicie/finalize</footer>
-</div>
-
-<!-- Modal -->
-<div id="modal" class="modal">
-    <div class="modal-card">
-        <h2 id="modalTitle">➕ Nova corrida</h2>
-        <form id="deliveryForm">
-            <input type="hidden" id="editId">
-            <div class="field">
-                <label><i class="fas fa-user"></i> Cliente</label>
-                <input type="text" id="client" placeholder="Nome" required>
-            </div>
-            <div class="field">
-                <label><i class="fas fa-location-dot"></i> Endereço</label>
-                <input type="text" id="address" placeholder="Rua, número, bairro, cidade" required>
-            </div>
-            <div class="field">
-                <label><i class="fas fa-tag"></i> Valor (R$)</label>
-                <input type="number" id="price" step="0.01" value="0">
-            </div>
-            <div class="field">
-                <label><i class="fas fa-road"></i> Distância (km)</label>
-                <div class="distance-row">
-                    <input type="number" id="distance" step="0.1" value="0">
-                    <button type="button" class="calc-btn" id="calcDistBtn"><i class="fas fa-location-dot"></i> Calcular</button>
-                </div>
-                <div class="small-note">🔍 Clique para obter a distância da sua localização atual até o endereço</div>
-            </div>
-            <div class="field">
-                <label><i class="fas fa-chart-line"></i> Status</label>
-                <select id="status">
-                    <option value="pendente">Pendente</option>
-                    <option value="em_andamento">Em andamento</option>
-                    <option value="entregue">Entregue</option>
-                </select>
-            </div>
-            <div class="field">
-                <label><i class="fas fa-comment"></i> Obs</label>
-                <textarea id="notes" rows="2" placeholder="Portão, referência..."></textarea>
-            </div>
-            <div class="modal-buttons">
-                <button type="button" class="btn-cancel" id="closeModalBtn">Cancelar</button>
-                <button type="submit" class="btn-save">Salvar</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<script>
-    // ---------- DADOS ----------
-    let deliveries = [];
-    let currentFilter = "all";
-    let deferredPrompt = null;
-
-    // Carregar do localStorage
-    function loadData() {
-        const saved = localStorage.getItem("motoflash_data");
-        if(saved) {
-            deliveries = JSON.parse(saved);
-        } else {
-            deliveries = [
-                { id: "1", cliente: "Ana Silva", endereco: "Rua Augusta, 1200 - Consolação, SP", valor: 18.5, distancia: 4.2, status: "pendente", obs: "Apto 204", criado: new Date(Date.now() - 2*3600000).toISOString(), entregue_em: null },
-                { id: "2", cliente: "Carlos M.", endereco: "Av. Paulista, 1500 - Bela Vista, SP", valor: 22.0, distancia: 3.5, status: "em_andamento", obs: "", criado: new Date(Date.now() - 5*3600000).toISOString(), entregue_em: null },
-                { id: "3", cliente: "Fernanda R.", endereco: "Rua Oscar Freire, 980 - Jardins, SP", valor: 27.3, distancia: 5.1, status: "entregue", obs: "Portaria", criado: new Date(Date.now() - 2*86400000).toISOString(), entregue_em: new Date(Date.now() - 86400000).toISOString() }
-            ];
-            saveLocal();
-        }
-        renderAll();
-    }
-
-    function saveLocal() {
-        localStorage.setItem("motoflash_data", JSON.stringify(deliveries));
-    }
-
-    function generateId() {
-        return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
-    }
-
-    function updateStats() {
-        const total = deliveries.length;
-        const pending = deliveries.filter(d => d.status === "pendente").length;
-        const earnings = deliveries.filter(d => d.status === "entregue").reduce((s, d) => s + (d.valor || 0), 0);
-        document.getElementById("totalCount").innerText = total;
-        document.getElementById("pendingCount").innerText = pending;
-        document.getElementById("totalEarn").innerHTML = `R$${earnings.toFixed(2)}`;
-    }
-
-    function renderList() {
-        let filtered = [...deliveries];
-        if(currentFilter !== "all") filtered = filtered.filter(d => d.status === currentFilter);
-        filtered.sort((a,b) => {
-            const prio = { pendente:1, em_andamento:2, entregue:3 };
-            return (prio[a.status] - prio[b.status]) || new Date(b.criado) - new Date(a.criado);
-        });
-
-        const container = document.getElementById("deliveryList");
-        if(filtered.length === 0) {
-            container.innerHTML = `<div class="empty-state"><i class="fas fa-road"></i><br>Nenhuma entrega aqui.</div>`;
-            return;
+            document.getElementById('dotDashboard').classList.toggle('show', state.activeOrders.length > 0 && pageName !== 'dashboard');
+            if (pageName === 'mapa') drawMap();
         }
 
-        container.innerHTML = filtered.map(d => {
-            const statusText = { pendente:"Pendente", em_andamento:"Em andamento", entregue:"Entregue" }[d.status];
-            const statusClass = `status-${d.status}`;
-            const dateStr = new Date(d.criado).toLocaleDateString("pt-BR", {day:"2-digit", month:"short", hour:"2-digit", minute:"2-digit"});
-            let actionBtns = "";
-            if(d.status === "pendente") actionBtns = `<button class="action-btn btn-start" data-action="start" data-id="${d.id}"><i class="fas fa-play"></i> Iniciar</button>`;
-            else if(d.status === "em_andamento") actionBtns = `<button class="action-btn btn-finish" data-action="finish" data-id="${d.id}"><i class="fas fa-flag-checkered"></i> Concluir</button>`;
-            const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.endereco)}`;
-            return `
-                <div class="delivery-card">
-                    <div class="card-header">
-                        <div class="customer"><i class="fas fa-user-circle"></i> ${escapeHtml(d.cliente)}</div>
-                        <div class="status-badge ${statusClass}">${statusText}</div>
+        // ============ TOAST ============
+        function showToast(message) {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.getElementById('app').appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // ============ CLOCK ============
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('timeDisplay').textContent =
+                now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        }
+        setInterval(updateClock, 30000);
+        updateClock();
+
+        // ============ TIMER ============
+        function startTimer() {
+            if (state.timerInterval) clearInterval(state.timerInterval);
+            state.timerInterval = setInterval(() => {
+                if (state.timerSeconds <= 0) {
+                    clearInterval(state.timerInterval);
+                    showToast('⏰ Tempo esgotado! Entre em contato com o suporte.');
+                    return;
+                }
+                state.timerSeconds--;
+                updateTimerDisplay();
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(state.timerSeconds / 60);
+            const secs = state.timerSeconds % 60;
+            const display = String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+            const timerEl = document.getElementById('timer1');
+            if (timerEl) timerEl.textContent = display;
+        }
+
+        // ============ DELETE ORDER ============
+        function deleteOrder(orderId) {
+            const orderEl = document.getElementById(orderId);
+            if (!orderEl) return;
+            const orderIdText = orderEl.querySelector('.order-id')?.textContent || 'Desconhecida';
+            if (state.activeOrders.includes(orderId)) {
+                state.activeOrders = state.activeOrders.filter(id => id !== orderId);
+                if (state.timerInterval && state.activeOrders.length === 0) {
+                    clearInterval(state.timerInterval);
+                    state.timerInterval = null;
+                }
+                document.getElementById('dotDashboard').classList.toggle('show', state.activeOrders.length > 0);
+            }
+            orderEl.remove();
+            showToast(`🗑️ Corrida ${orderIdText} excluída!`);
+            updateDashboardStats();
+        }
+
+        // ============ EDIT MODAL ============
+        function openEditModal(orderId) {
+            const orderEl = document.getElementById(orderId);
+            if (!orderEl) return;
+            const detailsSpans = orderEl.querySelectorAll('.order-details span');
+            let pickup = '', delivery = '', distance = '';
+            const priceEl = orderEl.querySelector('.order-price');
+            const price = priceEl ? priceEl.textContent.replace('R$', '').trim() : '0';
+
+            detailsSpans.forEach(span => {
+                const text = span.textContent.trim();
+                if (text.includes('📍')) pickup = text.replace('📍', '').replace('Retirar:', '').replace('Coleta:', '').trim();
+                else if (text.includes('🏠')) delivery = text.replace('🏠', '').replace('Entregar:', '').replace('Entrega:', '').trim();
+                else if (text.includes('📏')) distance = text.replace('📏', '').replace('Distância:', '').trim();
+            });
+
+            document.getElementById('editPickup').value = pickup;
+            document.getElementById('editDelivery').value = delivery;
+            document.getElementById('editPrice').value = price.replace(',', '.');
+            document.getElementById('editDistance').value = distance;
+            document.getElementById('editOrderId').value = orderId;
+            document.getElementById('editModal').style.display = 'flex';
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        function saveEdit() {
+            const orderId = document.getElementById('editOrderId').value;
+            const orderEl = document.getElementById(orderId);
+            if (!orderEl) return closeEditModal();
+
+            const pickup = document.getElementById('editPickup').value.trim();
+            const delivery = document.getElementById('editDelivery').value.trim();
+            const price = parseFloat(document.getElementById('editPrice').value.replace(',', '.'));
+            const distance = document.getElementById('editDistance').value.trim();
+
+            if (!pickup || !delivery || isNaN(price)) {
+                showToast('⚠️ Preencha todos os campos corretamente.');
+                return;
+            }
+
+            const priceEl = orderEl.querySelector('.order-price');
+            if (priceEl) priceEl.textContent = 'R$ ' + price.toFixed(2).replace('.', ',');
+
+            const detailsSpans = orderEl.querySelectorAll('.order-details span');
+            detailsSpans.forEach(span => {
+                const text = span.textContent.trim();
+                if (text.includes('📍')) span.textContent = '📍 ' + (orderId.startsWith('active') ? 'Retirar: ' : 'Coleta: ') + pickup;
+                else if (text.includes('🏠')) span.textContent = '🏠 ' + (orderId.startsWith('active') ? 'Entregar: ' : 'Entrega: ') + delivery;
+                else if (text.includes('📏')) span.textContent = '📏 Distância: ' + distance;
+            });
+
+            showToast('✅ Entrega atualizada com sucesso!');
+            closeEditModal();
+        }
+
+        // ============ NEW ORDER MODAL ============
+        function openNewOrderModal() {
+            document.getElementById('newOrderModal').style.display = 'flex';
+        }
+        function closeNewOrderModal() {
+            document.getElementById('newOrderModal').style.display = 'none';
+        }
+
+        function createNewOrder() {
+            const pickup = document.getElementById('newPickup').value.trim();
+            const delivery = document.getElementById('newDelivery').value.trim();
+            const price = parseFloat(document.getElementById('newPrice').value.replace(',', '.'));
+            const distance = document.getElementById('newDistance').value.trim();
+
+            if (!pickup || !delivery || isNaN(price) || !distance) {
+                showToast('⚠️ Preencha todos os campos.');
+                return;
+            }
+
+            const newId = 'order' + Date.now();
+            const container = document.getElementById('availableOrdersContainer');
+            const orderHTML = `
+                <div class="order-card" id="${newId}">
+                    <div class="order-top">
+                        <span class="order-id">#DEL-${Math.floor(Math.random()*1000)+1000}</span>
+                        <span class="order-price">R$ ${price.toFixed(2).replace('.', ',')}</span>
                     </div>
-                    <div class="address-line">
-                        <i class="fas fa-map-marker-alt"></i> <span>${escapeHtml(d.endereco)}</span>
-                        <a href="${mapsLink}" target="_blank" class="map-link"><i class="fas fa-external-link-alt"></i> mapa</a>
+                    <div class="order-details">
+                        <span>📍 Coleta: ${pickup}</span>
+                        <span>🏠 Entrega: ${delivery}</span>
+                        <span>📏 Distância: ${distance}</span>
                     </div>
-                    <div class="price-distance">
-                        <div class="price"><i class="fas fa-money-bill-wave"></i> R$ ${(d.valor||0).toFixed(2)}</div>
-                        <div class="distance"><i class="fas fa-road"></i> ${(d.distancia||0).toFixed(1)} km</div>
-                    </div>
-                    <div class="meta">
-                        <span><i class="far fa-clock"></i> ${dateStr}</span>
-                        ${d.obs ? `<span><i class="fas fa-note-sticky"></i> ${escapeHtml(d.obs.substring(0,35))}</span>` : ''}
-                    </div>
-                    <div class="action-buttons">
-                        <button class="action-btn btn-edit" data-action="edit" data-id="${d.id}"><i class="fas fa-pen"></i> Editar</button>
-                        ${actionBtns}
-                        <button class="action-btn btn-delete" data-action="delete" data-id="${d.id}"><i class="fas fa-trash"></i> Excluir</button>
+                    <div class="order-actions">
+                        <button class="btn btn-primary btn-sm" onclick="acceptOrder('${newId}')">✋ Aceitar Entrega</button>
+                        <button class="btn btn-sm" style="background:#6c757d;color:#fff;" onclick="openEditModal('${newId}')">✏️ Editar</button>
+                        <button class="btn btn-sm" style="background:#0077b6;color:#fff;" onclick="navigateToAddress('${newId}')">🗺️ Navegar</button>
+                        <button class="btn btn-sm" style="background:#dc3545;color:#fff;" onclick="deleteOrder('${newId}')">🗑️ Excluir</button>
                     </div>
                 </div>
             `;
-        }).join("");
+            container.insertAdjacentHTML('beforeend', orderHTML);
+            closeNewOrderModal();
+            showToast('🏁 Nova corrida criada!');
+            document.getElementById('newPickup').value = '';
+            document.getElementById('newDelivery').value = '';
+            document.getElementById('newPrice').value = '';
+            document.getElementById('newDistance').value = '';
+        }
 
-        // eventos dinâmicos
-        document.querySelectorAll("[data-action='edit']").forEach(btn => btn.addEventListener("click", (e) => { e.stopPropagation(); openEdit(btn.dataset.id); }));
-        document.querySelectorAll("[data-action='delete']").forEach(btn => btn.addEventListener("click", (e) => { e.stopPropagation(); deleteDelivery(btn.dataset.id); }));
-        document.querySelectorAll("[data-action='start']").forEach(btn => btn.addEventListener("click", (e) => { e.stopPropagation(); changeStatus(btn.dataset.id, "em_andamento"); }));
-        document.querySelectorAll("[data-action='finish']").forEach(btn => btn.addEventListener("click", (e) => { e.stopPropagation(); changeStatus(btn.dataset.id, "entregue"); }));
-    }
-
-    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, (m) => m==='&'?'&amp;':(m==='<'?'&lt;':'&gt;')); }
-    function renderAll() { updateStats(); renderList(); }
-
-    // CRUD
-    function saveDelivery(e) {
-        e.preventDefault();
-        const id = document.getElementById("editId").value;
-        const cliente = document.getElementById("client").value.trim();
-        const endereco = document.getElementById("address").value.trim();
-        const valor = parseFloat(document.getElementById("price").value) || 0;
-        const distancia = parseFloat(document.getElementById("distance").value) || 0;
-        const status = document.getElementById("status").value;
-        const obs = document.getElementById("notes").value.trim();
-        if(!cliente || !endereco) { alert("Preencha cliente e endereço"); return; }
-        if(id) {
-            const idx = deliveries.findIndex(d => d.id === id);
-            if(idx !== -1) {
-                const old = deliveries[idx].status;
-                deliveries[idx] = { ...deliveries[idx], cliente, endereco, valor, distancia, status, obs };
-                if(status === "entregue" && old !== "entregue") deliveries[idx].entregue_em = new Date().toISOString();
-                else if(status !== "entregue") deliveries[idx].entregue_em = null;
-            }
-        } else {
-            deliveries.unshift({
-                id: generateId(), cliente, endereco, valor, distancia, status, obs,
-                criado: new Date().toISOString(),
-                entregue_em: status === "entregue" ? new Date().toISOString() : null
+        // ============ NAVIGATE TO ADDRESS ============
+        function navigateToAddress(orderId) {
+            const orderEl = document.getElementById(orderId);
+            if (!orderEl) return;
+            const detailsSpans = orderEl.querySelectorAll('.order-details span');
+            let deliveryAddress = '';
+            detailsSpans.forEach(span => {
+                if (span.textContent.includes('🏠')) {
+                    deliveryAddress = span.textContent.replace('🏠', '').replace('Entregar:', '').replace('Entrega:', '').trim();
+                }
             });
-        }
-        saveLocal();
-        closeModal();
-        renderAll();
-    }
-
-    function deleteDelivery(id) {
-        if(confirm("Excluir esta corrida?")) {
-            deliveries = deliveries.filter(d => d.id !== id);
-            saveLocal();
-            renderAll();
-        }
-    }
-
-    function changeStatus(id, newStatus) {
-        const idx = deliveries.findIndex(d => d.id === id);
-        if(idx !== -1) {
-            const old = deliveries[idx].status;
-            deliveries[idx].status = newStatus;
-            if(newStatus === "entregue" && old !== "entregue") deliveries[idx].entregue_em = new Date().toISOString();
-            else if(newStatus !== "entregue") deliveries[idx].entregue_em = null;
-            saveLocal();
-            renderAll();
-        }
-    }
-
-    // Cálculo de distância usando OSRM + Nominatim
-    async function calcDistanceFromAddress(address) {
-        const geoUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`;
-        try {
-            const geoRes = await fetch(geoUrl, { headers: { 'User-Agent': 'MotoFlash/1.0' } });
-            const geoData = await geoRes.json();
-            if(!geoData.length) throw new Error("Endereço não encontrado");
-            const { lat, lon } = geoData[0];
-            const pos = await new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej));
-            const userLat = pos.coords.latitude, userLon = pos.coords.longitude;
-            const routeUrl = `https://router.project-osrm.org/route/v1/driving/${userLon},${userLat};${lon},${lat}?overview=false`;
-            const routeRes = await fetch(routeUrl);
-            const routeData = await routeRes.json();
-            if(routeData.code !== "Ok") throw new Error("Rota não encontrada");
-            return routeData.routes[0].distance / 1000;
-        } catch(e) {
-            alert("Erro: " + e.message);
-            return null;
-        }
-    }
-
-    async function handleCalcDistance() {
-        const addr = document.getElementById("address").value.trim();
-        if(!addr) { alert("Digite o endereço primeiro."); return; }
-        if(!navigator.geolocation) { alert("Geolocalização não suportada."); return; }
-        const btn = document.getElementById("calcDistBtn");
-        const original = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> calculando...';
-        btn.disabled = true;
-        try {
-            const dist = await calcDistanceFromAddress(addr);
-            if(dist !== null) {
-                document.getElementById("distance").value = dist.toFixed(1);
-                alert(`Distância calculada: ${dist.toFixed(1)} km`);
+            if (!deliveryAddress) {
+                showToast('⚠️ Endereço não encontrado.');
+                return;
             }
-        } catch(err) { alert("Falha no cálculo."); }
-        finally { btn.innerHTML = original; btn.disabled = false; }
-    }
-
-    // Modal
-    function openEdit(id) {
-        const d = deliveries.find(d => d.id === id);
-        if(d) {
-            document.getElementById("modalTitle").innerText = "✏️ Editar entrega";
-            document.getElementById("editId").value = d.id;
-            document.getElementById("client").value = d.cliente;
-            document.getElementById("address").value = d.endereco;
-            document.getElementById("price").value = d.valor;
-            document.getElementById("distance").value = d.distancia || 0;
-            document.getElementById("status").value = d.status;
-            document.getElementById("notes").value = d.obs || "";
-            openModal();
+            const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(deliveryAddress)}`;
+            window.open(url, '_blank');
+            showToast('🗺️ Abrindo mapa no navegador...');
         }
-    }
 
-    function openCreate() {
-        document.getElementById("modalTitle").innerText = "➕ Nova corrida";
-        document.getElementById("editId").value = "";
-        document.getElementById("client").value = "";
-        document.getElementById("address").value = "";
-        document.getElementById("price").value = "0";
-        document.getElementById("distance").value = "0";
-        document.getElementById("status").value = "pendente";
-        document.getElementById("notes").value = "";
-        openModal();
-    }
+        // ============ AUTO REMOVE AVAILABLE ORDERS ============
+        function autoRemoveAvailableOrder() {
+            const container = document.getElementById('availableOrdersContainer');
+            const orders = container.querySelectorAll('.order-card');
+            if (orders.length === 0) return;
+            const randomOrder = orders[Math.floor(Math.random() * orders.length)];
+            const orderId = randomOrder.querySelector('.order-id')?.textContent || 'Desconhecido';
+            randomOrder.remove();
+            showToast(`🚫 Corrida ${orderId} foi retirada automaticamente.`);
+        }
+        setInterval(autoRemoveAvailableOrder, 25000);
 
-    function openModal() { document.getElementById("modal").style.display = "flex"; }
-    function closeModal() { document.getElementById("modal").style.display = "none"; }
+        // ============ ORDER ACTIONS ============
+        function acceptOrder(orderId) {
+            const orderEl = document.getElementById(orderId);
+            if (!orderEl) return;
+            const priceText = orderEl.querySelector('.order-price').textContent;
+            const price = parseFloat(priceText.replace('R$', '').replace(',', '.').trim());
 
-    // Filtros
-    function initFilters() {
-        document.querySelectorAll(".filter-chip").forEach(btn => {
-            btn.addEventListener("click", () => {
-                document.querySelectorAll(".filter-chip").forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-                currentFilter = btn.dataset.filter;
-                renderList();
-            });
-        });
-    }
+            const clone = orderEl.cloneNode(true);
+            clone.id = 'activeOrder' + (state.activeOrders.length + 1);
+            clone.classList.add('delivering');
+            
+            const actionsDiv = clone.querySelector('.order-actions');
+            if (actionsDiv) actionsDiv.innerHTML = '';
+            else {
+                const newActions = document.createElement('div');
+                newActions.className = 'order-actions';
+                clone.appendChild(newActions);
+            }
+            clone.querySelector('.order-actions').innerHTML = `
+                <button class="btn btn-success btn-sm" onclick="updateDeliveryStatus('${clone.id}','delivered')">✅ Entregue</button>
+                <button class="btn btn-outline btn-sm" onclick="navigateTo('chat')">💬 Chat</button>
+                <button class="btn btn-sm" style="background:#e76f51;color:#fff;" onclick="showToast('🚨 Suporte acionado')">🆘</button>
+                <button class="btn btn-sm" style="background:#6c757d;color:#fff;" onclick="openEditModal('${clone.id}')">✏️ Editar</button>
+                <button class="btn btn-sm" style="background:#0077b6;color:#fff;" onclick="navigateToAddress('${clone.id}')">🗺️ Navegar</button>
+                <button class="btn btn-sm" style="background:#dc3545;color:#fff;" onclick="deleteOrder('${clone.id}')">🗑️ Excluir</button>
+            `;
 
-    // PWA install prompt
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        const banner = document.getElementById("installBanner");
-        banner.style.display = "block";
-        banner.onclick = async () => {
-            banner.style.display = "none";
-            if(deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; }
-        };
-    });
+            if (!clone.querySelector('.timer-display')) {
+                const detailsDiv = clone.querySelector('.order-details');
+                if (detailsDiv) {
+                    const timerSpan = document.createElement('span');
+                    timerSpan.innerHTML = '🕐 <strong class="timer-display">20:00</strong> restantes';
+                    detailsDiv.appendChild(timerSpan);
+                }
+            }
 
-    document.getElementById("deliveryForm").addEventListener("submit", saveDelivery);
-    document.getElementById("openModalBtn").addEventListener("click", openCreate);
-    document.getElementById("closeModalBtn").addEventListener("click", closeModal);
-    document.getElementById("calcDistBtn").addEventListener("click", handleCalcDistance);
-    window.addEventListener("click", (e) => { if(e.target === document.getElementById("modal")) closeModal(); });
+            document.getElementById('activeOrdersContainer').appendChild(clone);
+            orderEl.remove();
+            state.activeOrders.push(clone.id);
+            state.todayEarnings += price;
+            state.todayDeliveries++;
+            state.timerSeconds = 1200;
+            updateDashboardStats();
+            startTimer();
+            updateTimerDisplay();
+            showToast('✅ Pedido aceito! Boa entrega!');
+            document.getElementById('dotDashboard').classList.add('show');
+            document.getElementById('notifBadge').textContent = Math.max(0, state.notifications - 1);
+            state.notifications = Math.max(0, state.notifications - 1);
+        }
 
-    loadData();
-    initFilters();
+        function updateDeliveryStatus(orderId, status) {
+            const orderEl = document.getElementById(orderId);
+            if (!orderEl) return;
+            if (status === 'delivered') {
+                orderEl.style.opacity = '0.5';
+                orderEl.style.pointerEvents = 'none';
+                orderEl.querySelector('.order-actions').innerHTML = '<span class="badge badge-success">✅ Entregue</span>';
+                state.activeOrders = state.activeOrders.filter(id => id !== orderId);
+                if (state.timerInterval && state.activeOrders.length === 0) {
+                    clearInterval(state.timerInterval);
+                    state.timerInterval = null;
+                }
+                document.getElementById('dotDashboard').classList.toggle('show', state.activeOrders.length > 0);
+                showToast('🎉 Entrega concluída!');
+                updateDashboardStats();
+            }
+        }
 
-    // Service Worker para offline (básico)
-    if('serviceWorker' in navigator) {
-        const swCode = `self.addEventListener('fetch', event => { event.respondWith(fetch(event.request).catch(() => new Response('Offline', { status: 200 }))); });`;
-        const blob = new Blob([swCode], {type: 'application/javascript'});
-        navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(e => console.log("SW erro", e));
-    }
-</script>
+        // ============ ADMIN MODAL (ACESSO TOTAL) ============
+        function openAdminModal() {
+            document.getElementById('adminName').value = state.profileName;
+            document.getElementById('adminRating').value = state.profileRating;
+            document.getElementById('adminEarnings').value = state.todayEarnings;
+            document.getElementById('adminDeliveries').value = state.todayDeliveries;
+            document.getElementById('adminModal').style.display = 'flex';
+        }
+        function closeAdminModal() {
+            document.getElementById('adminModal').style.display = 'none';
+        }
+        function saveAdminSettings() {
+            const newName = document.getElementById('adminName').value.trim();
+            const newRating = document.getElementById('adminRating').value.trim();
+            const newEarnings = parseFloat(document.getElementById('adminEarnings').value);
+            const newDeliveries = parseInt(document.getElementById('adminDeliveries').value);
+
+            if (newName) {
+                state.profileName = newName;
+                document.getElementById('profileName').textContent = newName;
+            }
+            if (newRating) {
+                state.profileRating = newRating;
+                document.getElementById('profileRatingDisplay').textContent = newRating;
+                document.getElementById('profileRating').textContent = newRating;
+            }
+            if (!isNaN(newEarnings)) state.todayEarnings = newEarnings;
+            if (!isNaN(newDeliveries)) state.todayDeliveries = newDeliveries;
+
+            updateDashboardStats();
+            showToast('✅ Configurações aplicadas!');
+            closeAdminModal();
+        }
+        function resetAllData() {
+            state.todayEarnings = 0;
+            state.todayDeliveries = 0;
+            state.activeOrders = [];
+            if (state.timerInterval) clearInterval(state.timerInterval);
+            document.getElementById('activeOrdersContainer').innerHTML = '';
+            document.getElementById('availableOrdersContainer').innerHTML = '';
+            document.getElementById('dotDashboard').classList.remove('show');
+            updateDashboardStats();
+            showToast('🗑️ Todos os dados do dia foram resetados!');
+            closeAdminModal();
+        }
+
+        function updateDashboardStats() {
+            document.getElementById('todayEarnings').textContent = 'R$ ' + state.todayEarnings.toFixed(2).replace('.', ',');
+            document.getElementById('todayDeliveries').textContent = state.todayDeliveries;
+            document.getElementById('onlineStatus').textContent = state.online ? '🟢 Online' : '🔴 Offline';
+            document.getElementById('onlineStatus').className = state.online ? 'badge badge-success' : 'badge badge-danger';
+        }
+
+        function toggleOnline() {
+            state.online = !state.online;
+            updateDashboardStats();
+            showToast(state.online ? '🟢 Você está online!' : '🔴 Você está offline');
+        }
+
+        // ============ CHAT ============
+        function sendChat() {
+            const input = document.getElementById('chatInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+            const chatContainer = document.getElementById('chatMessages');
+            const newMsg = document.createElement('div');
+            newMsg.className = 'chat-msg outgoing';
+            newMsg.textContent = msg;
+            chatContainer.appendChild(newMsg);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            input.value = '';
+            setTimeout(() => {
+                const reply = document.createElement('div');
+                reply.className = 'chat-msg incoming';
+                reply.textContent = '👍 Recebido! Obrigado pela atualização.';
+                chatContainer.appendChild(reply);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 1500);
+        }
+
+        // ============ MAP ============
+        function drawMap() {
+            const canvas = document.getElementById('mapCanvas');
+            if (!canvas) return;
+            const container = document.getElementById('mapContainer');
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+
+            ctx.fillStyle = '#e8f4f8';
+            ctx.fillRect(0, 0, w, h);
+            ctx.strokeStyle = '#d0dde3';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < w; i += 40) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, h);
+                ctx.stroke();
+            }
+            for (let j = 0; j < h; j += 40) {
+                ctx.beginPath();
+                ctx.moveTo(0, j);
+                ctx.lineTo(w, j);
+                ctx.stroke();
+            }
+            ctx.strokeStyle = '#ffc107';
+            ctx.lineWidth = 4;
+            ctx.setLineDash([8, 4]);
+            ctx.beginPath();
+            ctx.moveTo(30, h - 30);
+            ctx.lineTo(w - 30, 30);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = '#e63946';
+            ctx.beginPath();
+            ctx.arc(30, h - 30, 12, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('🏪', 18, h - 20);
+            ctx.fillStyle = '#2a9d8f';
+            ctx.beginPath();
+            ctx.arc(w - 30, 30, 12, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('🏠', w - 48, 44);
+            const t = (Date.now() % 6000) / 6000;
+            const mx = 30 + (w - 60) * t;
+            const my = (h - 30) - (h - 60) * t;
+            ctx.fillStyle = '#1d3557';
+            ctx.beginPath();
+            ctx.arc(mx, my, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('🛵', mx - 14, my + 5);
+        }
+        setInterval(() => {
+            if (state.currentPage === 'mapa') drawMap();
+        }, 2000);
+
+        // ============ INIT ============
+        function init() {
+            updateDashboardStats();
+            updateTimerDisplay();
+            if (state.activeOrders.length > 0) startTimer();
+            document.getElementById('dotDashboard').classList.toggle('show', state.activeOrders.length > 0);
+            document.getElementById('notifBadge').textContent = state.notifications;
+            setInterval(() => {
+                if (state.online && Math.random() < 0.3 && state.activeOrders.length < 3) {
+                    state.notifications++;
+                    document.getElementById('notifBadge').textContent = state.notifications;
+                    showToast('🔔 Novo pedido disponível!');
+                }
+            }, 45000);
+        }
+
+        init();
+        console.log('🏍️ MotoExpress PRO - ACESSO TOTAL ATIVADO!');
+    </script>
 </body>
 </html>
