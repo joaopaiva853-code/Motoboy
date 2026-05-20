@@ -271,17 +271,44 @@
             font-size: 22px;
         }
 
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0 0 0;
+        }
+
+        .btn-icon {
+            background: rgba(255,255,255,0.08);
+            border: none;
+            padding: 8px 14px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #fff;
+        }
+
+        .btn-map {
+            background: rgba(255, 107, 53, 0.15);
+            color: #ff8c5a;
+            border: 1px solid #ff6b35;
+        }
+
         .btn-whatsapp-sm {
             background: linear-gradient(135deg, #25D366, #1ebc5a);
             color: #fff;
             border: none;
             padding: 8px 14px;
-            border-radius: 30px;
+            border-radius: 40px;
             font-size: 13px;
             font-weight: 700;
             cursor: pointer;
-            margin-left: 10px;
-            min-height: 38px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .bottom-nav {
@@ -347,16 +374,17 @@
             background: rgba(0, 0, 0, 0.85);
             z-index: 500;
             display: flex;
-            align-items: flex-end;
+            align-items: center;
             justify-content: center;
         }
 
         .modal-sheet {
             background: linear-gradient(145deg, #1e1e32, #16162a);
-            border-radius: 28px 28px 0 0;
-            width: 100%;
-            padding: 24px 20px 32px;
-            max-height: 85vh;
+            border-radius: 32px;
+            width: 90%;
+            max-width: 400px;
+            padding: 24px 20px;
+            max-height: 80vh;
             overflow-y: auto;
         }
 
@@ -454,6 +482,22 @@
             font-size: 16px;
             font-weight: 600;
         }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .detail-label {
+            font-weight: 600;
+            color: #a0a0b8;
+        }
+        .detail-value {
+            font-weight: 700;
+            text-align: right;
+        }
     </style>
 </head>
 <body>
@@ -526,7 +570,7 @@
             <div class="settings-item" onclick="showAddCorridaModal()"><span>📝</span><span style="flex:1;margin-left:12px;">Adicionar Corrida Manual</span><span>→</span></div>
             <div class="settings-item" onclick="resetAllData()"><span>🗑️</span><span style="flex:1;margin-left:12px;">Limpar Todos os Dados</span><span>→</span></div>
             <div class="settings-item" id="installButtonContainer" style="display:none;" onclick="installApp()"><span>📲</span><span style="flex:1;margin-left:12px;">Instalar App (APK)</span><span>→</span></div>
-            <p style="text-align:center;color:#6b6b80;margin-top:24px;">MotoDash Pro • Versão 2.1</p>
+            <p style="text-align:center;color:#6b6b80;margin-top:24px;">MotoDash Pro • Versão 2.2</p>
         </div>
     </div>
 
@@ -535,6 +579,19 @@
         <div class="nav-item" data-screen="screenOrders" onclick="switchScreen('screenOrders', this)"><span class="nav-icon">📦</span> Corridas<span class="nav-badge" id="navBadgeOrders">0</span></div>
         <div class="nav-item" data-screen="screenHistory" onclick="switchScreen('screenHistory', this)"><span class="nav-icon">📋</span> Histórico</div>
         <div class="nav-item" data-screen="screenProfile" onclick="switchScreen('screenProfile', this)"><span class="nav-icon">👤</span> Perfil</div>
+    </div>
+</div>
+
+<!-- Modal Detalhes da Corrida (com mapa) -->
+<div class="modal-overlay" id="orderDetailModal" style="display:none;" onclick="closeOrderDetailModal(event)">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+        <div style="width:50px;height:5px;background:#6b6b80;border-radius:4px;margin:0 auto 20px;"></div>
+        <div style="font-size:22px;font-weight:800;text-align:center;margin-bottom:20px;">📋 Detalhes da Corrida</div>
+        <div id="orderDetailContent"></div>
+        <div style="display:flex; gap:12px; margin-top:20px;">
+            <button class="btn btn-primary" id="detailMapBtn" style="flex:1;">🗺️ Ver no Mapa</button>
+            <button class="btn btn-outline" onclick="closeOrderDetailModal()" style="flex:1;">Fechar</button>
+        </div>
     </div>
 </div>
 
@@ -552,7 +609,7 @@
                     <option value="sushi">🍣 Sushi</option>
                     <option value="acai">🥤 Açaí</option>
                     <option value="market">🛒 Mercado</option>
-                    <option value="loja">🛍️ Loja</option> <!-- NOVA OPÇÃO LOJA -->
+                    <option value="loja">🛍️ Loja</option>
                 </select>
             </div>
             <div class="form-group"><label>👤 Cliente</label><input type="text" id="manualClientName" placeholder="Nome do cliente" required></div>
@@ -606,6 +663,13 @@
     function showToast(msg) { const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 2500); }
     function playBeep(f=800,d=150){ try{ const c=new(window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain(); o.type='square'; o.frequency.value=f; g.gain.value=0.08; o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime+d/1000); }catch(e){} }
 
+    // ==================== MAPA ====================
+    function openMap(address) {
+        if(!address) { showToast('Endereço não disponível'); return; }
+        const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+        window.open(url, '_blank');
+    }
+
     // ==================== GEOLOCALIZAÇÃO E DISTÂNCIA ====================
     function haversineDistance(lat1,lon1,lat2,lon2){ const R=6371; const dLat=(lat2-lat1)*Math.PI/180, dLon=(lon2-lon1)*Math.PI/180; const a=Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2; return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)); }
     async function geocodeAddress(addr){ const url=`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(addr)}&format=json&limit=1`; try{ const r=await fetch(url,{headers:{'User-Agent':'MotoDash/1.0'}}); if(!r.ok) return null; const d=await r.json(); if(d.length) return {lat:parseFloat(d[0].lat),lng:parseFloat(d[0].lon)}; return null; }catch(e){ return null; } }
@@ -637,7 +701,32 @@
     function markDelivered(id){ const o=appData.orders.find(o=>o.id===id); if(o && o.status==='picked_up'){ o.status='delivered'; appData.totalDeliveries++; appData.totalEarnings+=o.price; appData.totalRatings++; appData.ratingSum+=5; persist(); showToast(`🏁 Entregue! +${formatCurrency(o.price)}`); } }
     function deleteOrder(id){ if(confirm('Excluir esta corrida?')){ appData.orders=appData.orders.filter(o=>o.id!==id); persist(); } }
     function openWhatsApp(phone){ window.open(`https://wa.me/55${phone.replace(/\D/g,'')}`, '_blank'); }
-    function showOrderModal(id){ const o=appData.orders.find(o=>o.id===id); if(o) alert(`🏍️ ${o.storeName}\n👤 ${o.clientName}\n📍 ${o.dropoffAddr}\n💰 ${formatCurrency(o.price)}\n📏 ${o.distance || '?'} km`); }
+
+    // Modal de detalhes da ordem
+    let currentOrderDetail = null;
+    function showOrderDetails(order) {
+        currentOrderDetail = order;
+        const container = document.getElementById('orderDetailContent');
+        const statusMap = {new:'🆕 Nova', accepted:'✅ Aceita', picked_up:'📦 Em Rota', delivered:'🏁 Entregue', cancelled:'❌ Cancelada'};
+        container.innerHTML = `
+            <div class="detail-row"><div class="detail-label">🏪 Estabelecimento</div><div class="detail-value">${order.storeName}</div></div>
+            <div class="detail-row"><div class="detail-label">👤 Cliente</div><div class="detail-value">${order.clientName || 'Não informado'}</div></div>
+            <div class="detail-row"><div class="detail-label">📱 WhatsApp</div><div class="detail-value">${order.clientPhone || 'Não informado'}</div></div>
+            <div class="detail-row"><div class="detail-label">📍 Endereço de entrega</div><div class="detail-value" style="word-break:break-word;">${order.dropoffAddr}</div></div>
+            <div class="detail-row"><div class="detail-label">📏 Distância</div><div class="detail-value">${order.distance ? order.distance.toFixed(1) : '?'} km</div></div>
+            <div class="detail-row"><div class="detail-label">💰 Valor</div><div class="detail-value green" style="color:#00e676;">${formatCurrency(order.price)}</div></div>
+            <div class="detail-row"><div class="detail-label">📅 Criado em</div><div class="detail-value">${new Date(order.createdAt).toLocaleString()}</div></div>
+            <div class="detail-row"><div class="detail-label">🔄 Status</div><div class="detail-value">${statusMap[order.status]}</div></div>
+        `;
+        const mapBtn = document.getElementById('detailMapBtn');
+        mapBtn.onclick = () => openMap(order.dropoffAddr);
+        document.getElementById('orderDetailModal').style.display = 'flex';
+    }
+    function closeOrderDetailModal(e) {
+        if(e && e.target !== document.getElementById('orderDetailModal')) return;
+        document.getElementById('orderDetailModal').style.display = 'none';
+        currentOrderDetail = null;
+    }
 
     function buildOrderCard(o, showDelete=false){
         const badgeText = {new:'Nova', accepted:'Aceita', picked_up:'Em Rota', delivered:'Entregue', cancelled:'Cancelada'}[o.status];
@@ -647,9 +736,13 @@
             else if(o.status==='accepted') btns = `<div class="btn-row"><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();markPickedUp('${o.id}')">📦 Coletar</button></div>`;
             else if(o.status==='picked_up') btns = `<div class="btn-row"><button class="btn btn-accept btn-sm" onclick="event.stopPropagation();markDelivered('${o.id}')">🏁 Entregar</button></div>`;
         } else { btns = `<div style="margin-top:12px;"><button class="btn btn-reject btn-sm" style="width:auto;padding:8px 16px;" onclick="event.stopPropagation();deleteOrder('${o.id}')">🗑️ Excluir</button></div>`; }
-        return `<div class="order-card ${o.status==='new' ? 'new-order' : ''}" onclick="showOrderModal('${o.id}')">
+        
+        return `<div class="order-card ${o.status==='new' ? 'new-order' : ''}" onclick="showOrderDetails(${JSON.stringify(o).replace(/"/g, '&quot;')})">
             <div style="display:flex;justify-content:space-between;align-items:center;"><b style="font-size:16px;">${o.storeName}</b><span style="background:rgba(0,0,0,0.5);padding:4px 14px;border-radius:40px;font-size:11px;">${badgeText}</span></div>
-            <div style="margin:10px 0;"><span>👤 ${o.clientName}</span><button class="btn-whatsapp-sm" onclick="event.stopPropagation();openWhatsApp('${o.clientPhone || ''}')">💬 WhatsApp</button></div>
+            <div style="margin:10px 0; display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="btn-whatsapp-sm" onclick="event.stopPropagation();openWhatsApp('${o.clientPhone || ''}')">💬 WhatsApp</button>
+                <button class="btn-icon btn-map" onclick="event.stopPropagation();openMap('${o.dropoffAddr.replace(/'/g, "\\'")}')">🗺️ Mapa</button>
+            </div>
             <div style="font-size:14px;">📍 ${o.dropoffAddr}</div>
             <div style="display:flex;justify-content:space-between;margin-top:12px;"><span class="stat-value green" style="font-size:20px;">${formatCurrency(o.price)}</span><span>📏 ${o.distance || '?'} km</span></div>
             ${btns}
@@ -666,12 +759,10 @@
         const distance = parseFloat(document.getElementById('manualDistance').value) || 2.5;
         const price = parseFloat(document.getElementById('manualPrice').value);
         if(!storeName || !clientName || !clientPhone || !dropoff){ showToast('⚠️ Preencha todos os campos'); return; }
-        // Mapeamento de ícones incluindo LOJA
         const iconMap = { pizza:'🍕', burger:'🍔', sushi:'🍣', acai:'🥤', market:'🛒', loja:'🛍️' };
         const displayName = `${iconMap[storeType]} ${storeName}`;
         const newOrder = { id:generateId(), storeName:displayName, storeType, clientName, clientPhone, dropoffAddr:dropoff, distance, price, status:'new', createdAt:new Date().toISOString() };
         appData.orders.unshift(newOrder);
-        // Salvar destino se não existir
         if(!appData.savedAddresses.some(a=>a.dropoffAddr===dropoff)) appData.savedAddresses.push({ storeName:displayName, storeType, dropoffAddr:dropoff });
         persist();
         playBeep(880,200);
