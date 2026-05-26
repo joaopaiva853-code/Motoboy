@@ -32,7 +32,7 @@
             --radius: 16px;
             --radius-sm: 10px;
             --radius-xs: 8px;
-            --bottom-nav-height: 68px;
+            --bottom-nav-height: 80px; /* Aumentado para botões maiores */
             --header-height: 56px;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -263,6 +263,7 @@
             width: 100%;
         }
 
+        /* Bottom Nav - Botões Maiores */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -276,8 +277,8 @@
             justify-content: space-around;
             align-items: center;
             height: var(--bottom-nav-height);
-            padding: 0 8px;
-            padding-bottom: env(safe-area-inset-bottom, 0);
+            padding: 4px 8px;
+            padding-bottom: env(safe-area-inset-bottom, 4px);
             z-index: 100;
             box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.06);
         }
@@ -285,15 +286,20 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            justify-content: center;
+            gap: 2px;
             cursor: pointer;
-            padding: 6px 12px;
-            border-radius: 12px;
+            padding: 8px 12px;
+            border-radius: 16px;
             color: var(--text-muted);
-            font-size: 0.7rem;
-            font-weight: 500;
+            font-size: 0.85rem; /* Aumentado */
+            font-weight: 600;
             background: none;
             border: none;
+            position: relative;
+            transition: all var(--transition);
+            -webkit-tap-highlight-color: transparent;
+            min-width: 60px;
         }
         .nav-item.active {
             color: var(--primary);
@@ -302,21 +308,29 @@
         .nav-item.active::after {
             content: '';
             position: absolute;
-            top: -8px;
-            width: 24px;
-            height: 3px;
+            top: -6px;
+            width: 28px;
+            height: 4px;
             background: var(--primary);
             border-radius: 0 0 4px 4px;
         }
+        .nav-icon {
+            font-size: 1.8rem; /* Ícones maiores */
+            transition: all var(--transition);
+            line-height: 1;
+        }
+        .nav-item:active {
+            transform: scale(0.9);
+        }
         .nav-badge {
             position: absolute;
-            top: -4px;
-            right: 2px;
+            top: -2px;
+            right: 4px;
             background: var(--danger);
             color: #fff;
-            font-size: 0.6rem;
-            width: 18px;
-            height: 18px;
+            font-size: 0.7rem;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -324,6 +338,7 @@
             font-weight: 700;
             animation: bounceIn 0.5s ease;
         }
+
         .form-group {
             margin-bottom: 12px;
         }
@@ -432,6 +447,16 @@
             display: block;
             margin-bottom: 12px;
         }
+        .edit-goal-btn {
+            background: rgba(255,255,255,0.3);
+            border: none;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-left: 8px;
+        }
     </style>
 </head>
 <body>
@@ -469,9 +494,12 @@
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <div>
                         <div style="font-size:0.8rem;opacity:0.9;">Meta Diária</div>
-                        <div style="font-size:1.4rem;font-weight:800;">R$ 200,00</div>
+                        <div style="font-size:1.4rem;font-weight:800;" id="goalDisplay">R$ 200,00</div>
                     </div>
-                    <div style="font-size:2.5rem;">🎯</div>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <span style="font-size:2.5rem;">🎯</span>
+                        <button class="edit-goal-btn" onclick="editDailyGoal()">✏️ Editar Meta</button>
+                    </div>
                 </div>
                 <div class="progress-bar" style="background:rgba(255,255,255,0.35);margin-top:10px;">
                     <div class="progress-fill" id="goalProgress" style="width:0%;background:#fff;"></div>
@@ -492,18 +520,18 @@
             <div class="card">
                 <div class="form-group"><label>🏪 Restaurante / Loja</label><input class="form-input" id="inputRestaurant" placeholder="Ex: Pizzaria Bella Napoli"></div>
                 <div class="form-group"><label>👤 Nome do Cliente</label><input class="form-input" id="inputClient" placeholder="Ex: Maria Silva"></div>
-                <div class="form-group"><label>📍 Endereço de Entrega</label><input class="form-input" id="inputAddress" placeholder="Rua Exemplo, 123 - Bairro, Cidade"></div>
+                <div class="form-group"><label>📍 Endereço de Entrega (Macapá/AP)</label><input class="form-input" id="inputAddress" placeholder="Ex: Rua Leopoldo Machado, 123, Centro"></div>
                 <div class="form-group">
-                    <label>📌 Localização do Endereço do Cliente</label>
+                    <label>📌 Localização do Endereço (somente Macapá)</label>
                     <button type="button" class="btn btn-outline btn-block" onclick="geocodeAddress()">
-                        🔍 Buscar coordenadas pelo endereço
+                        🔍 Buscar coordenadas do endereço em Macapá
                     </button>
                     <div id="locationStatus" style="font-size:0.8rem;color:var(--text-muted);margin-top:6px;"></div>
                     <input type="hidden" id="inputLat">
                     <input type="hidden" id="inputLng">
                 </div>
                 <div class="form-group"><label>💰 Valor da Corrida (R$)</label><input class="form-input" type="number" id="inputValue" placeholder="Ex: 12.50" step="0.01" min="1"></div>
-                <div class="form-group"><label>📱 Telefone do Cliente</label><input class="form-input" id="inputPhone" placeholder="(11) 99999-9999"></div>
+                <div class="form-group"><label>📱 Telefone do Cliente</label><input class="form-input" id="inputPhone" placeholder="(96) 99999-9999"></div>
                 <div class="form-group"><label>📝 Observações</label><input class="form-input" id="inputNotes" placeholder="Ex: Portão azul, apto 42"></div>
                 <button class="btn btn-primary btn-block" onclick="addDelivery()" style="margin-top:8px;">✅ Registrar Corrida</button>
                 <button class="btn btn-outline btn-block" onclick="showScreen('dashboard')" style="margin-top:6px;">⬅ Voltar</button>
@@ -543,32 +571,55 @@
                 <div class="detail-row"><span class="detail-label">Média por Corrida</span><span class="detail-value" id="avgEarning">R$ 0,00</span></div>
             </div>
             <div class="card">
-                <p style="font-size:0.8rem;color:var(--text-muted);text-align:center;">🛵 MotoDelivery Pro v1.2<br>Com geolocalização do cliente</p>
+                <p style="font-size:0.8rem;color:var(--text-muted);text-align:center;">🛵 MotoDelivery Pro v1.4<br>Macapá/AP • Meta personalizável</p>
                 <button class="btn btn-danger btn-sm btn-block" onclick="resetAll()">🗑️ Resetar Todos os Dados</button>
             </div>
             <button class="btn btn-outline btn-block" onclick="showScreen('dashboard')">⬅ Voltar</button>
         </div>
     </div>
 
+    <!-- BOTTOM NAV - Botões Maiores -->
     <nav class="bottom-nav">
-        <button class="nav-item active" data-screen="dashboard"><span class="nav-icon">🏠</span>Início</button>
-        <button class="nav-item" data-screen="newDelivery"><span class="nav-icon">➕</span>Nova<span class="nav-badge" id="activeCountBadge" style="display:none;">0</span></button>
-        <button class="nav-item" data-screen="history"><span class="nav-icon">📋</span>Histórico</button>
-        <button class="nav-item" data-screen="profile"><span class="nav-icon">👤</span>Perfil</button>
+        <button class="nav-item active" data-screen="dashboard">
+            <span class="nav-icon">🏠</span>
+            <span>Início</span>
+        </button>
+        <button class="nav-item" data-screen="newDelivery">
+            <span class="nav-icon">➕</span>
+            <span>Nova</span>
+            <span class="nav-badge" id="activeCountBadge" style="display:none;">0</span>
+        </button>
+        <button class="nav-item" data-screen="history">
+            <span class="nav-icon">📋</span>
+            <span>Histórico</span>
+        </button>
+        <button class="nav-item" data-screen="profile">
+            <span class="nav-icon">👤</span>
+            <span>Perfil</span>
+        </button>
     </nav>
 
     <script>
-        const APP_KEY = 'motodelivery_pro_data_v2';
-        let appData = { profileName: 'Motoboy', deliveries: [], darkMode: false };
+        const APP_KEY = 'motodelivery_pro_data_v4';
+        let appData = {
+            profileName: 'Motoboy',
+            deliveries: [],
+            darkMode: false,
+            dailyGoal: 200 // Meta diária padrão
+        };
 
         function loadData() {
             try {
                 const saved = localStorage.getItem(APP_KEY);
-                if (saved) appData = JSON.parse(saved);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    appData = { ...appData, ...parsed };
+                }
                 if (!appData.deliveries) appData.deliveries = [];
+                if (!appData.dailyGoal) appData.dailyGoal = 200;
                 if (!appData.profileName) appData.profileName = 'Motoboy';
             } catch (e) {
-                appData = { profileName: 'Motoboy', deliveries: [], darkMode: false };
+                // mantém defaults
             }
         }
 
@@ -629,12 +680,15 @@
             const doneToday = appData.deliveries.filter(d => d.date === today && d.status === 'done');
             const earnings = doneToday.reduce((s, d) => s + (parseFloat(d.value) || 0), 0);
             const active = appData.deliveries.filter(d => !['done', 'canceled'].includes(d.status));
-            const goal = 200;
+            const goal = appData.dailyGoal || 200;
             const pct = Math.min(100, Math.round((earnings / goal) * 100));
+
             document.getElementById('todayEarnings').textContent = formatMoney(earnings);
             document.getElementById('todayDeliveries').textContent = doneToday.length;
+            document.getElementById('goalDisplay').textContent = formatMoney(goal);
             document.getElementById('goalProgress').style.width = pct + '%';
             document.getElementById('goalText').textContent = pct + '% concluído';
+
             const container = document.getElementById('activeDeliveriesList');
             if (active.length === 0) {
                 container.innerHTML =
@@ -658,6 +712,22 @@
             const badge = document.getElementById('activeCountBadge');
             if (active.length > 0) { badge.style.display = 'flex';
                 badge.textContent = active.length; } else { badge.style.display = 'none'; }
+        }
+
+        function editDailyGoal() {
+            const currentGoal = appData.dailyGoal || 200;
+            const newGoalStr = prompt('Digite o valor da meta diária (R$):', currentGoal.toString());
+            if (newGoalStr !== null) {
+                const newGoal = parseFloat(newGoalStr.replace(',', '.'));
+                if (!isNaN(newGoal) && newGoal > 0) {
+                    appData.dailyGoal = newGoal;
+                    saveData();
+                    refreshDashboard();
+                    showToast('🎯 Meta diária atualizada para ' + formatMoney(newGoal));
+                } else {
+                    showToast('⚠️ Valor inválido. A meta não foi alterada.');
+                }
+            }
         }
 
         function advanceStatus(id) {
@@ -684,25 +754,38 @@
         async function geocodeAddress() {
             const address = document.getElementById('inputAddress').value.trim();
             const statusDiv = document.getElementById('locationStatus');
-            if (!address) { statusDiv.textContent = '⚠️ Digite o endereço do cliente primeiro.';
-                statusDiv.style.color = 'var(--danger)'; return; }
-            statusDiv.textContent = '🔍 Buscando coordenadas do endereço...';
+            if (!address) {
+                statusDiv.textContent = '⚠️ Digite o endereço do cliente em Macapá primeiro.';
+                statusDiv.style.color = 'var(--danger)';
+                return;
+            }
+            const fullAddress = address.toLowerCase().includes('macapá') ? address : `${address}, Macapá, Amapá, Brasil`;
+            statusDiv.textContent = '🔍 Buscando coordenadas em Macapá...';
             statusDiv.style.color = 'var(--text-muted)';
+            const viewbox = '-51.15,-0.1,-50.9,0.15';
+            const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullAddress)}&limit=1&bounded=1&viewbox=${viewbox}`;
             try {
-                const url =
-                    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`;
                 const res = await fetch(url);
                 const data = await res.json();
                 if (data.length > 0) {
                     const lat = parseFloat(data[0].lat);
                     const lng = parseFloat(data[0].lon);
+                    if (lat < -0.1 || lat > 0.15 || lng < -51.15 || lng > -50.9) {
+                        statusDiv.textContent =
+                            '❌ Endereço encontrado fora de Macapá. Por favor, digite um endereço válido em Macapá.';
+                        statusDiv.style.color = 'var(--danger)';
+                        document.getElementById('inputLat').value = '';
+                        document.getElementById('inputLng').value = '';
+                        return;
+                    }
                     document.getElementById('inputLat').value = lat;
                     document.getElementById('inputLng').value = lng;
                     statusDiv.textContent =
-                        `✅ Localização do cliente: ${lat.toFixed(5)}, ${lng.toFixed(5)} (${data[0].display_name})`;
+                        `✅ Localização do cliente em Macapá: ${lat.toFixed(5)}, ${lng.toFixed(5)} (${data[0].display_name})`;
                     statusDiv.style.color = 'var(--success)';
                 } else {
-                    statusDiv.textContent = '❌ Endereço não encontrado. Tente ser mais específico (ex: Rua, número, cidade).';
+                    statusDiv.textContent =
+                        '❌ Endereço não encontrado em Macapá. Verifique se escreveu corretamente (ex: Rua, número, bairro).';
                     statusDiv.style.color = 'var(--danger)';
                 }
             } catch (e) {
@@ -720,7 +803,10 @@
             const notes = document.getElementById('inputNotes').value.trim();
             const lat = parseFloat(document.getElementById('inputLat').value) || null;
             const lng = parseFloat(document.getElementById('inputLng').value) || null;
-            if (!restaurant || !client || !address || !value || value <= 0) { showToast('⚠️ Preencha os campos obrigatórios!'); return; }
+            if (!restaurant || !client || !address || !value || value <= 0) {
+                showToast('⚠️ Preencha os campos obrigatórios!');
+                return;
+            }
             const delivery = {
                 id: 'del_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
                 restaurant,
@@ -768,7 +854,7 @@
             if (hasCoords) {
                 html += `
             <div class="card">
-              <div style="display:flex;justify-content:space-between;"><h4>🗺️ Localização do Cliente</h4><span style="font-size:0.75rem;">${d.lat.toFixed(4)}, ${d.lng.toFixed(4)}</span></div>
+              <div style="display:flex;justify-content:space-between;"><h4>🗺️ Localização do Cliente (Macapá)</h4><span style="font-size:0.75rem;">${d.lat.toFixed(4)}, ${d.lng.toFixed(4)}</span></div>
               <div id="${mapId}" class="map-container"></div>
               <div style="display:flex;gap:8px;margin-top:8px;">
                 <button class="btn btn-sm btn-primary" onclick="openExternalMap(${d.lat},${d.lng},'google')">🗺️ Google Maps</button>
@@ -776,8 +862,10 @@
                 <button class="btn btn-sm btn-outline" onclick="openExternalMap(${d.lat},${d.lng},'native')">📱 Mapas</button>
               </div>
             </div>`;
-            } else { html +=
-                '<div class="card"><p style="color:var(--text-muted);text-align:center;">📍 Nenhuma localização registrada para este endereço.</p></div>'; }
+            } else {
+                html +=
+                    '<div class="card"><p style="color:var(--text-muted);text-align:center;">📍 Nenhuma localização registrada para este endereço.</p></div>';
+            }
             if (d.status !== 'done' && d.status !== 'canceled') {
                 html += `<div style="display:flex;gap:8px;margin-top:8px;">
               ${getNextStatus(d.status) ? `<button class="btn btn-primary btn-block" onclick="advanceStatus('${d.id}');openDeliveryDetail('${d.id}');">▶ ${getStatusLabel(getNextStatus(d.status))}</button>` : ''}
@@ -819,7 +907,7 @@
                 <div class="card" onclick="openDeliveryDetail('${d.id}')">
                   <div style="display:flex;justify-content:space-between;"><div><div class="card-title">🏪 ${escapeHtml(d.restaurant)}</div><div class="card-subtitle">👤 ${escapeHtml(d.client)}</div></div><div>${getStatusBadge(d.status)}</div></div>
                   <div style="display:flex;justify-content:space-between;"><span style="font-weight:700;color:var(--primary);">${formatMoney(d.value)}</span><span style="font-size:0.75rem;">${formatDate(d.createdAt)}</span></div>
-                  ${d.lat && d.lng ? '<div style="font-size:0.75rem;color:var(--info);">📍 Com localização</div>' : ''}
+                  ${d.lat && d.lng ? '<div style="font-size:0.75rem;color:var(--info);">📍 Com localização (Macapá)</div>' : ''}
                 </div>`).join('');
         }
         document.querySelectorAll('.filter-btn').forEach(btn => btn.addEventListener('click', () => {
@@ -854,6 +942,7 @@
                 if (confirm('Confirmação final?')) {
                     appData.deliveries = [];
                     appData.profileName = 'Motoboy';
+                    appData.dailyGoal = 200;
                     saveData();
                     refreshDashboard();
                     refreshHistory();
@@ -873,7 +962,7 @@
 
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape' && document.getElementById('screen-detail').classList.contains('active'))
-        showScreen('dashboard');
+                showScreen('dashboard');
             if (e.ctrlKey && e.key === 'd') { e.preventDefault();
                 toggleDarkMode(); }
             if (e.ctrlKey && e.key === 'n') { e.preventDefault();
